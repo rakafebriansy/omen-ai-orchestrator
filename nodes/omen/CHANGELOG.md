@@ -17,6 +17,12 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-15 22:10:00] - Implementation: TICKET-01 Setup Next.js dan Tailwind v4 OpenZeppelin Theme
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/rakafebriansy/omen-ai-orchestrator.git`
+- **Konteks:** "implementasikan @implementation_plan.md di branch main"
+- **Perubahan:** `[Added]` Mengonfigurasi TypeScript (strict mode, `@/*` alias) dan Tailwind CSS v4 CSS-first (`@theme`) dengan palet tema OpenZeppelin Institutional Web3 di `omen/web`. Mengonversi `layout.js` dan `page.js` menjadi `layout.tsx` dan `page.tsx`, menambahkan `postcss.config.mjs`, serta membersihkan file lama `page.module.css` dan `jsconfig.json`.
+- **Path File:** `omen/web/package.json`, `omen/web/tsconfig.json`, `omen/web/postcss.config.mjs`, `omen/web/app/globals.css`, `omen/web/app/layout.tsx`, `omen/web/app/page.tsx`, `nodes/omen/tickets/TICKET-01-setup-nextjs-tailwind-theme.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-15 19:51:00] - Design System: OpenZeppelin Theme Migration
 > **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/rakafebriansy/omen-ai-orchestrator.git`
 - **Konteks:** "ganti tema nya dari cyberpunk ke seperti web ini: https://www.openzeppelin.com/solidity-contracts?ref=landingfolio"

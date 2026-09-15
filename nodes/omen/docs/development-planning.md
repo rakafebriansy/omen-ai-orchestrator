@@ -27,7 +27,7 @@ Fokus pada antarmuka visual, interaktivitas komponen, palet tema OpenZeppelin, d
 
 | No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
 |:---:|---|---|:---:|---|
-| 1 | **[TICKET-01](../tickets/TICKET-01-setup-nextjs-tailwind-theme.md)** | Setup Next.js dan Tailwind OpenZeppelin Theme | High | `omen/web/tailwind.config.ts`, `globals.css` |
+| 1 | **[TICKET-01](../tickets/TICKET-01-setup-nextjs-tailwind-theme.md)** | Setup Next.js dan Tailwind v4 OpenZeppelin Theme | High | `omen/web/globals.css`, `postcss.config.mjs` |
 | 2 | **[TICKET-02](../tickets/TICKET-02-setup-vitest-testing-suite.md)** | Setup Testing Suite Vitest | High | `omen/web/vitest.config.ts` |
 | 3 | **[TICKET-03](../tickets/TICKET-03-layout-shell-navbar-footer.md)** | Pembuatan Layout Shell Navbar dan Footer | High | `omen/web/app/layout.tsx`, `Navbar.tsx`, `Footer.tsx` |
 | 4 | **[TICKET-04](../tickets/TICKET-04-landing-overview-page.md)** | Pembuatan Halaman Landing dan Statistik Platform | High | `omen/web/app/page.tsx`, `HeroSection.tsx` |
