@@ -17,6 +17,12 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-15 22:50:00] - Testing: TICKET-02 Setup Testing Suite Vitest
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan @TICKET-02-setup-vitest-testing-suite.md"
+- **Perubahan:** `[Added]` Mengonfigurasi test runner Vitest, `@testing-library/react`, `@testing-library/jest-dom`, `@vitejs/plugin-react`, dan jsdom di `omen/web`. Menambahkan konfigurasi `vitest.config.mts`, `tests/setup.ts`, sampel unit test `tests/sample.test.tsx`, serta script `npm run test`, `test:watch`, dan `test:coverage` di `package.json`.
+- **Path File:** `omen/web/package.json`, `omen/web/package-lock.json`, `omen/web/vitest.config.mts`, `omen/web/tests/setup.ts`, `omen/web/tests/sample.test.tsx`, `nodes/omen/tickets/TICKET-02-setup-vitest-testing-suite.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-15 22:10:00] - Implementation: TICKET-01 Setup Next.js dan Tailwind v4 OpenZeppelin Theme
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/rakafebriansy/omen-ai-orchestrator.git`
 - **Konteks:** "implementasikan @implementation_plan.md di branch main"

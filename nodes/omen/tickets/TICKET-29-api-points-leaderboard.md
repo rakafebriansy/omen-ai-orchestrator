@@ -7,21 +7,28 @@ labels: [Backend, API]
 ---
 
 # Deskripsi
-Mengembangkan API endpoint GET /api/leaderboard/points untuk menyajikan daftar peringkat global berdasarkan akumulasi total poin.
+Mengembangkan Route Handler `GET /api/leaderboard/points` di `omen/web/app/api/leaderboard/points/route.ts` untuk menyajikan peringkat global berdasarkan akumulasi total poin.
+
+## Spesifikasi Desain dan Teknis (UI / Technical Specification)
+### Spesifikasi Endpoint API
+- **Metode:** `GET`
+- **Query Params:** `limit` (default 50), `offset` (default 0), `wallet_address` (opsional)
+- **Response:** Array ranking pengguna dan objek `currentUserRank`.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Mengurutkan record berdasarkan total_points terbesar secara descending.
+- [ ] Mengurutkan daftar ranking secara descending berdasarkan total_points.
 - [ ] Mendukung paginasi data limit dan offset.
-- [ ] Mengembalikan posisi ranking spesifik jika parameter wallet diberikan.
+- [ ] Unit test API route leaderboard lulus pengujian Vitest.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/app/api/leaderboard/points/route.ts`
+- `omen/web/tests/api-leaderboard.test.ts`
 
 ---
 
-## AI Execution Log & Output
+## AI Execution Log dan Output
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
 - **Ringkasan File Terpengaruh:**
-- **Catatan & Keputusan Arsitektural (Jika Ada):**
+- **Catatan dan Keputusan Arsitektural (Jika Ada):**

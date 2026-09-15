@@ -7,21 +7,28 @@ labels: [Backend, API, Admin]
 ---
 
 # Deskripsi
-Mengembangkan API endpoint POST /api/markets/[id]/resolve khusus admin untuk memperbarui status pasar menjadi resolved_yes atau resolved_no.
+Mengembangkan Route Handler `POST /api/markets/[id]/resolve` di `omen/web/app/api/markets/[id]/resolve/route.ts` untuk memperbarui status pasar di database setelah resolusi on-chain berhasil.
+
+## Spesifikasi Desain dan Teknis (UI / Technical Specification)
+### Spesifikasi Endpoint API
+- **Metode:** `POST`
+- **URL Params:** `id` (Market UUID)
+- **Request Body:** `{ status: 'resolved_yes' | 'resolved_no' | 'cancelled', resolution_source: string }`.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Memvalidasi otorisasi wallet admin.
-- [ ] Mengubah status pasar di tabel markets dan mencatat resolution_source.
-- [ ] Mencegah perubahan status jika pasar sudah pernah diresolve sebelumnya.
+- [ ] Memperbarui status pasar dan mencatat tautan bukti resolution_source.
+- [ ] Mencegah perubahan status jika pasar sudah pernah di-resolve sebelumnya.
+- [ ] Unit test API route resolve market lulus pengujian Vitest.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/app/api/markets/[id]/resolve/route.ts`
+- `omen/web/tests/api-markets-resolve.test.ts`
 
 ---
 
-## AI Execution Log & Output
+## AI Execution Log dan Output
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
 - **Ringkasan File Terpengaruh:**
-- **Catatan & Keputusan Arsitektural (Jika Ada):**
+- **Catatan dan Keputusan Arsitektural (Jika Ada):**

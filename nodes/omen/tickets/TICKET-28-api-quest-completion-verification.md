@@ -7,21 +7,29 @@ labels: [Backend, API, Gamification]
 ---
 
 # Deskripsi
-Mengembangkan API endpoint POST /api/quests/[id]/complete untuk memvalidasi pemenuhan syarat misi dan mengalokasikan poin reward.
+Mengembangkan Route Handler `POST /api/quests/[id]/complete` di `omen/web/app/api/quests/[id]/complete/route.ts` untuk memverifikasi penyelesaian misi dan memberikan reward poin.
+
+## Spesifikasi Desain dan Teknis (UI / Technical Specification)
+### Spesifikasi Endpoint API
+- **Metode:** `POST`
+- **URL Params:** `id` (Quest UUID)
+- **Request Body:** `{ wallet_address: string }`
+- **Validasi:** Mencegah klaim ganda dengan mengecek keberadaan entri di `points_events`.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Memvalidasi keabsahan quest_id dan mencegah klaim ganda.
-- [ ] Menambah saldo total_points di tabel users.
-- [ ] Menyimpan audit trail transaksi ke tabel points_events.
+- [ ] Memvalidasi quest aktif dan mencegah eksploitasi perolehan poin ganda.
+- [ ] Menambah total_points pengguna dan mencatat ke points_events.
+- [ ] Unit test API route quest completion lulus pengujian Vitest.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/app/api/quests/[id]/complete/route.ts`
+- `omen/web/tests/api-quest-complete.test.ts`
 
 ---
 
-## AI Execution Log & Output
+## AI Execution Log dan Output
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
 - **Ringkasan File Terpengaruh:**
-- **Catatan & Keputusan Arsitektural (Jika Ada):**
+- **Catatan dan Keputusan Arsitektural (Jika Ada):**

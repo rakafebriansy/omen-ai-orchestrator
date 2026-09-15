@@ -22,7 +22,7 @@ Mengonfigurasi Next.js dengan TypeScript dan Tailwind CSS v4 menggunakan token t
 
 ---
 
-## AI Execution Log & Output
+## AI Execution Log dan Output
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
@@ -39,6 +39,6 @@ Mengonfigurasi Next.js dengan TypeScript dan Tailwind CSS v4 menggunakan token t
   - `omen/web/app/globals.css`
   - `omen/web/app/layout.tsx`
   - `omen/web/app/page.tsx`
-- **Catatan & Keputusan Arsitektural (Jika Ada):**
+- **Catatan dan Keputusan Arsitektural (Jika Ada):**
   - Mengadopsi arsitektur Tailwind CSS v4 CSS-first (`@theme`) di dalam `globals.css` sehingga tidak membutuhkan `tailwind.config.ts` dan tidak memerlukan `autoprefixer` terpisah.
 

@@ -31,7 +31,7 @@ labels: [Frontend, Backend, SmartContract, Feature, Bug, dsb]
 
 ---
 
-## AI Execution Log & Output
+## AI Execution Log dan Output
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
@@ -39,6 +39,6 @@ labels: [Frontend, Backend, SmartContract, Feature, Bug, dsb]
   2. ...
 - **Ringkasan File Terpengaruh:**
   - `path/ke/file/...`
-- **Catatan & Keputusan Arsitektural (Jika Ada):**
+- **Catatan dan Keputusan Arsitektural (Jika Ada):**
   - ...
 ```
