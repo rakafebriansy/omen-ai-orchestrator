@@ -1,0 +1,46 @@
+@startuml flowchart
+skinparam roundcorner 10
+skinparam defaultFontName "Inter, Segoe UI, sans-serif"
+
+title Pipeline Taruhan On-Chain, Resolusi Admin, & Klaim Payout Omen
+
+start
+
+:Pengguna Membuka Market & Memilih Sisi (Yes/No);
+:Input Nominal Taruhan (Native ETH);
+
+if (Saldo dompet mencukupi & deadline belum lewat?) then (Ya)
+  :Eksekusi `PredictionMarket.placeBet{value: amount}(marketId, side)`;
+  :Transaksi On-Chain terkonfirmasi di Testnet;
+  
+  :Frontend / Listener memanggil `/api/bets/index`;
+  :Simpan entri taruhan di tabel `bets`;
+  :Catat `points_events` (Sumber: `prediction_market`) & Update saldo poin user;
+else (Tidak)
+  :Tampilkan Galat / Transaksi Batal;
+  stop
+endif
+
+:Menunggu Batas Waktu (*Deadline*) Berakhir;
+:Admin Memeriksa Hasil Pasar di Sumber Referensi;
+
+:Admin Mengakses Panel `/admin`;
+:Admin Mengeksekusi `PredictionMarket.resolveMarket(marketId, result)`;
+:Smart Contract mengunci status pemenang & menghitung rasio payout;
+
+:Admin Endpoint `/api/markets/:id/resolve` memperbarui status di Supabase;
+
+fork
+  :Pengguna dengan Taruhan Menang Membuka "My Bets";
+  :Klik "Claim Payout";
+  :Eksekusi `PredictionMarket.claim(marketId)`;
+  :Dana Native ETH ditransfer otomatis dari kontrak ke wallet;
+  :Tandai `claimed = true` di tabel `bets`;
+fork again
+  :Pengguna dengan Taruhan Kalah;
+  :Status taruhan berakhir (Poin partisipasi tetap tersimpan);
+end fork
+
+stop
+
+@enduml

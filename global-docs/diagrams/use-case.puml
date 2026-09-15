@@ -1,0 +1,47 @@
+@startuml use-case
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam defaultFontName "Inter, Segoe UI, sans-serif"
+
+actor "Crypto Trader / Farmer" as User
+actor "Admin / Operator" as Admin
+actor "Smart Contract Indexer / API" as Indexer
+
+rectangle "Omen Ecosystem (Web + On-Chain)" {
+  usecase "Connect Phantom Wallet (EVM)" as UC_Connect
+  usecase "Claim Daily Check-in & Streak" as UC_Checkin
+  usecase "View & Complete Quests" as UC_Quests
+  usecase "View Points Leaderboard" as UC_Leaderboard
+  usecase "Explore Prediction Markets" as UC_Markets
+  usecase "Place Bet (Yes/No) with Native ETH" as UC_Bet
+  usecase "Claim Winning Payout" as UC_Claim
+  usecase "View Personal Bets History" as UC_MyBets
+  
+  usecase "Create New Market (On-Chain + DB)" as UC_AdminCreateMarket
+  usecase "Resolve Market (Input Yes/No)" as UC_AdminResolve
+  usecase "Manage Quests (Create/Deactivate)" as UC_AdminQuests
+  usecase "Index On-Chain Bet Events" as UC_IndexBets
+  usecase "Allocate Participation Points" as UC_AllocPoints
+}
+
+User --> UC_Connect
+User --> UC_Checkin
+User --> UC_Quests
+User --> UC_Leaderboard
+User --> UC_Markets
+User --> UC_Bet
+User --> UC_Claim
+User --> UC_MyBets
+
+Admin --> UC_AdminCreateMarket
+Admin --> UC_AdminResolve
+Admin --> UC_AdminQuests
+
+Indexer --> UC_IndexBets
+Indexer --> UC_AllocPoints
+
+UC_Bet ..> UC_IndexBets : <<triggers>>
+UC_IndexBets ..> UC_AllocPoints : <<include>>
+
+@enduml

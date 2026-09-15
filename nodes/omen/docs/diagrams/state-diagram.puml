@@ -1,0 +1,60 @@
+@startuml state-diagram
+skinparam roundcorner 10
+skinparam state {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+  FontColor #000000
+  FontName "Inter, Segoe UI, sans-serif"
+  ArrowColor #333333
+}
+
+title Siklus Hidup Pasar Prediksi (Prediction Market State Machine)
+
+[*] --> Created : Admin memanggil `createMarket()` di Kontrak & DB
+
+state Created {
+  Created : Market ID terdaftar, total pool Yes = 0, No = 0
+}
+
+Created --> Active : Waktu Buka Dimulai
+
+state Active #E8F5E9 {
+  Active : Pengguna dapat memasang taruhan Yes/No dengan Native ETH
+  Active : Total pool dan implied odds diperbarui secara real-time
+}
+
+Active --> Locked #FFF8E1 {
+  Locked : Pemasangan taruhan baru ditolak (Timestamp >= Deadline)
+  Locked : Menunggu verifikasi & input hasil oleh Admin
+}
+
+Locked --> Resolved_Yes : Admin resolve dengan hasil YES
+Locked --> Resolved_No : Admin resolve dengan hasil NO
+Locked --> Cancelled : Kondisi luar biasa / pembatalan pasar
+
+state Resolved_Yes #E0F2F1 {
+  Resolved_Yes : Sisi YES dinyatakan sebagai pemenang
+  Resolved_Yes : Pool NO dibagikan secara proporsional ke pemegang tiket YES
+}
+
+state Resolved_No #FFEBEE {
+  Resolved_No : Sisi NO dinyatakan sebagai pemenang
+  Resolved_No : Pool YES dibagikan secara proporsional ke pemegang tiket NO
+}
+
+state Cancelled #F5F5F5 {
+  Cancelled : Seluruh dana taruhan dapat di-refund 100% tanpa potongan
+}
+
+Resolved_Yes --> Claiming : User mengeksekusi claim()
+Resolved_No --> Claiming : User mengeksekusi claim()
+Cancelled --> Claiming : User mengeksekusi refund()
+
+state Claiming #E8EAF6 {
+  Claiming : Kontrak mentransfer dana kemenangan / refund ke dompet
+  Claiming : Status tiket berubah menjadi Claimed
+}
+
+Claiming --> [*]
+
+@enduml

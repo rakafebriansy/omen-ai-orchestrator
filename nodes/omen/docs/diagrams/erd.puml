@@ -1,0 +1,67 @@
+@startuml erd
+skinparam roundcorner 8
+skinparam linetype ortho
+skinparam defaultFontName "Inter, Segoe UI, sans-serif"
+
+entity "users" as users {
+  * id : uuid <<PK, default gen_random_uuid()>>
+  --
+  * wallet_address : text <<unique, not null>>
+  total_points : numeric <<default 0>>
+  last_checkin_at : timestamptz
+  streak_count : integer <<default 0>>
+  * created_at : timestamptz <<not null, default now()>>
+}
+
+entity "quests" as quests {
+  * id : uuid <<PK, default gen_random_uuid()>>
+  --
+  * title : text <<not null>>
+  description : text
+  * points_reward : numeric <<not null>>
+  is_active : boolean <<default true>>
+  * created_at : timestamptz <<not null, default now()>>
+}
+
+entity "points_events" as points_events {
+  * id : uuid <<PK, default gen_random_uuid()>>
+  --
+  * wallet_address : text <<not null>>
+  quest_id : uuid <<FK, references quests(id), nullable>>
+  * source : text <<not null, check in ('daily_checkin', 'quest', 'prediction_market', 'referral')>>
+  * points : numeric <<not null>>
+  * created_at : timestamptz <<not null, default now()>>
+}
+
+entity "markets" as markets {
+  * id : uuid <<PK, default gen_random_uuid()>>
+  --
+  * contract_market_id : integer <<unique, not null>>
+  * title : text <<not null>>
+  description : text
+  * deadline : timestamptz <<not null>>
+  * status : text <<check in ('active', 'resolved_yes', 'resolved_no', 'cancelled'), default 'active'>>
+  total_pool_yes : numeric <<default 0>>
+  total_pool_no : numeric <<default 0>>
+  resolution_source : text
+  * created_at : timestamptz <<not null, default now()>>
+}
+
+entity "bets" as bets {
+  * id : uuid <<PK, default gen_random_uuid()>>
+  --
+  * market_id : uuid <<FK, references markets(id)>>
+  * wallet_address : text <<not null>>
+  * side : text <<check in ('yes', 'no')>>
+  * amount : numeric <<not null>>
+  claimed : boolean <<default false>>
+  * tx_hash : text <<unique, not null>>
+  * created_at : timestamptz <<not null, default now()>>
+}
+
+quests ||--o{ points_events : "earns_from"
+users ||--o{ points_events : "accumulates"
+markets ||--o{ bets : "contains"
+users ||--o{ bets : "places"
+
+@enduml

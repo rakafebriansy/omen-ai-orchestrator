@@ -1,0 +1,41 @@
+@startuml sequence-diagram
+autonumber
+skinparam roundcorner 10
+skinparam defaultFontName "Inter, Segoe UI, sans-serif"
+
+actor "Pengguna (Trader)" as User
+participant "Omen Frontend (Next.js)" as Frontend
+participant "Phantom EVM Wallet" as Wallet
+participant "PredictionMarket.sol" as Contract
+participant "Supabase API Route" as Backend
+database "Supabase DB" as DB
+actor "Admin" as Admin
+
+== 1. Pemasangan Taruhan (Betting) ==
+User -> Frontend : Pilih Sisi (Yes/No) & Input Nominal ETH
+Frontend -> Wallet : Minta Sign & Send `placeBet(marketId, side)`
+Wallet -> Contract : Broadcast Tx dengan Native ETH
+Contract --> Wallet : Tx Hash Konfirmasi
+Wallet --> Frontend : Tx Success
+Frontend -> Backend : POST `/api/bets/index` (txHash, marketId, amount, side)
+Backend -> DB : Simpan ke tabel `bets` & `points_events`
+Backend -> DB : Tambah total_points di `users`
+Backend --> Frontend : Status Berhasil & Poin Bertambah
+
+== 2. Resolusi Pasar ==
+Admin -> Frontend : Buka `/admin` -> Pilih Market -> Input Hasil (Yes/No)
+Frontend -> Wallet : Sign `resolveMarket(marketId, result)`
+Wallet -> Contract : Broadcast Tx Resolusi
+Contract --> Wallet : Market Resolved Event
+Frontend -> Backend : POST `/api/markets/:id/resolve` (status)
+Backend -> DB : Update status di tabel `markets`
+
+== 3. Klaim Kemenangan (Claim Payout) ==
+User -> Frontend : Buka "My Bets" -> Klik "Claim Payout"
+Frontend -> Wallet : Minta Sign `claim(marketId)`
+Wallet -> Contract : Eksekusi `claim(marketId)`
+Contract -> User : Transfer Payout Native ETH ke Wallet
+Contract --> Wallet : Payout Sent Event
+Frontend -> Backend : Update status `claimed = true` di DB
+
+@enduml

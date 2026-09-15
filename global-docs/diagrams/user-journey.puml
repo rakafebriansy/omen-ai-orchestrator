@@ -1,0 +1,70 @@
+@startuml user-journey
+skinparam roundcorner 10
+skinparam state {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+  FontColor #000000
+  FontName "Inter, Segoe UI, sans-serif"
+  ArrowColor #333333
+}
+
+title Omen — End-to-End User Journey (Points & Prediction Market)
+
+[*] --> LandingPage : Kunjungi Web Omen
+
+state LandingPage {
+  LandingPage : Melihat Metrik Global (Total User, Poin Terdistribusi, Market Aktif)
+  LandingPage : Mempelajari Mekanisme Quest Farming & Prediction Market
+  LandingPage : Memeriksa Link Kontrak Resmi & CA Token
+}
+
+LandingPage --> WalletConnection : Klik "Connect Wallet"
+
+state WalletConnection {
+  WalletConnection : Memilih Phantom Wallet (EVM Mode)
+  WalletConnection : Menyetujui Koneksi Wallet di Browser
+  WalletConnection : Upsert entri user di Supabase (`/api/wallet/connect`)
+}
+
+WalletConnection --> MainDashboard : Sukses Terhubung
+
+state MainDashboard {
+  MainDashboard : Menampilkan Ringkasan Poin & Rank Pengguna
+  MainDashboard : Menyajikan Tab: Quests, Predictions, Leaderboard, My Bets
+}
+
+MainDashboard --> QuestsFlow : Navigasi ke "Quests & Points"
+MainDashboard --> PredictionsFlow : Navigasi ke "Predictions"
+MainDashboard --> LeaderboardFlow : Navigasi ke "Leaderboard"
+MainDashboard --> MyBetsFlow : Navigasi ke "My Bets"
+
+state QuestsFlow {
+  QuestsFlow : Melakukan Daily Check-in (1x per 24 jam) -> Streak +1 & Poin Masuk
+  QuestsFlow : Membaca daftar Quest aktif (Connect wallet, Follow X, Ikut 1 Market, Invite Teman)
+  QuestsFlow : Menyelesaikan aksi -> Memanggil `/api/quests/:id/complete` -> Poin bertambah
+}
+
+state PredictionsFlow {
+  PredictionsFlow : Memilih Market Aktif (mis. "Apakah Token X naik >20%?")
+  PredictionsFlow : Memeriksa Pool Size (Yes Pool vs No Pool) & Implied Odds
+  PredictionsFlow : Memilih Sisi (Yes / No) & Mengisi Jumlah Taruhan (Native ETH)
+  PredictionsFlow : Menandatangani Transaksi On-Chain (`PredictionMarket.placeBet()`)
+  PredictionsFlow : Event di-index via `/api/bets/index` -> Tambah Poin Partisipasi
+}
+
+state LeaderboardFlow {
+  LeaderboardFlow : Memeriksa Ranking Global Wallet berdasarkan Total Poin
+  LeaderboardFlow : Memeriksa Peringkat Diri Sendiri & Selisih Poin ke Tier Atas
+}
+
+state MyBetsFlow {
+  MyBetsFlow : Memantau Status Taruhan Aktif / Menunggu Resolusi
+  MyBetsFlow : Melihat Market yang Telah Di-Resolve Admin (Yes / No)
+  MyBetsFlow : Klik "Claim Payout" untuk Taruhan Menang -> Dana Masuk ke Wallet
+}
+
+QuestsFlow --> MainDashboard : Kembali ke Dashboard
+PredictionsFlow --> MyBetsFlow : Transaksi Berhasil
+MyBetsFlow --> MainDashboard : Klaim Selesai
+
+@enduml
