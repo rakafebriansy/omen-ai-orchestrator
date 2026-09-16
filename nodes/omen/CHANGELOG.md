@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 18:14:00] - Implementation: Integrasi Transaksi Admin Pembuatan Pasar
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-42 (Integrasi Transaksi Admin Pembuatan Pasar)
+- **Perubahan:** `[Added/Modified]` Integrasi Web3 Wagmi transaction hook `useAdminCreateMarket` ke dalam formulir admin `AdminMarketCreateForm`:
+  1. `web/hooks/useAdminCreateMarket.ts`: Menghubungkan fungsi on-chain `createMarket(title, deadline)` via Wagmi `useWriteContract`, `useWaitForTransactionReceipt`, `useAccount`, `usePublicClient`, serta decoding event `MarketCreated` dan sinkronisasi metadata pasar ke database backend via `POST /api/markets`.
+  2. `web/components/AdminMarketCreateForm.tsx`: Mengintegrasikan `useAdminCreateMarket` ke dalam `handleConfirmDeploy`, menyelaraskan loading state transaksi on-chain dan sinkronisasi API, serta mempertahankan backward compatibility untuk callback `onSubmitMarket`.
+  3. `web/tests/admin-create-market.test.ts`: Unit test suite memvalidasi pemanggilan `createMarket` dengan BigInt unix timestamp, penanganan error transaksi, dan sinkronisasi database.
+- **Path File:** `omen/web/hooks/useAdminCreateMarket.ts`, `omen/web/components/AdminMarketCreateForm.tsx`, `omen/web/tests/admin-create-market.test.ts`, `nodes/omen/tickets/TICKET-42-admin-create-market-wiring.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 18:11:00] - Implementation: Pembuatan API Route Indexer Taruhan
 > **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-34 (Pembuatan API Route Indexer Taruhan)
