@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 18:01:00] - Implementation: Pembuatan API Route Katalog Pasar
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-30 (Pembuatan API Route Katalog Pasar)
+- **Perubahan:** `[Added]` Mengembangkan Next.js route handler `GET /api/markets` dan pengujian otomatis katalog pasar prediksi:
+  1. `web/db/migrations/01_init_schema.sql` & `web/types/database.ts`: Menambahkan kolom `category` dan indeks `idx_markets_category` untuk pengindeksan kategori pasar.
+  2. `web/app/api/markets/route.ts`: Menyediakan endpoint katalog pasar prediksi dengan dukungan filter dinamis `status` (active, resolved, cancelled, all), filter `category` (case-insensitive ilike), pengurutan `sort` (highest_pool, ending_soon, newest), dan kalkulasi `total_pool = yesPool + noPool`.
+  3. `web/tests/api-markets-get.test.ts`: Menyusun unit test suite Vitest (6 skenario uji: kalkulasi pool default, filter active & resolved, filter kategori, opsi sorting pool & deadline, error handling 500, dan Zero-Comment Policy). Seluruh 30 test files lulus 100% (178 unit tests pass).
+- **Path File:** `omen/web/app/api/markets/route.ts`, `omen/web/tests/api-markets-get.test.ts`, `omen/web/db/migrations/01_init_schema.sql`, `omen/web/types/database.ts`, `omen/web/tests/api-schema.test.ts`, `nodes/omen/tickets/TICKET-30-api-markets-get-feed.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-16 17:51:00] - Implementation: Integrasi Web3 Provider Wagmi di Layout Web
 > **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-39 (Integrasi Web3 Provider Wagmi di Layout Web)
