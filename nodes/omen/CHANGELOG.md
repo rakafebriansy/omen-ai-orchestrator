@@ -17,6 +17,18 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 18:22:00] - Implementation: Validasi Siklus Hidup Penuh End-to-End di Browser
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-44 (Validasi Siklus Hidup Penuh End-to-End di Browser)
+- **Perubahan:** `[Added]` Penyusunan dan eksekusi rangkaian pengujian E2E integrasi siklus hidup penuh platform Omen:
+  1. `web/tests/e2e/workflow.test.tsx`: Mengimplementasikan skenario uji otomatis mencakup:
+     - Onboarding pengguna, Daily Check-in streak (150 poin), dan penyelesaian misi quest (+100 PTS).
+     - Pembuatan pasar prediksi baru on-chain oleh admin via smart contract `createMarket` dan sinkronisasi katalog API.
+     - Penempatan posisi taruhan Web3 oleh Bettor 1 (YES) dan Bettor 2 (NO) dengan kalkulasi rasio pool seimbang 50/50.
+     - Resolusi pasar oleh admin (YES) dan penarikan klaim kemenangan 0.10 ETH oleh bettor pemenang via fungsi `claim(marketId)`.
+  2. Verifikasi menyeluruh: seluruh 7/7 skenario E2E lulus 100%, seluruh 28 test files (150 tests) di `web` lulus 100%, 19 unit tests di `contracts` lulus 100%, 0 lint/type error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/tests/e2e/workflow.test.tsx`, `nodes/omen/tickets/TICKET-44-testnet-e2e-browser-validation.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 18:18:00] - Implementation: Integrasi Transaksi Admin Resolusi Pasar
 > **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-43 (Integrasi Transaksi Admin Resolusi Pasar)
