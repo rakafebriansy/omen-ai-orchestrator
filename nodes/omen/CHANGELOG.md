@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:20:00] - Implementation: TICKET-15 Pembuatan Modal Dialog Pasang Taruhan
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
+- **Perubahan:** `[Added]` Mengembangkan komponen modal dialog taruhan dua arah `BettingModal`:
+  1. `BettingModal.tsx`: `[Created]` Membangun komponen modal dialog pasang taruhan interaktif dengan pemilih posisi dual-outcome (*YES/NO*), input nominal ETH berfont mono besar, tombol preset penambahan cepat (*+0.01, +0.05, +0.10, MAX*), kalkulator estimasi potensi payout & ROI secara langsung, penanganan error validasi input/saldo, serta tombol konfirmasi transaksi async dengan visual spinner loading.
+  2. `betting-modal.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 8 pengujian mencakup rendering modal, pertukaran outcome, interaksi preset amount, kalkulasi estimasi payout, validasi saldo, eksekusi submit callback `onConfirmBet`, dan interaksi penutupan modal via tombol close maupun klik backdrop (total 78/78 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/BettingModal.tsx`, `omen/web/tests/betting-modal.test.tsx`, `nodes/omen/tickets/TICKET-15-betting-modal-dialog-ui.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:17:00] - Implementation: TICKET-14 Pembuatan Halaman Katalog Pasar Prediksi
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
