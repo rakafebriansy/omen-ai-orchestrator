@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:17:00] - Implementation: TICKET-14 Pembuatan Halaman Katalog Pasar Prediksi
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
+- **Perubahan:** `[Added]` Membangun halaman penuh katalog pasar prediksi di `app/predictions/page.tsx`:
+  1. `app/predictions/page.tsx`: `[Created]` Memadukan header statistik pasar (Active Markets counter, Total Liquidity Pool), integrasi komponen `<MarketCategoryFilter />` dengan kalkulasi counter per kategori, grid responsif 3 kolom kartu prediksi `<MarketCard />`, serta empty state interaktif dengan tombol Reset Filters yang responsif dan theme-aware.
+  2. `predictions-page.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 5 pengujian mencakup rendering header & statistik, filtering pill kategori, live search text filtering, rendering empty state fallback & reset action, serta live status feedback saat bet dipilih (total 70/70 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/app/predictions/page.tsx`, `omen/web/tests/predictions-page.test.tsx`, `nodes/omen/tickets/TICKET-14-prediction-markets-feed-page.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:15:00] - Implementation: TICKET-45 Integrasi Logo Resmi Omen pada Navbar, Footer, dan Shell Branding
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
