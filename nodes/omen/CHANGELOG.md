@@ -17,6 +17,17 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:55:00] - Implementation: Pembuatan Robust Admin Login UI & Portal Otentikasi
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "buatkan login ui untuk admin, robust, dan error message"
+- **Perubahan:** `[Added/Updated]` Mengembangkan portal login admin terpadu yang tangguh `AdminLoginForm` dan mengintegrasikannya pada halaman `app/admin/page.tsx`:
+  1. `AdminLoginForm.tsx`: `[Created]` Membangun komponen portal login admin dengan metode autentikasi ganda (*Web3 Admin Whitelist Wallet & Master Secret Passphrase*), validasi format EVM address regex, error handling yang detail dan informatif, fitur toggle show/hide password, mekanisme proteksi brute-force lockout, tombol cepat pengisian kredensial demo (*Use Demo Admin Credentials*), serta desain glassmorphism premium *Dark & Light Emerald*.
+  2. `app/admin/page.tsx`: `[Updated]` Mengintegrasikan portal `AdminLoginForm` sebagai gerbang utama saat sesi admin belum terotentikasi dan mengaktifkan akses dashboard admin seketika setelah login berhasil.
+  3. `admin-login.test.tsx` & `admin-page.test.tsx`: `[Created/Updated]` Menyusun 9 unit test komprehensif untuk `AdminLoginForm` dan 7 unit test untuk `AdminDashboardPage` (total 124/124 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/AdminLoginForm.tsx`, `omen/web/app/admin/page.tsx`, `omen/web/tests/admin-login.test.tsx`, `omen/web/tests/admin-page.test.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:47:00] - Implementation: Integrasi Betting Confirmation Modal pada Pasar Prediksi
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "pada bet predictions, saat pilih yes no beri confirmation modal"
