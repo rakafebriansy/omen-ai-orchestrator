@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:35:00] - Implementation: TICKET-21 Pembuatan Interface Admin Resolusi Pasar Prediksi
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
+- **Perubahan:** `[Added]` Mengembangkan komponen antarmuka admin resolusi pasar prediksi `AdminMarketResolutionTable`:
+  1. `AdminMarketResolutionTable.tsx`: `[Created]` Membangun komponen antarmuka admin untuk pasar kadaluarsa (*expired markets*) yang menunggu resolusi dengan tombol tindakan per baris (*Resolve YES, Resolve NO, Cancel & Refund*), tautan verifikasi sumber oracle, serta *Double Confirmation Modal* interaktif dengan proteksi checkbox verifikasi data, input catatan resolusi, dan warning permanensi penyelesaian transaksi on-chain yang 100% theme-aware.
+  2. `admin-resolution-table.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 6 pengujian komprehensif mencakup verifikasi rendering baris pasar dan tombol aksi, filtering pasar, pemicuan dialog konfirmasi ganda, validasi proteksi checkbox bukti oracle, eksekusi settlement sukses dengan callback `onResolveMarket`, dan pembatalan dialog (total 107/107 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/AdminMarketResolutionTable.tsx`, `omen/web/tests/admin-resolution-table.test.tsx`, `nodes/omen/tickets/TICKET-21-admin-market-resolution-ui.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:32:00] - Implementation: TICKET-20 Pembuatan Form Admin Manajemen Quest
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
