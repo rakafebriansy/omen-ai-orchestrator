@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 18:07:00] - Implementation: Integrasi Transaksi Klaim pada Halaman My Bets
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-41 (Integrasi Transaksi Klaim pada Halaman My Bets)
+- **Perubahan:** `[Added/Modified]` Integrasi Web3 Wagmi transaction hook `useClaimPayout` ke dalam tombol klaim `ClaimPayoutButton`:
+  1. `web/hooks/useClaimPayout.ts`: Menghubungkan fungsi on-chain `claim(marketId)` via Wagmi `useWriteContract`, `useWaitForTransactionReceipt`, `useAccount`, dan context fallback untuk isolasi unit test suite.
+  2. `web/components/ClaimPayoutButton.tsx`: Mendukung prop `marketId` dan `onSuccess`, memanggil `claimPayout` saat diklik, dan memperbarui status reaktif badge "Claimed" setelah konfirmasi transaksi on-chain.
+  3. `web/tests/use-claim-payout.test.ts` & `web/tests/claim-button.test.tsx`: Unit test suite memvalidasi pemanggilan `claim` dengan BigInt market ID, penanganan error transaksi, dan flow klik tombol klaim.
+- **Path File:** `omen/web/hooks/useClaimPayout.ts`, `omen/web/components/ClaimPayoutButton.tsx`, `omen/web/tests/use-claim-payout.test.ts`, `omen/web/tests/claim-button.test.tsx`, `nodes/omen/tickets/TICKET-41-web3-claim-payout-wiring.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 18:05:00] - Implementation: Pembuatan API Route Pembaruan Status Pasar
 > **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-32 (Pembuatan API Route Pembaruan Status Pasar)
