@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 17:39:00] - Implementation: Pembuatan API Route Pendaftaran Wallet
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-25 (Pembuatan API Route Pendaftaran Wallet)
+- **Perubahan:** `[Added/Updated]` Mengembangkan Next.js serverless route handler `POST /api/wallet/connect` dan pengujian otomatis:
+  1. `app/api/wallet/connect/route.ts`: Membuat endpoint pendaftaran dan upsert dompet pengguna baru dengan validasi regex format alamat EVM (`^0x[a-fA-F0-9]{40}$`), normalisasi `toLowerCase()`, dan kueri upsert pada tabel `users` via `getSupabaseAdminClient()`.
+  2. `types/database.ts`: Menyelaraskan seluruh definisi entitas dan interface `Database` menjadi type aliases agar mematuhi index signature `GenericSchema` PostgREST v2 dan lolos type check TypeScript `tsc --noEmit`.
+  3. `tests/api-wallet-connect.test.ts`: Menyusun unit test suite Vitest (5 skenario uji: validasi required payload, regex EVM invalid, upsert sukses, database error response 500, dan Zero-Comment Policy). Seluruh 25 test file lulus 100% (148 tests pass).
+- **Path File:** `omen/web/app/api/wallet/connect/route.ts`, `omen/web/types/database.ts`, `omen/web/tests/api-wallet-connect.test.ts`, `nodes/omen/tickets/TICKET-25-api-wallet-connect-upsert.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 17:38:00] - Implementation: Implementasi Smart Contract PredictionMarket.sol
 > **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-36 (Implementasi Smart Contract PredictionMarket.sol)
