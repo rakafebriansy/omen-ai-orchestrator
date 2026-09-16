@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 13:18:00] - Guideline: Pembuatan Prompt Logo Aplikasi Omen & Pembaruan Retrospective Slop
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "dari omen-ai-orchestrator dan omen-dir buatlah prompt untuk logo aplikasi. prompt saja"
+- **Perubahan:**
+  1. `[Created]` Menyusun prompt desain logo berformat production-grade untuk aplikasi **Omen** berdasarkan dokumen `design-system.md` dan `prd.md` — mencakup spesifikasi: symbol orb oracle dengan vertical emerald split, wordmark uppercase font mono institusional, palet `#030906` / `#10B981` / `#34D399`, tone *Institutional Web3 / DeFi-grade*, dan tiga varian (dark, light, square favicon).
+  2. `[Updated]` Mencatat retrospective pembelajaran penting terkait pencegahan *AI-generated slop* (konten generik-simetris, card fatigue, emoji ikon) ke dalam `RETROSPECTIVE.md` agar AI agent berikutnya tidak mengulangi kesalahan desain serupa.
+- **Path File:** `nodes/omen/CHANGELOG.md`, `nodes/omen/retrospectives/RETROSPECTIVE.md`
+
+
 ### [2026-09-16 12:37:00] - Implementation: Sinkronisasi Gaya Badge Stats & Fitur Scrollable pada Tabel Trending Prediction Markets
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "1. +24.6% this week di TOTAL VALUE LOCKED dan 3.0x Multiplier di POINTS DISTRIBUTED samakan stylenya; 2. di tabel Trending Prediction Markets buatlah scrollable, heightnya mengunakan height saat ini"
