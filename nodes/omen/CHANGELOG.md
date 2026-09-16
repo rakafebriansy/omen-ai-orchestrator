@@ -17,6 +17,129 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 12:37:00] - Implementation: Sinkronisasi Gaya Badge Stats & Fitur Scrollable pada Tabel Trending Prediction Markets
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "1. +24.6% this week di TOTAL VALUE LOCKED dan 3.0x Multiplier di POINTS DISTRIBUTED samakan stylenya; 2. di tabel Trending Prediction Markets buatlah scrollable, heightnya mengunakan height saat ini"
+- **Perubahan:** `[Updated]` Menyelaraskan desain visual dan fungsionalitas scroll internal:
+  1. Menyamakan gaya badge metrik `3.0x Multiplier` pada kartu Points Distributed di `StatsOverview.tsx` menjadi `text-[11px] font-bold px-2 py-0.5 rounded bg-yes-green/10 text-yes-green border border-yes-green/20`, identik dengan badge `+24.6% this week` pada kartu Total Value Locked.
+  2. Menerapkan `h-[460px] overflow-y-auto custom-scrollbar` pada kontainer daftar pasar di `TrendingMarketsTeaser.tsx` dan menambahkan utilitas `.custom-scrollbar` bertema emerald halus pada `globals.css` sehingga tabel dapat digulir secara vertikal tanpa mengubah tinggi dokumen atau memicu layout shift.
+- **Path File:** `omen/web/components/landing/StatsOverview.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/app/globals.css`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 12:33:00] - Implementation: Variasi Data Pasar per Tab (5 4 1 2) & Stabilitas Tata Letak Dinamis pada Trending Prediction Markets
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "buatlah data tab beragam coba, 5 4  1 2"
+- **Perubahan:** `[Updated]` Mengonfigurasi distribusi data pasar terkurasi yang variatif di tiap kategori tab pada `TrendingMarketsTeaser.tsx`:
+  1. *Hot Markets*: 5 pasar teratas (Ethereum $4,500, Bitcoin $120k, Arbitrum DAU 1.5M, Crypto Cap $3.5T, US Fed Rate Cut).
+  2. *Crypto*: 4 pasar (Ethereum $4,500, Bitcoin $120k, Solana DEX Volume Flip, Bitcoin Dominance 60%).
+  3. *Layer 2*: 1 pasar unggulan (Arbitrum DAU 1.5M).
+  4. *Macro*: 2 pasar (Crypto Cap $3.5T, US Fed Rate Cut).
+  5. Menambahkan kontainer stabil `min-h-[460px]` dengan callout kartu "Propose New Market +" untuk kategori dengan data ringkas (≤ 2 pasar), memastikan tidak ada lonjakan tinggi atau pergeseran layout saat berganti antar tab.
+- **Path File:** `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 12:30:00] - Implementation: Eliminasi Layout Shift & Blink saat Pindah Tab pada Trending Prediction Markets
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "saat pindah tab di Trending Prediction Markets, ada blink saat di paling bawah"
+- **Perubahan:** `[Updated]` Menghilangkan layout shift, lonjakan tinggi kontainer (*height jump*), dan kedipan (*blink*) saat berganti tab di `TrendingMarketsTeaser.tsx`:
+  1. Menyeragamkan kurasi pasar aktif menjadi 3 pasar unggulan terbaik per kategori (termasuk *Hot Markets*), sehingga tinggi kontainer konsisten 100% di semua tab.
+  2. Menetapkan `min-h-[300px]` pada kontainer daftar pasar untuk stabilitas dimensi vertikal saat perpindahan state.
+  3. Menambahkan atribut `priority` pada seluruh elemen ikon Next.js `Image` untuk menghindari *image decoding layout flash*.
+  4. Mengganti `transition-all` yang memicu kalkulasi ulang dimensi menjadi `transition-colors duration-150` pada baris dan `transition-[width] duration-300` terfokus pada bar probabilitas YES/NO.
+- **Path File:** `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 12:18:00] - Implementation: Perbaikan Gradasi Full-Bleed Light Mode & Eliminasi Boundary Cut pada Hero Section
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "di light mode ada warna gradasi tidak sesuai"
+- **Perubahan:** `[Updated]` Memperbaiki percampuran gradasi warna latar belakang Light Mode pada `HeroSection.tsx` dan `globals.css`:
+  1. Mengubah kontainer layer gambar dan overlay scrim dari `bottom-0 h-[68%]` menjadi `absolute inset-0` penuh, sehingga gradasi transisi mengalir mulus dan kontinu dari atas (putih bersih) ke bawah (mint-emerald lembut `#E2F7ED`) tanpa garis potongan horizontal melintang yang tajam.
+  2. Menyesuaikan blending gambar 3D pada Light Mode menjadi `mix-blend-luminosity opacity-35` agar menyatu lembut dengan latar belakang tanpa bercak gelap.
+  3. Menghaluskan garis pendaran atas `.light-emerald-seam` agar menyatu alami dengan kontainer rounded.
+- **Path File:** `omen/web/components/landing/HeroSection.tsx`, `omen/web/app/globals.css`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 12:09:00] - Implementation: Penggantian Stacked Avatars dengan Ikon Komunitas Web3 Bersih
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "tertumpuk stacked, gunakan icon lain yang lebih baik"
+- **Perubahan:** `[Updated]` Mengganti elemen avatar bertumpuk kaku (`0x1`, `0x4`, `0x9`) pada kartu Community Active di `StatsOverview.tsx` dengan ikon vektor komunitas (*multi-user network vector icon*) yang bersih, tajam, dan proporsional.
+- **Path File:** `omen/web/components/landing/StatsOverview.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 12:06:00] - Implementation: Restrukturisasi Layout Kompak & Hierarki Visual Jernih pada Stats Overview Cards
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "dalam satu kartu buatlah informasinya tetap compact namun mudah dilihat. saat ini sangat buruk penempatan layoutnya"
+- **Perubahan:** `[Updated]` Merestrukturisasi tata letak 4 kartu metrik pada `StatsOverview.tsx` menjadi susunan grid modular 4-kolom yang ringkas, berhierarki tajam, dan mudah dipindai mata:
+  1. *Header Row*: Label kategori dengan status denyut/ikon di sisi kiri dan badge jaringan/kategori di sisi kanan.
+  2. *Hero Value*: Angka metrik utama masif `text-2xl sm:text-3xl font-black font-mono` dengan jarak vertikal yang lapang (*breathing room*).
+  3. *Footer Row*: Border pembatas halus 1px memisahkan badge persentase/multiplier dengan keterangan status settlement.
+- **Path File:** `omen/web/components/landing/StatsOverview.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 11:38:00] - Implementation: Pengayaan Data Pasar & Fungsionalitas Penuh Tab Filter pada Trending Prediction Markets
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "di Trending Prediction Markets buatlah tabbingnya berfungsi"
+- **Perubahan:** `[Updated]` Mengembangkan fungsionalitas filter tab kategori (`Hot Markets`, `Crypto`, `Layer 2`, `Macro`) pada `TrendingMarketsTeaser.tsx` menjadi interaktif penuh dengan katalog 9 pasar prediksi biner terkurasi, badge hitungan dinamis untuk tiap kategori, indikator garis bawah aktif emerald, dan pemfilteran tabel seketika tanpa latensi.
+- **Path File:** `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/tests/landing.test.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 11:33:00] - Implementation: Integrasi Ikon Kripto Asli WebP pada Trending Prediction Markets
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "svgnya cacat, cari png di internet lalu convert ke webp"
+- **Perubahan:** `[Updated]` Mengunduh aset PNG resolusi tinggi untuk ikon kripto resmi (Bitcoin, Ethereum, Arbitrum), Hot/Flame, dan Macro Globe, mengonversinya ke format WebP terkompresi optimal dengan transparansi penuh (`cwebp -q 95 -alpha_q 100`), lalu mengintegrasikannya ke dalam komponen `TrendingMarketsTeaser.tsx` menggunakan komponen `next/image` untuk performa dan ketajaman visual maksimal.
+- **Path File:** `omen/web/public/icons/btc.webp`, `omen/web/public/icons/eth.webp`, `omen/web/public/icons/arb.webp`, `omen/web/public/icons/hot.webp`, `omen/web/public/icons/macro.webp`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 11:27:00] - Implementation: Penggantian Emoji dengan Vector SVG Icon pada Trending Prediction Markets
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "gantilah icon icon di Trending Prediction Markets menjadi non emoji, tapi icon asli. seperti tab crypto menjadi icon btc dsb"
+- **Perubahan:** `[Updated]` Mengganti seluruh emoji pada komponen `TrendingMarketsTeaser.tsx` dengan ikon vektor SVG kustom (Bitcoin `BtcIcon`, Arbitrum `ArbitrumIcon`, Flame `FlameIcon`, Macro Globe `MacroIcon`, dan Ethereum `EthIcon`) pada tab kategori dan badge pasar terdaftar. Memastikan estetika lebih profesional, tajam, dan konsisten di seluruh perangkat.
+- **Path File:** `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 08:28:00] - Implementation: Transformasi Bahasa Desain Bitget Exchange (Tabbed Markets Table, Live Ticker Strip, Split Terminals, 3-Step Onboarding)
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "saya ingin konten dari landing page saya tidak hanya berupa card, gunakan https://www.bitget.com/ sebagai referensi. coba buka, screenshot dan implementasikan NAMUN HANYA STYLE NYA SAJA. SELURUH CONTENTNYA TETAP SEPERTI SAAT INI"
+- **Perubahan:** `[Updated]` Mentransformasi tampilan landing page Omen (`omen/web/app/page.tsx`) dengan mengadopsi bahasa desain dan komponen interaktif berstandar Bitget Exchange tanpa mengubah seluruh konten Web3 Omen:
+  1. `StatsOverview.tsx`: Mengubah kumpulan kotak bento menjadi *Live Exchange Ticker Bar & Protocol Metric Strip* dengan pembatas garis vertikal 1px dan indikator denyut data on-chain.
+  2. `TrendingMarketsTeaser.tsx`: Mengubah kartu teaser menjadi *Interactive Tabbed Live Markets Table* dengan tab filter (`🔥 Hot Markets`, `💎 Crypto`, `⚡ Layer 2`, `📈 Macro`), meter probabilitas YES/NO, volume pool, dan tombol quick-bet instan di tiap baris.
+  3. `FeaturePillars.tsx`: Mengubah pilar menjadi *Split Product Terminal Showcases* yang memadukan narasi protokol dengan *Trading Slip Simulator & Payout Calculator Widget* (Pillar I) dan *Streak Multiplier Vault* (Pillar II).
+  4. `QuestsTeaser.tsx`: Mengadopsi tata letak *Task Center & Rewards Hub* dengan 7-day streak roadmap dan task list table berdensitas tinggi.
+  5. `OnboardingJourney.tsx`: `[Added]` Membuat komponen alur onboarding berantai 3 langkah (`01 Connect Web3 Wallet` → `02 Claim Daily Quests` → `03 Predict & Earn Airdrop`).
+  6. Pengujian Vitest bertambah menjadi 24 unit test lulus 100% dan Zero-Comment Policy terverifikasi.
+- **Path File:** `omen/web/components/landing/StatsOverview.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/components/landing/FeaturePillars.tsx`, `omen/web/components/landing/QuestsTeaser.tsx`, `omen/web/components/landing/OnboardingJourney.tsx`, `omen/web/app/page.tsx`, `omen/web/app/globals.css`, `omen/web/tests/landing.test.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 08:05:00] - Implementation: Transformasi Asymmetric Bento Architecture dan Variasi Bentuk Kartu
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "terlalu ai slop, sebab terlalu simetris card-cardnya dan tidak ada bentuk lain dari card, buatlah asimetris"
+- **Perubahan:** `[Updated]` Merombak susunan kartu yang monoton dan simetris menjadi arsitektur *Asymmetric Bento Matrix* dan variasi bentuk dinamis:
+  1. `StatsOverview.tsx`: Bento grid 4-kolom asimetris (Hero TVL 2-kolom dengan on-chain live status + Active Markets 1-kolom dengan category badges + Points 1-kolom dengan multiplier badge + Community Wallets 4-kolom full-bleed ribbon dengan avatar stack).
+  2. `FeaturePillars.tsx`: Asymmetric 60/40 Split (Pilar I 7-kolom lebar dengan simulasi gauge probabilitas binary Yes/No dan badge arsitektur Solidity; Pilar II 5-kolom vertikal dengan Streak Vault dan tier ladder reward).
+  3. `TrendingMarketsTeaser.tsx`: 1 Kartu Spotlight Unggulan 7-kolom dengan odds meter besar dan tombol quick-bet + 2 Kartu Compact Bertumpuk 5-kolom.
+  4. `QuestsTeaser.tsx`: 8-kolom timeline milestone perjalanan quest dengan highlight kartu emas Day 3 & Day 7 + 4-kolom panel status streak multiplier dan status airdrop eligibility.
+  5. Pengujian 23 unit test Vitest 100% lulus dan kepatuhan Zero-Comment Policy terverifikasi.
+- **Path File:** `omen/web/components/landing/StatsOverview.tsx`, `omen/web/components/landing/FeaturePillars.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/components/landing/QuestsTeaser.tsx`, `omen/web/tests/landing.test.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 07:55:00] - Implementation: Penyelarasan Presisi Lebar Section dengan Navbar
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "panjang semua section di @page.tsx samakan dengan panjang navbar, saat ini semua section memiliki panjang yang kurang dari navbar"
+- **Perubahan:** `[Updated]` Menyelaraskan struktur kontainer di `layout.tsx` dengan menyisipkan wrapper `max-w-[1400px] w-full mx-auto` di dalam `<main className="w-full px-4 sm:px-6 lg:px-8 xl:px-10">`, sehingga lebar seluruh section di `page.tsx` sejajar presisi 100% (*pixel-perfect match*) dengan panjang kontainer kartu Navbar di semua breakpoint layar.
+- **Path File:** `omen/web/app/layout.tsx`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 07:50:00] - Implementation: Penyeragaman Layout Hero Centered Stack dan Visual 3D Ribbon
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "susunan/layout hero (section pertama) nya antara light dan dark berbeda. buatlah sama dengan menggunakan yang dark mode, begitupun gambarnya"
+- **Perubahan:** `[Updated]` Menyeragamkan susunan tata letak Hero Section di `HeroSection.tsx` pada Light Mode menjadi *Centered Stack Layout* yang identik 100% dengan Dark Mode (kicker badge Arbitrum Sepolia terpusat, Display H1 `clamp(42px, 7.5vw, 96px)` terpusat, subheadline terpusat, dan barisan CTA buttons terpusat). Menggunakan aset visual 3D liquid metal ribbons yang sama (`public/images/hero-dark-emerald.jpg`) di bagian bawah dengan *gradient scrim overlay* yang disesuaikan untuk masing-masing tema. Memperbarui unit testing di `tests/landing.test.tsx` (23 tests passing 100% pada Vitest).
+- **Path File:** `omen/web/components/landing/HeroSection.tsx`, `omen/web/tests/landing.test.tsx`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 07:45:00] - Implementation: Refinement Container Responsive dan Light Mode Glowing Shine
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "1. saat ini, tampilan landing page tidak fill the container. buatlah responsive sehingga fill the container 2. saat di light mode. di pinggir pinggir dari container beberapa konten, terdapat garis hijau, yang buruk dan annoying, tidak terlihat seperti kilauan, perbaikilah supaya menjadi kilauan seperti saat di darkmode"
+- **Perubahan:** `[Updated]` Memperluas kontainer tata letak halaman agar mengisi seluruh lebar kanvas (`w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10`) di `layout.tsx`, `Navbar.tsx`, dan `Footer.tsx`, serta mengubah alignment flex di `page.tsx` menjadi `items-stretch w-full`. Menghilangkan seluruh garis hijau solid kaku pada Light Mode di `HeroSection.tsx`, `StatsOverview.tsx`, `FeaturePillars.tsx`, `TrendingMarketsTeaser.tsx`, `QuestsTeaser.tsx`, `AirdropBanner.tsx`, dan `Navbar.tsx`, menggantikannya dengan efek kilauan pendaran kaca mewah (*top seam glowing line* `light-emerald-seam` dan *specular glass shadow* `light-card-shine`).
+- **Path File:** `omen/web/app/globals.css`, `omen/web/app/layout.tsx`, `omen/web/app/page.tsx`, `omen/web/components/Navbar.tsx`, `omen/web/components/Footer.tsx`, `omen/web/components/landing/HeroSection.tsx`, `omen/web/components/landing/StatsOverview.tsx`, `omen/web/components/landing/FeaturePillars.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/components/landing/QuestsTeaser.tsx`, `omen/web/components/landing/AirdropBanner.tsx`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 07:30:00] - Implementation: TICKET-04 Dual Theme Dark Emerald dan Light Emerald Landing Page
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "berikut yang saya unggah adalah prompt kedua, dimana untuk membuat light mode dan dark mode, juga memperbaiki tampilan menjadi gradient background. ikutilah prompt tersebut dan sesuaikan dengan konteks app kita"

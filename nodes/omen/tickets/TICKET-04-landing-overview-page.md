@@ -58,9 +58,15 @@ Membangun halaman beranda (Landing Page) berestetika Dual Theme (**Dark Emerald 
 - `omen/web/components/landing/FeaturePillars.tsx`
 - `omen/web/components/landing/TrendingMarketsTeaser.tsx`
 - `omen/web/components/landing/QuestsTeaser.tsx`
+- `omen/web/components/landing/OnboardingJourney.tsx`
 - `omen/web/components/landing/AirdropBanner.tsx`
 - `omen/web/public/images/hero-dark-emerald.jpg`
 - `omen/web/public/images/hero-light-emerald.png`
+- `omen/web/public/icons/btc.webp`
+- `omen/web/public/icons/eth.webp`
+- `omen/web/public/icons/arb.webp`
+- `omen/web/public/icons/hot.webp`
+- `omen/web/public/icons/macro.webp`
 - `omen/web/tests/landing.test.tsx`
 - `omen/web/tests/navbar.test.tsx`
 
@@ -76,7 +82,15 @@ Membangun halaman beranda (Landing Page) berestetika Dual Theme (**Dark Emerald 
   4. Memperbarui `Navbar.tsx` dengan theme toggle button dan styling adaptif.
   5. Menyelaraskan seluruh sub-komponen landing page (`StatsOverview.tsx`, `FeaturePillars.tsx`, `TrendingMarketsTeaser.tsx`, `QuestsTeaser.tsx`, `AirdropBanner.tsx`, `Footer.tsx`) agar adaptif terhadap tema aktif.
   6. Memperbarui unit testing di `tests/landing.test.tsx` dan `tests/navbar.test.tsx` (23 tests passing 100% pada Vitest).
-  7. Menegakkan Zero-Comment Policy secara mutlak pada seluruh file kode.
+  8. Mentransformasi seluruh grid simetris ("AI-slop") menjadi susunan Asymmetric Bento Architecture dan Variasi Kartu Informasi Kaya.
+  9. Mentransformasi landing page dengan bahasa desain pertukaran global (**Bitget.com** style):
+     - `StatsOverview.tsx`: Live Exchange Ticker Bar & Protocol Metric Strip dengan garis batas 1px dan pulse status.
+     - `TrendingMarketsTeaser.tsx`: Interactive Tabbed Live Markets Table dengan tab filter kategori (`Hot`, `Crypto`, `L2`, `Macro`), meter probabilitas YES/NO, volume pool, dan tombol quick-bet instan di tiap baris.
+     - `FeaturePillars.tsx`: Split Product Terminal Showcases dengan kalkulator Trading Slip Simulator interaktif & Streak Multiplier Vault.
+     - `QuestsTeaser.tsx`: Task Center & Rewards Hub layout dengan 7-day streak progress dan table task list.
+     - `OnboardingJourney.tsx`: [NEW] 3-Step User Journey Sequence (`01`, `02`, `03`) terhubung garis alur.
+  10. Mengunduh aset PNG ikon kripto resmi (Bitcoin, Ethereum, Arbitrum, Hot Flame, Macro Globe), mengonversinya ke format WebP terkompresi optimal dengan transparansi penuh (`cwebp -q 95 -alpha_q 100`), dan mengintegrasikannya dengan komponen `next/image` pada `TrendingMarketsTeaser.tsx`.
+  11. Memperbarui unit testing (24 tests passing 100% pada Vitest) dan memverifikasi Zero-Comment Policy secara menyeluruh.
 - **Ringkasan File Terpengaruh:**
   - `omen/web/app/page.tsx` [Updated]
   - `omen/web/app/layout.tsx` [Updated]
@@ -89,10 +103,19 @@ Membangun halaman beranda (Landing Page) berestetika Dual Theme (**Dark Emerald 
   - `omen/web/components/landing/FeaturePillars.tsx` [Updated]
   - `omen/web/components/landing/TrendingMarketsTeaser.tsx` [Updated]
   - `omen/web/components/landing/QuestsTeaser.tsx` [Updated]
+  - `omen/web/components/landing/OnboardingJourney.tsx` [Created]
   - `omen/web/components/landing/AirdropBanner.tsx` [Updated]
   - `omen/web/public/images/hero-dark-emerald.jpg` [Created]
   - `omen/web/public/images/hero-light-emerald.png` [Created]
+  - `omen/web/public/icons/btc.webp` [Created]
+  - `omen/web/public/icons/eth.webp` [Created]
+  - `omen/web/public/icons/arb.webp` [Created]
+  - `omen/web/public/icons/hot.webp` [Created]
+  - `omen/web/public/icons/macro.webp` [Created]
   - `omen/web/tests/landing.test.tsx` [Updated]
   - `omen/web/tests/navbar.test.tsx` [Updated]
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
   - Arsitektur tema ganda Dark Emerald dan Light Emerald menyatu secara terstruktur dengan sistem token Tailwind CSS dan tetap mempertahankan nuansa institusional Web3 Arbitrum Sepolia.
+  - Bahasa desain Bitget Exchange (Tabbed Data Tables, Ticker Bar, Split Simulation Terminals, 3-Step Onboarding) menghilangkan kejenuhan "card fatigue" dan menghadirkan pengalaman trading & quest Web3 berdensitas data tinggi tanpa mengubah konten aslinya.
+  - Aset ikon resmi WebP memberikan kejernihan visual maksimal dan bobot payload yang sangat ringan.
+

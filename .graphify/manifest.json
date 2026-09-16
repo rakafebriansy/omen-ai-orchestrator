@@ -1,0 +1,370 @@
+{
+  "README.md": {
+    "mtime": 1789459266123.1145,
+    "hash": "15ebcb93fb84cbb17e92831dc94a019f"
+  },
+  "global-docs/LEARN.md": {
+    "mtime": 1789475569951.9006,
+    "hash": "b6dbcdf006db7d3efb385097ff9c3b55"
+  },
+  "global-docs/design-system.md": {
+    "mtime": 1789488230388.758,
+    "hash": "0603c634d2482f174b8a6a5a18fb11a0"
+  },
+  "global-docs/prd.md": {
+    "mtime": 1789476648806.6484,
+    "hash": "ab0644a7aa801615b66f9a548b5c192d"
+  },
+  "global-docs/project-overview.md": {
+    "mtime": 1789459383460.024,
+    "hash": "b8e19804bbd14691d0f2ee93f1e2dba7"
+  },
+  "global-docs/templates/README.md": {
+    "mtime": 1789459266123.9663,
+    "hash": "9992834c6f23187f795b97e000f5cc2b"
+  },
+  "global-docs/templates/api_documentation_template.md": {
+    "mtime": 1789459266124.0798,
+    "hash": "fb39c07989c26efc1248d6834525e5c4"
+  },
+  "global-docs/templates/bug_report_template.md": {
+    "mtime": 1789459266124.163,
+    "hash": "1c7972e8c0f417260e510ec62d062a21"
+  },
+  "global-docs/templates/changelog_entry_template.md": {
+    "mtime": 1789459266124.232,
+    "hash": "4d3e36b74b9ebdcc29eb9153f1a983d5"
+  },
+  "global-docs/templates/commit_message_template.md": {
+    "mtime": 1789459266124.3054,
+    "hash": "42bb56d2abf0371a416f59550feaacfe"
+  },
+  "global-docs/templates/pull_request_template.md": {
+    "mtime": 1789459266124.374,
+    "hash": "051892c5acb50d93473516eab745e0f0"
+  },
+  "global-docs/templates/routing_template.md": {
+    "mtime": 1789459266124.443,
+    "hash": "f673ae19afbbb9f6ad1c45601c7bbf3e"
+  },
+  "global-docs/ui-example.md": {
+    "mtime": 1789476622533.6702,
+    "hash": "522a4958d6508f9a75fdefc1e14caec7"
+  },
+  "global-guidelines/README.md": {
+    "mtime": 1789459266124.557,
+    "hash": "74399e659a5cbe3437b972567c62184f"
+  },
+  "global-guidelines/coding.md": {
+    "mtime": 1789459266124.6504,
+    "hash": "92ae5718fe094a7573788867f0faa7f5"
+  },
+  "global-guidelines/database.md": {
+    "mtime": 1789459266124.7434,
+    "hash": "54902717ac6d6f0acce16b2e37fafa41"
+  },
+  "global-guidelines/dependencies.md": {
+    "mtime": 1789459266124.8496,
+    "hash": "3ccd1f91f105c1862da611b1afb71a13"
+  },
+  "global-guidelines/deployment.md": {
+    "mtime": 1789459266124.9893,
+    "hash": "f33564052ce98a63ddba544a8c9c67be"
+  },
+  "global-guidelines/error-handling.md": {
+    "mtime": 1789459266125.1047,
+    "hash": "44f042bd3036c5d5b131d8a8242befca"
+  },
+  "global-guidelines/localization.md": {
+    "mtime": 1789459266125.1946,
+    "hash": "04b85cfd9542153f9b99a50f2a87e436"
+  },
+  "global-guidelines/pipeline.md": {
+    "mtime": 1789459266125.2769,
+    "hash": "810601802f57de65b499876232e247be"
+  },
+  "global-guidelines/safe-file-operations.md": {
+    "mtime": 1789459266125.3726,
+    "hash": "8452f36b3ea0844d719832b95ada48d7"
+  },
+  "global-guidelines/security.md": {
+    "mtime": 1789459266125.4585,
+    "hash": "5d2389d3a37741095294a3589b13746a"
+  },
+  "global-guidelines/testing.md": {
+    "mtime": 1789459266125.6208,
+    "hash": "1ecb0866214ae48606137c0e0f2092be"
+  },
+  "global-guidelines/ui-and-assets.md": {
+    "mtime": 1789459266125.7783,
+    "hash": "67d8bd553ced9757c5cea722be74621b"
+  },
+  "global-guidelines/version-control.md": {
+    "mtime": 1789459266125.97,
+    "hash": "897d4d03a78fafefbd9a86df1e807970"
+  },
+  "nodes/_template/CHANGELOG.md": {
+    "mtime": 1789459266126.2046,
+    "hash": "dba491d15543cc6139f6fc191a578f59"
+  },
+  "nodes/_template/docs/development-planning.md": {
+    "mtime": 1789459266126.3855,
+    "hash": "4afa68647ddfe96c2b7c0394598502e3"
+  },
+  "nodes/_template/docs/diagrams/README.md": {
+    "mtime": 1789459266126.7197,
+    "hash": "ed775781a2a3fee9acb4b2e01aea497c"
+  },
+  "nodes/_template/docs/system-design.md": {
+    "mtime": 1789459266126.8804,
+    "hash": "86fd1b961615f060f9768ea6adf34fbc"
+  },
+  "nodes/_template/guidelines/project-context.md": {
+    "mtime": 1789459266127.0977,
+    "hash": "1aac80088aec714379cbdcb6ae7ad602"
+  },
+  "nodes/_template/main.md": {
+    "mtime": 1789459266127.2556,
+    "hash": "71ee3572a613c51bbb9d0005f02f4bee"
+  },
+  "nodes/_template/prototypes/README.md": {
+    "mtime": 1789459266127.4182,
+    "hash": "292f4f2149838f07d5dc9adb3fa7c780"
+  },
+  "nodes/_template/retrospectives/MERGE_HISTORY.md": {
+    "mtime": 1789459266127.5376,
+    "hash": "cef77b66fd530c06a4ff926221992312"
+  },
+  "nodes/_template/retrospectives/README.md": {
+    "mtime": 1789459266127.631,
+    "hash": "831478941e9aa268151fe71f22653c63"
+  },
+  "nodes/_template/retrospectives/RETROSPECTIVE.md": {
+    "mtime": 1789459266127.7112,
+    "hash": "ab298c3f158d210e321d1d0f5f0b73c4"
+  },
+  "nodes/_template/tickets/README.md": {
+    "mtime": 1789459266127.8394,
+    "hash": "f143fd2014b0f3a96cd23ea973c6460b"
+  },
+  "nodes/omen/CHANGELOG.md": {
+    "mtime": 1789537005192.7507,
+    "hash": "c4a996c05ad7b4135824b7b360ff322d"
+  },
+  "nodes/omen/docs/development-planning.md": {
+    "mtime": 1789483811994.7463,
+    "hash": "06c1fa913a7c1defac2a8cc42842678f"
+  },
+  "nodes/omen/docs/diagrams/README.md": {
+    "mtime": 1789473942404.1545,
+    "hash": "6efcc8e3743bd6dd2a4561a3aa8aad88"
+  },
+  "nodes/omen/docs/system-design.md": {
+    "mtime": 1789476670813.2766,
+    "hash": "f39b1434ff27245501963bb9210b24b3"
+  },
+  "nodes/omen/guidelines/project-context.md": {
+    "mtime": 1789476659699.6345,
+    "hash": "c36be33592fb037a854110a883656cd7"
+  },
+  "nodes/omen/main.md": {
+    "mtime": 1789460935069.6958,
+    "hash": "360d1caa2b45877a247502ee4555f9ce"
+  },
+  "nodes/omen/prototypes/README.md": {
+    "mtime": 1789461072928.3237,
+    "hash": "3e431501aa75a8b65597f6b9b074748c"
+  },
+  "nodes/omen/retrospectives/MERGE_HISTORY.md": {
+    "mtime": 1789461086361.2012,
+    "hash": "10bd7cd55bfad87c213ef48424f4e748"
+  },
+  "nodes/omen/retrospectives/README.md": {
+    "mtime": 1789461077652.868,
+    "hash": "c641e74954c53fca008bf688974ceef0"
+  },
+  "nodes/omen/retrospectives/RETROSPECTIVE.md": {
+    "mtime": 1789461082003.4956,
+    "hash": "cbee5329fc3040b3492810472fd12ab2"
+  },
+  "nodes/omen/tickets/README.md": {
+    "mtime": 1789487932804.3604,
+    "hash": "ed22b43fb53cdefba1c9e53bcb38d2ac"
+  },
+  "nodes/omen/tickets/TICKET-01-setup-nextjs-tailwind-theme.md": {
+    "mtime": 1789487932803.9294,
+    "hash": "b7d6e81131157447fca91ea2e2632fff"
+  },
+  "nodes/omen/tickets/TICKET-02-setup-vitest-testing-suite.md": {
+    "mtime": 1789487932804.8115,
+    "hash": "d6a417ac1d18a3091a328fc29db0e24b"
+  },
+  "nodes/omen/tickets/TICKET-03-layout-shell-navbar-footer.md": {
+    "mtime": 1789488791287.1028,
+    "hash": "de8ccc7319660024b2d498e455965140"
+  },
+  "nodes/omen/tickets/TICKET-04-landing-overview-page.md": {
+    "mtime": 1789533357677.6375,
+    "hash": "0d64f73505071bf2a6af9700d4b9a155"
+  },
+  "nodes/omen/tickets/TICKET-05-connect-wallet-button-ui.md": {
+    "mtime": 1789487948414.7405,
+    "hash": "c10afa39416df6216cc6a347913bf640"
+  },
+  "nodes/omen/tickets/TICKET-06-network-switcher-dialog-ui.md": {
+    "mtime": 1789487948415.7969,
+    "hash": "f70db8b2bbb956f6db362121162fb1c8"
+  },
+  "nodes/omen/tickets/TICKET-07-daily-checkin-widget-ui.md": {
+    "mtime": 1789487948413.6055,
+    "hash": "2df65b72c634157f1c107c6ecd68bac7"
+  },
+  "nodes/omen/tickets/TICKET-08-quest-list-cards-ui.md": {
+    "mtime": 1789487948415.2202,
+    "hash": "749ec2aa840e3fc3f4988599ca7d3790"
+  },
+  "nodes/omen/tickets/TICKET-09-quests-farming-page.md": {
+    "mtime": 1789487948415.729,
+    "hash": "764d7ce37aabb6abd627e646d38d92fe"
+  },
+  "nodes/omen/tickets/TICKET-10-points-leaderboard-table-ui.md": {
+    "mtime": 1789487948414.8735,
+    "hash": "74260511e1d793c61985922977e3cf9a"
+  },
+  "nodes/omen/tickets/TICKET-11-points-leaderboard-page.md": {
+    "mtime": 1789487948413.7466,
+    "hash": "7982cf6681a713f4fa2f8d9201807b2b"
+  },
+  "nodes/omen/tickets/TICKET-12-market-category-filter-ui.md": {
+    "mtime": 1789487948416.079,
+    "hash": "e6765c8d0b57a6974b8df4a45dfe905b"
+  },
+  "nodes/omen/tickets/TICKET-13-prediction-market-card-ui.md": {
+    "mtime": 1789487948415.4426,
+    "hash": "49fa1000f1a5464aa606cac3cbae66c8"
+  },
+  "nodes/omen/tickets/TICKET-14-prediction-markets-feed-page.md": {
+    "mtime": 1789487948416.1492,
+    "hash": "1b41d63fd085923a676c8e5ca629a1fc"
+  },
+  "nodes/omen/tickets/TICKET-15-betting-modal-dialog-ui.md": {
+    "mtime": 1789487948413.3716,
+    "hash": "d615c4dc49851b89286f27beb33192a5"
+  },
+  "nodes/omen/tickets/TICKET-16-user-bets-table-ui.md": {
+    "mtime": 1789487948413.451,
+    "hash": "3f8fafa4fee0cd886493bafe7e1d6694"
+  },
+  "nodes/omen/tickets/TICKET-17-payout-claim-button-ui.md": {
+    "mtime": 1789487948415.0837,
+    "hash": "b136ca05536222486d9a3aa61ef5117c"
+  },
+  "nodes/omen/tickets/TICKET-18-my-bets-page.md": {
+    "mtime": 1789487948414.5425,
+    "hash": "e9c2b1f6d2eeafe9ea40daa62760cf4e"
+  },
+  "nodes/omen/tickets/TICKET-19-admin-market-create-form-ui.md": {
+    "mtime": 1789487948415.3652,
+    "hash": "177b891eee389057228d2eac49eb7d4f"
+  },
+  "nodes/omen/tickets/TICKET-20-admin-quest-management-form-ui.md": {
+    "mtime": 1789487948415.2854,
+    "hash": "5769e71339a179b3b3192b70c3219761"
+  },
+  "nodes/omen/tickets/TICKET-21-admin-market-resolution-ui.md": {
+    "mtime": 1789487948413.529,
+    "hash": "539ff10aaa9e31eca829004ee2235a75"
+  },
+  "nodes/omen/tickets/TICKET-22-admin-dashboard-page.md": {
+    "mtime": 1789487948416.016,
+    "hash": "88bb15377017ed33e6d036b596216500"
+  },
+  "nodes/omen/tickets/TICKET-23-supabase-schema-migration.md": {
+    "mtime": 1789487948414.1025,
+    "hash": "c36cabea7da305cc1e92c7c6c835330f"
+  },
+  "nodes/omen/tickets/TICKET-24-supabase-database-client-helper.md": {
+    "mtime": 1789487948414.1675,
+    "hash": "8a25f5a2abcfce8a3fc71b1a69ea2f39"
+  },
+  "nodes/omen/tickets/TICKET-25-api-wallet-connect-upsert.md": {
+    "mtime": 1789487948413.679,
+    "hash": "011e533d7998b6d044c357795ff0f0c3"
+  },
+  "nodes/omen/tickets/TICKET-26-api-daily-checkin-streak.md": {
+    "mtime": 1789487948415.0193,
+    "hash": "bafa5dd9561eb74347a2b3831d06679c"
+  },
+  "nodes/omen/tickets/TICKET-27-api-quests-list.md": {
+    "mtime": 1789487948414.6084,
+    "hash": "f1bbc037cec475d217594a9e482b8f87"
+  },
+  "nodes/omen/tickets/TICKET-28-api-quest-completion-verification.md": {
+    "mtime": 1789487948414.67,
+    "hash": "455bfd7f3e35fc557dbb36617f0f71e8"
+  },
+  "nodes/omen/tickets/TICKET-29-api-points-leaderboard.md": {
+    "mtime": 1789487948415.6616,
+    "hash": "43dd05fe4d408e2c465d7297a296cb89"
+  },
+  "nodes/omen/tickets/TICKET-30-api-markets-get-feed.md": {
+    "mtime": 1789487948413.8855,
+    "hash": "a561297f36e5702ba8b99f2d16894f93"
+  },
+  "nodes/omen/tickets/TICKET-31-api-markets-post-create.md": {
+    "mtime": 1789487948414.9556,
+    "hash": "9691abfe317792c4b40396dd8938f463"
+  },
+  "nodes/omen/tickets/TICKET-32-api-markets-resolve-status.md": {
+    "mtime": 1789487948415.9275,
+    "hash": "59f970055bda029a750be00fcca77298"
+  },
+  "nodes/omen/tickets/TICKET-33-api-user-bets-get.md": {
+    "mtime": 1789487948413.8147,
+    "hash": "ea47aed4d4349211d3c71f9323a3c3ad"
+  },
+  "nodes/omen/tickets/TICKET-34-api-bets-indexer.md": {
+    "mtime": 1789487948414.405,
+    "hash": "50f47f9859fe4fb436bcec4549429502"
+  },
+  "nodes/omen/tickets/TICKET-35-hardhat-setup-arbitrum-sepolia.md": {
+    "mtime": 1789487948415.5356,
+    "hash": "51197fde31670115f95d4328e4f682db"
+  },
+  "nodes/omen/tickets/TICKET-36-prediction-market-contract-implementation.md": {
+    "mtime": 1789487948413.9583,
+    "hash": "9e5fea5744a3de07bbabe119bd1507ed"
+  },
+  "nodes/omen/tickets/TICKET-37-hardhat-contract-unit-testing.md": {
+    "mtime": 1789487948414.806,
+    "hash": "e547bdf6147192f23befe7a4f801dafd"
+  },
+  "nodes/omen/tickets/TICKET-38-testnet-deployment-abi-export.md": {
+    "mtime": 1789487948414.2307,
+    "hash": "d76b6f75f5f8dda0b592f37da66cc2f4"
+  },
+  "nodes/omen/tickets/TICKET-39-web3-provider-wagmi-integration.md": {
+    "mtime": 1789487948415.5986,
+    "hash": "b7ab6a34114fa3cbf74ed09ce12647b3"
+  },
+  "nodes/omen/tickets/TICKET-40-web3-betting-transaction-wiring.md": {
+    "mtime": 1789487948415.8633,
+    "hash": "1c8db726eab27c5d366314d1555aad7e"
+  },
+  "nodes/omen/tickets/TICKET-41-web3-claim-payout-wiring.md": {
+    "mtime": 1789487948415.1519,
+    "hash": "38bb4a56b27f7264982263e730a2e4fa"
+  },
+  "nodes/omen/tickets/TICKET-42-admin-create-market-wiring.md": {
+    "mtime": 1789487948414.3042,
+    "hash": "37136950ec2ca4580a7c111ce3e2005c"
+  },
+  "nodes/omen/tickets/TICKET-43-admin-resolve-market-wiring.md": {
+    "mtime": 1789487948414.026,
+    "hash": "6dbcacd448d0b87499b2e05c59267f4f"
+  },
+  "nodes/omen/tickets/TICKET-44-testnet-e2e-browser-validation.md": {
+    "mtime": 1789487948414.4722,
+    "hash": "60ed6577960f388c50c4324c6fb2ae0f"
+  }
+}
