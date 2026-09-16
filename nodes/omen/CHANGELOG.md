@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:02:00] - Implementation: TICKET-12 Pembuatan Komponen Filter Kategori Pasar Prediksi
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 7-20 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> buatlah permintaan add commit dan push -> repeat untuk task berikutnya"
+- **Perubahan:** `[Added]` Mengembangkan komponen filter navigasi kategori dan pengurutan pasar prediksi `MarketCategoryFilter`:
+  1. `MarketCategoryFilter.tsx`: `[Created]` Membangun komponen filter pill kategori horizontal (*All Markets, Trending, Crypto Narratives, Meme Tokens, Closing Soon, Resolved*), input teks pencarian judul pasar dengan ikon SVG & tombol clear, serta dropdown sort opsi pengurutan (*Highest Pool, Ending Soonest, Newest*) yang responsif, mobile-scrollable, dan theme-aware.
+  2. `market-filter.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 5 pengujian mencakup verifikasi rendering pill kategori, perpindahan kategori aktif, pengetikan & pembersihan query pencarian, perubahan opsi sort, dan badge jumlah market (total 60/60 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/MarketCategoryFilter.tsx`, `omen/web/tests/market-filter.test.tsx`, `nodes/omen/tickets/TICKET-12-market-category-filter-ui.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 13:58:00] - Implementation: TICKET-11 Pembuatan Halaman Leaderboard Poin
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 7-20 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> buatlah permintaan add commit dan push -> repeat untuk task berikutnya"
