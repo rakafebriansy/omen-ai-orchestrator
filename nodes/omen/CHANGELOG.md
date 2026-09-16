@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:23:00] - Implementation: TICKET-16 Pembuatan Tabel Riwayat Taruhan Pengguna
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
+- **Perubahan:** `[Added]` Mengembangkan komponen tabel riwayat taruhan portofolio pengguna `UserBetsTable`:
+  1. `UserBetsTable.tsx`: `[Created]` Membangun komponen tabel riwayat taruhan pengguna berstandar Web3 dengan kolom terstruktur (*Market Question, Side, Staked, Potential Return, Status, Action*), badge kubu posisi (*YES/NO*), badge status hasil (*Active, Won 🏆, Lost, Cancelled*), rincian return & persentase ROI, action slot tombol "Claim Payout" dan badge "Claimed", serta fallback empty state terhubung dengan eksplorasi katalog pasar yang responsif dan theme-aware.
+  2. `user-bets-table.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 5 pengujian mencakup verifikasi rendering baris posisi, badge kubu & status, eksekusi tombol Claim Payout memicu callback `onClaimPayout`, verifikasi status Claimed, dan tampilan fallback empty state (total 83/83 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/UserBetsTable.tsx`, `omen/web/tests/user-bets-table.test.tsx`, `nodes/omen/tickets/TICKET-16-user-bets-table-ui.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:20:00] - Implementation: TICKET-15 Pembuatan Modal Dialog Pasang Taruhan
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
