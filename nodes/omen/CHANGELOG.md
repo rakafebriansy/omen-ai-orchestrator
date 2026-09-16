@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 18:08:00] - Implementation: Pembuatan API Route Riwayat Taruhan
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-33 (Pembuatan API Route Riwayat Taruhan)
+- **Perubahan:** `[Added]` Mengembangkan Next.js serverless route handler `GET /api/bets` dan pengujian otomatis riwayat taruhan pengguna:
+  1. `web/app/api/bets/route.ts`: Menyediakan endpoint `GET` untuk menyajikan riwayat posisi taruhan pengguna berdasarkan query `wallet_address`. Memfilter data taruhan pengguna, mengambil metadata pasar dari tabel `markets`, serta mengkalkulasi status taruhan dinamis (`active`, `won`, `lost`, `cancelled`) dan payout hasil taruhan.
+  2. `web/tests/api-bets-get.test.ts`: Menyusun unit test suite Vitest (6 skenario pengujian: kalkulasi status & payout beragam pasar, user tanpa taruhan, penolakan missing/invalid wallet address 400, error penanganan database 500, dan Zero-Comment Policy). Seluruh 33 test files lulus 100% (201 unit tests pass).
+- **Path File:** `omen/web/app/api/bets/route.ts`, `omen/web/tests/api-bets-get.test.ts`, `nodes/omen/tickets/TICKET-33-api-user-bets-get.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-16 18:07:00] - Implementation: Integrasi Transaksi Klaim pada Halaman My Bets
 > **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-41 (Integrasi Transaksi Klaim pada Halaman My Bets)
