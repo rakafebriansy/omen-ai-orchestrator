@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 17:38:00] - Implementation: Implementasi Smart Contract PredictionMarket.sol
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-36 (Implementasi Smart Contract PredictionMarket.sol)
+- **Perubahan:** `[Added]` Mengembangkan smart contract inti `PredictionMarket.sol` mewarisi `Ownable` dan `ReentrancyGuard` dari OpenZeppelin Contracts v5:
+  1. `PredictionMarket.sol`: Mengimplementasikan lifecycle lengkap pasar prediksi biner (Active, ResolvedYes, ResolvedNo, Cancelled), fungsi `createMarket` terproteksi owner, fungsi `placeBet` penyetoran Native ETH dengan validasi deadline & pool update, fungsi `resolveMarket` terproteksi owner & deadline lock, fungsi `cancelMarket` pembatalan darurat, serta fungsi `claim` dengan kalkulasi proporsional pool share dan 100% refund bagi pasar batal.
+  2. Keamanan & Pola: Menerapkan Checks-Effects-Interactions pattern, flag pencegahan klaim ganda `claimed = true`, low-level ETH transfer `call{value: ...}("")`, dan kepatuhan mutlak terhadap Zero-Comment Policy.
+  3. Validasi: Kompilasi Solidity `npx hardhat compile --force` berhasil 100% tanpa error maupun warning, verifikasi types `npx tsc --noEmit` lolos, dan unit test web `omen/web` 127/127 lulus.
+- **Path File:** `omen/contracts/contracts/PredictionMarket.sol`, `nodes/omen/tickets/TICKET-36-prediction-market-contract-implementation.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-16 17:12:00] - Implementation: Inisialisasi Hardhat dan Konfigurasi Arbitrum Sepolia
 > **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-35 (Inisialisasi Hardhat dan Konfigurasi Arbitrum Sepolia)
