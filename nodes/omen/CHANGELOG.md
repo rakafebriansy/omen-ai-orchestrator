@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 13:48:00] - Implementation: TICKET-08 Pembuatan Komponen Kartu Quest
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 7-20 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> buatlah permintaan add commit dan push -> repeat untuk task berikutnya"
+- **Perubahan:** `[Added]` Mengembangkan komponen baris/kartu misi `QuestCard` untuk modul gamifikasi:
+  1. `QuestCard.tsx`: `[Created]` Membangun komponen kartu tugas dengan tag kategori semantik (*Social, Onboarding, On-Chain, Daily*), judul instruksi misi, deskripsi, reward points badge (`+PTS`), dan 3 status tombol (*Available*, *Verifying spinner*, dan *Completed check badge*) yang responsif dan theme-aware.
+  2. `quest-card.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 4 pengujian mencakup rendering informasi misi, transisi verifikasi asynchronous, disabled verifying state, dan completed state (total 44/44 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/QuestCard.tsx`, `omen/web/tests/quest-card.test.tsx`, `nodes/omen/tickets/TICKET-08-quest-list-cards-ui.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 13:43:00] - Implementation: TICKET-07 Pembuatan Widget Daily Check-in Streak
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 7-20 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> buatlah permintaan add commit dan push -> repeat untuk task berikutnya"

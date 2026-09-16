@@ -1,7 +1,7 @@
 ---
 id: TICKET-08
 title: Pembuatan Komponen Kartu Quest
-status: Todo
+status: Done
 priority: Medium
 labels: [Frontend, UI, Gamification]
 ---
@@ -25,10 +25,10 @@ Membangun komponen baris/kartu misi `QuestCard` di `omen/web/components/QuestCar
      - *State Selesai (Completed / Claimed):* `bg-yes-green-soft text-yes-green border border-yes-green/20 px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-1.5` bertuliskan "Completed".
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Merender badge reward poin dengan nilai yang jelas.
-- [ ] Menampilkan status misi secara akurat (Tersedia, Verifikasi, atau Selesai).
-- [ ] Tombol memicu event callback aksi verifikasi saat diklik.
-- [ ] Unit test komponen QuestCard lulus pengujian Vitest.
+- [x] Merender badge reward poin dengan nilai yang jelas.
+- [x] Menampilkan status misi secara akurat (Tersedia, Verifikasi, atau Selesai).
+- [x] Tombol memicu event callback aksi verifikasi saat diklik.
+- [x] Unit test komponen QuestCard lulus pengujian Vitest.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/components/QuestCard.tsx`
@@ -40,5 +40,11 @@ Membangun komponen baris/kartu misi `QuestCard` di `omen/web/components/QuestCar
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
+  1. Membuat komponen modular `QuestCard.tsx` dengan badge kategori semantik (Social, Onboarding, On-Chain, Daily), judul & deskripsi tugas, badge reward poin (+PTS), dan 3 status tombol (Available, Verifying dengan spinner animasi, Completed dengan badge hijau checkmark).
+  2. Menyusun unit test Vitest di `tests/quest-card.test.tsx` mencakup 4 pengujian (render rincian misi, transisi aksi/verifikasi async, status verifying disabled, dan status completed).
+  3. Memverifikasi seluruh pengujian (44/44 tests pass 100%), type check `npx tsc --noEmit` lulus tanpa error, dan kepatuhan Zero-Comment Policy terjamin.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/components/QuestCard.tsx` [Created]
+  - `omen/web/tests/quest-card.test.tsx` [Created]
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Komponen menerima props callback `onAction` dan `onVerify` yang siap dihubungkan ke backend verification handler atau link social media.
