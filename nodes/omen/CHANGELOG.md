@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:28:00] - Implementation: TICKET-18 Pembuatan Halaman My Bets
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
+- **Perubahan:** `[Added]` Membangun halaman penuh portofolio taruhan pribadi `app/my-bets/page.tsx`:
+  1. `app/my-bets/page.tsx`: `[Created]` Memadukan 3 kartu statistik portofolio pengguna (*Total ETH Staked, Total Payouts Won, Prediction Win Rate*), kontrol tab penyaringan status posisi (*All Positions, Active, Won, Lost*), integrasi komponen tabel riwayat taruhan `<UserBetsTable />`, dan penanganan klaim hadiah interaktif dengan alert notification toast yang responsif dan theme-aware.
+  2. `my-bets-page.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 3 pengujian mencakup rendering metrik kartu portofolio & tabel taruhan, penyaringan tab posisi taruhan, dan eksekusi klaim payout reward (total 90/90 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/app/my-bets/page.tsx`, `omen/web/tests/my-bets-page.test.tsx`, `nodes/omen/tickets/TICKET-18-my-bets-page.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:25:00] - Implementation: TICKET-17 Pembuatan Komponen Tombol Klaim Payout
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
