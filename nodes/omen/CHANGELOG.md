@@ -17,6 +17,27 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 13:43:00] - Implementation: TICKET-07 Pembuatan Widget Daily Check-in Streak
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 7-20 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> buatlah permintaan add commit dan push -> repeat untuk task berikutnya"
+- **Perubahan:** `[Added]` Mengembangkan komponen widget gamifikasi streak reward harian `DailyCheckinWidget`:
+  1. `DailyCheckinWidget.tsx`: `[Created]` Membangun kalender matriks visual 7 hari dengan pembagian status interaktif (*Claimed/Checked*, *Today Active*, *Locked/Upcoming*), badge pengganda streak aktif (*Multiplier Active*), tombol aksi klaim reward harian, notifikasi perolehan poin instan, serta live timer countdown cooldown (*Next Check-in in HHh MMm SSs*) yang theme-aware dan aksesibel.
+  2. `checkin-widget.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 3 pengujian mencakup verifikasi grid status, eksekusi tombol klaim poin harian, transisi cooldown timer, dan initial cooldown rendering (total 40/40 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/DailyCheckinWidget.tsx`, `omen/web/tests/checkin-widget.test.tsx`, `nodes/omen/tickets/TICKET-07-daily-checkin-widget-ui.md`, `nodes/omen/CHANGELOG.md`
+
+
+
+### [2026-09-16 13:37:00] - Implementation: TICKET-06 Pembuatan Dialog Network Switcher Phantom EVM
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 6-10 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> repeat untuk task berikutnya"
+- **Perubahan:** `[Added]` Membangun komponen dialog modal peringatan wrong network `NetworkSwitcherModal` dan indikator status jaringan pada header navigasi:
+  1. `NetworkSwitcherModal.tsx`: `[Created]` Mengembangkan dialog modal peringatan dengan ikon amber berkilau, kartu status jaringan perbandingan aktif (Ethereum Mainnet) vs target (Arbitrum Sepolia Chain ID 421614), animasi loading pada tombol switch, opsi dismiss/close, serta atribut aksesibilitas WAI-ARIA (`role="dialog"`, `aria-modal="true"`, `aria-labelledby`, `aria-describedby`).
+  2. `Navbar.tsx`: `[Updated]` Menambahkan badge peringatan "Wrong Network" berdenyut (*animate-ping*) di samping tombol wallet saat rantai tidak sesuai, yang memicu dialog modal switcher ketika diklik.
+  3. `network-switcher.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 5 pengujian (total 37/37 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/NetworkSwitcherModal.tsx`, `omen/web/components/Navbar.tsx`, `omen/web/tests/network-switcher.test.tsx`, `nodes/omen/tickets/TICKET-06-network-switcher-dialog-ui.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 13:27:00] - Implementation: TICKET-05 Pembuatan Komponen Tombol Connect Wallet
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan TICKET-05-connect-wallet-button-ui.md"

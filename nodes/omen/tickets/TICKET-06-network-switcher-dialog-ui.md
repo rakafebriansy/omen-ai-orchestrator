@@ -1,7 +1,7 @@
 ---
 id: TICKET-06
 title: Pembuatan Dialog Network Switcher Phantom EVM
-status: Todo
+status: Done
 priority: Medium
 labels: [Frontend, UI, Web3]
 ---
@@ -25,13 +25,14 @@ Membangun komponen dialog peringatan dan tombol perpindahan jaringan di `omen/we
    - Badge kecil di navbar `bg-no-red-soft text-no-red text-xs font-mono font-medium px-2 py-1 rounded-md border border-no-red/20 flex items-center gap-1.5` saat wrong network.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Modal muncul secara visual saat status wrong network aktif.
-- [ ] Tombol switch network menampilkan state loading saat interaksi berlangsung.
-- [ ] Tersedia indikator visual status jaringan di samping tombol dompet.
-- [ ] Unit test komponen NetworkSwitcherModal lulus pengujian Vitest.
+- [x] Modal muncul secara visual saat status wrong network aktif.
+- [x] Tombol switch network menampilkan state loading saat interaksi berlangsung.
+- [x] Tersedia indikator visual status jaringan di samping tombol dompet.
+- [x] Unit test komponen NetworkSwitcherModal lulus pengujian Vitest.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/components/NetworkSwitcherModal.tsx`
+- `omen/web/components/Navbar.tsx`
 - `omen/web/tests/network-switcher.test.tsx`
 
 ---
@@ -40,5 +41,14 @@ Membangun komponen dialog peringatan dan tombol perpindahan jaringan di `omen/we
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
+  1. Membuat komponen `NetworkSwitcherModal.tsx` berfitur tema ganda (Dark/Light Mode), ikon peringatan amber berkilau, kartu komparasi status jaringan aktif vs target (Arbitrum Sepolia Chain ID 421614), dan animasi state loading pada tombol switch.
+  2. Memasang atribut aksesibilitas WAI-ARIA modal dialog (`role="dialog"`, `aria-modal="true"`, `aria-labelledby`, `aria-describedby`).
+  3. Mengintegrasikan badge indikator status jaringan "Wrong Network" berdenyut (*animate-ping*) pada `Navbar.tsx` yang memicu terbukanya dialog switcher ketika diklik.
+  4. Menyusun test suite `tests/network-switcher.test.tsx` dengan 5 unit tests yang menguji visibilitas modal, perbandingan jaringan, interaksi tombol switch, fungsi dismiss/close, serta integrasi badge di navbar (37/37 tests pass 100%).
+  5. Menjalankan type checking `npx tsc --noEmit` (0 error) dan verifikasi Zero-Comment Policy.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/components/NetworkSwitcherModal.tsx` [Created]
+  - `omen/web/components/Navbar.tsx` [Modified]
+  - `omen/web/tests/network-switcher.test.tsx` [Created]
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Callback `onSwitchNetwork` dirancang asynchronous sehingga langsung kompatibel dengan method `switchChain` dari Wagmi/Viem saat integrasi Web3 dilakukan.

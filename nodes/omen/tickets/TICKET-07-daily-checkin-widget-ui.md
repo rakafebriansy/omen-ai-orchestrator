@@ -1,7 +1,7 @@
 ---
 id: TICKET-07
 title: Pembuatan Widget Daily Check-in Streak
-status: Todo
+status: Done
 priority: Medium
 labels: [Frontend, UI, Gamification]
 ---
@@ -28,11 +28,11 @@ Membangun komponen widget interaktif `DailyCheckinWidget` di `omen/web/component
    - *State Cooldown:* Tombol disabled `w-full bg-bg-subtle text-text-muted border border-border-subtle py-3.5 rounded-xl font-mono text-sm cursor-not-allowed` menampilkan waktu hitung mundur (contoh: "Next Check-in in 14h 22m 10s").
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Merender tracker 7 hari dengan indikator visual hari checked, aktif, dan terkunci.
-- [ ] Menampilkan countdown cooldown timer jika check-in hari ini sudah selesai.
-- [ ] Tombol klaim memicu callback interaktif dengan feedback visual yang responsif.
-- [ ] Aksesibilitas ARIA label pada indikator streak count dan waktu cooldown.
-- [ ] Unit test komponen DailyCheckinWidget lulus pengujian Vitest.
+- [x] Merender tracker 7 hari dengan indikator visual hari checked, aktif, dan terkunci.
+- [x] Menampilkan countdown cooldown timer jika check-in hari ini sudah selesai.
+- [x] Tombol klaim memicu callback interaktif dengan feedback visual yang responsif.
+- [x] Aksesibilitas ARIA label pada indikator streak count dan waktu cooldown.
+- [x] Unit test komponen DailyCheckinWidget lulus pengujian Vitest.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/components/DailyCheckinWidget.tsx`
@@ -44,5 +44,12 @@ Membangun komponen widget interaktif `DailyCheckinWidget` di `omen/web/component
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
+  1. Membuat komponen gamifikasi `DailyCheckinWidget.tsx` dengan visualisasi 7-day streak matrix (checked, current active, locked), badge streak multiplier, live timer cooldown countdown, dan notifikasi perolehan reward poin.
+  2. Memasang aksesibilitas WAI-ARIA (`role="region"`, `aria-label="Daily Check-in Streak"`, `aria-live="polite"` pada counter timer).
+  3. Menyusun test suite `tests/checkin-widget.test.tsx` dengan unit test Vitest mencakup verifikasi render 7-day grid, interaksi claim tombol, status perolehan poin, countdown interval timer, dan initial cooldown state (total 40/40 tests pass 100%).
+  4. Menjalankan type check `npx tsc --noEmit` (0 error) dan verifikasi Zero-Comment Policy.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/components/DailyCheckinWidget.tsx` [Created]
+  - `omen/web/tests/checkin-widget.test.tsx` [Created]
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Komponen menerima props dinamis `pointsSchedule`, `currentStreak`, dan callback `onCheckIn` yang siap disambungkan ke endpoint API `/api/checkin` dan Supabase streak tracking pada tiket backend Fase 2.
