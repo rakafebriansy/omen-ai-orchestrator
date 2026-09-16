@@ -17,6 +17,28 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 17:12:00] - Implementation: Inisialisasi Hardhat dan Konfigurasi Arbitrum Sepolia
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-35 (Inisialisasi Hardhat dan Konfigurasi Arbitrum Sepolia)
+- **Perubahan:** `[Added]` Menginisialisasi lingkungan pengembangan smart contract Hardhat TypeScript di direktori `omen/contracts`:
+  1. `package.json`: Menyiapkan konfigurasi paket `omen-contracts` dengan dependensi Hardhat v2, `@nomicfoundation/hardhat-toolbox` v5, `@openzeppelin/contracts` v5, `dotenv`, dan tooling TypeScript.
+  2. `tsconfig.json`: Mengonfigurasi compiler TypeScript ES2020 CommonJS dengan mode strict untuk modul smart contract.
+  3. `hardhat.config.ts`: Mengonfigurasi jaringan testnet Arbitrum Sepolia (Chain ID 421614, endpoint RPC dari env, akun deployer dari private key, optimizer 200 runs pada compiler Solidity 0.8.20) dengan kepatuhan penuh terhadap Zero-Comment Policy.
+  4. `.env.example`: Menyediakan boilerplate variabel lingkungan RPC testnet dan template private key.
+  5. Validasi: Menjalankan instalasi dependensi, kompilasi `npx hardhat compile`, dan type checking `npx tsc --noEmit` yang lolos 100%.
+- **Path File:** `omen/contracts/package.json`, `omen/contracts/tsconfig.json`, `omen/contracts/hardhat.config.ts`, `omen/contracts/.env.example`, `nodes/omen/tickets/TICKET-35-hardhat-setup-arbitrum-sepolia.md`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 17:10:00] - Implementation: Pembuatan Supabase Database Client Helper
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-24 (Pembuatan Supabase Database Client Helper)
+- **Perubahan:** `[Added]` Menginisialisasi helper client Supabase dan definisi tipe TypeScript untuk Next.js serverless route handlers dan client components:
+  1. Dependensi: Menginstal `@supabase/supabase-js` sebagai SDK resmi Supabase PostgreSQL client.
+  2. `types/database.ts`: Mendefinisikan tipe entitas lengkap (`User`, `Quest`, `PointsEvent`, `Market`, `Bet`), union types (`PointsSource`, `MarketStatus`, `BetSide`), dan skema antarmuka `Database` generik untuk Row, Insert, dan Update.
+  3. `lib/supabase.ts`: Membangun helper client instansiasi aman dengan pola cached singleton dan fungsi reset, mencakup `getSupabaseClient()` (public/anon key) serta `getSupabaseAdminClient()` (`SUPABASE_SERVICE_ROLE_KEY` bypass RLS untuk off-chain engine route handlers).
+  4. `tests/api-supabase.test.ts`: Menyusun unit test suite Vitest (8 skenario uji) yang memvalidasi inisialisasi client, reuse singleton instance, penanganan galat saat environment variables kosong, serta kepatuhan mutlak Zero-Comment Policy. Seluruh 24 file test lulus 100% (143 tests pass).
+- **Path File:** `omen/web/package.json`, `omen/web/types/database.ts`, `omen/web/lib/supabase.ts`, `omen/web/tests/api-supabase.test.ts`, `nodes/omen/tickets/TICKET-24-supabase-database-client-helper.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 17:07:00] - Implementation: Skema Basis Data Supabase Migration
 > **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-23 (Skema Basis Data Supabase Migration)
