@@ -17,6 +17,14 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 17:41:00] - Implementation: Pembuatan API Route Daily Check-in Streak
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-26 (Pembuatan API Route Daily Check-in Streak)
+- **Perubahan:** `[Added]` Mengembangkan Next.js serverless route handler `POST /api/checkin` dan pengujian otomatis streak gamifikasi:
+  1. `app/api/checkin/route.ts`: Membuat endpoint check-in harian dengan validasi cooldown 24 jam (penolakan status 400), penambahan streak harian berturut-turut pada jendela 24-48 jam, reset streak ke 1 bila lewat 48 jam, formula bonus multiplier `100 * (1 + (streak - 1) * 0.25)`, pembaruan profil pengguna pada tabel `users`, dan pencatatan audit log transaksi poin ke tabel `points_events`.
+  2. `tests/api-checkin.test.ts`: Menyusun unit test suite Vitest (8 skenario uji: validasi input, 404 user, check-in perdana, cooldown < 24 jam, bonus multiplier 25%, reset streak > 48 jam, error handling 500, dan Zero-Comment Policy). Seluruh 26 test file lulus 100% (156 tests pass).
+- **Path File:** `omen/web/app/api/checkin/route.ts`, `omen/web/tests/api-checkin.test.ts`, `nodes/omen/tickets/TICKET-26-api-daily-checkin-streak.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 17:39:00] - Implementation: Pembuatan API Route Pendaftaran Wallet
 > **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-25 (Pembuatan API Route Pendaftaran Wallet)
