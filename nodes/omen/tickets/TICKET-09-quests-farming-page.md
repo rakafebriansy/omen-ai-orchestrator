@@ -1,7 +1,7 @@
 ---
 id: TICKET-09
 title: Pembuatan Halaman Quests dan Farming
-status: Todo
+status: Done
 priority: Medium
 labels: [Frontend, UI]
 ---
@@ -25,10 +25,10 @@ Membangun halaman penuh Quests dan Points Farming di `omen/web/app/quests/page.t
    - Empty State: Ilustrasi dan teks ramah jika tidak ada misi pada kategori yang dipilih.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Halaman memadukan ringkasan saldo poin, DailyCheckinWidget, dan daftar QuestCard secara terstruktur.
-- [ ] Tab kategori filter menyaring daftar misi secara interaktif.
-- [ ] Tampilan sepenuhnya responsif dan bersih di seluruh resolusi layar.
-- [ ] Unit test halaman quests berhasil lulus pengujian Vitest.
+- [x] Halaman memadukan ringkasan saldo poin, DailyCheckinWidget, dan daftar QuestCard secara terstruktur.
+- [x] Tab kategori filter menyaring daftar misi secara interaktif.
+- [x] Tampilan sepenuhnya responsif dan bersih di seluruh resolusi layar.
+- [x] Unit test halaman quests berhasil lulus pengujian Vitest.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/app/quests/page.tsx`
@@ -40,5 +40,13 @@ Membangun halaman penuh Quests dan Points Farming di `omen/web/app/quests/page.t
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
+  1. Membangun halaman `app/quests/page.tsx` dengan integrasi kartu saldo akumulasi poin (`2,450 PTS`), tier ranking badge (*Tier II • Silver Hunter*), stat boxes (Quests Done, Active Streak, Airdrop Rank), `<DailyCheckinWidget />`, serta direktori katalog misi.
+  2. Mengembangkan filter kategori tab interaktif (*All Quests, Onboarding, Social, On-Chain, Daily*) dengan badge counter jumlah misi dinamis dan empty state handling.
+  3. Mengintegrasikan update saldo poin dinamis ketika pengguna menyelesaikan misi pada `QuestCard` atau melakukan daily check-in.
+  4. Menyusun test suite `tests/quests-page.test.tsx` mencakup 4 unit test Vitest untuk render halaman, navigasi filter kategori, dan akumulasi penambahan poin saat aksi quest dieksekusi (total 48/48 tests pass 100%).
+  5. Menjalankan type checking `npx tsc --noEmit` (0 error) dan verifikasi Zero-Comment Policy.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/app/quests/page.tsx` [Created]
+  - `omen/web/tests/quests-page.test.tsx` [Created]
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Struktur data quest dirancang modular sehingga saat API `/api/quests` terhubung pada Fase 2, komponen tinggal menerima data via SWR/TanStack Query tanpa merombak UI.

@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 13:51:00] - Implementation: TICKET-09 Pembuatan Halaman Quests dan Farming
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 7-20 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> buatlah permintaan add commit dan push -> repeat untuk task berikutnya"
+- **Perubahan:** `[Added]` Membangun halaman penuh Quests & Points Farming di rute `app/quests/page.tsx`:
+  1. `app/quests/page.tsx`: `[Created]` Memadukan header kampanye Season 1, kartu ringkasan saldo poin total (`2,450 PTS`), status ranking tier (*Tier II • Silver Hunter*), stat boxes (Quests Done, Active Streak, Airdrop Rank), `<DailyCheckinWidget />`, serta direktori katalog misi berfitur filter tab kategori interaktif (*All Quests, Onboarding, Social, On-Chain, Daily*) yang terhubung dengan update saldo poin live.
+  2. `quests-page.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 4 pengujian mencakup verifikasi render elemen halaman, penyaringan tab kategori misi, dan kalkulasi pertambahan poin saat quest diselesaikan (total 48/48 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/app/quests/page.tsx`, `omen/web/tests/quests-page.test.tsx`, `nodes/omen/tickets/TICKET-09-quests-farming-page.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 13:48:00] - Implementation: TICKET-08 Pembuatan Komponen Kartu Quest
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 7-20 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> buatlah permintaan add commit dan push -> repeat untuk task berikutnya"
