@@ -17,6 +17,17 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 15:00:00] - Implementation: Penyempurnaan Desain Admin Login UI & Viewport Centering
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "revisi: 1. admin portal masih bisa scrollable, buat fix letakkan ditengah (tengahnya, tengah dari 100vh - navbar), 2. ui nya ai slop, buatlah lebih clean dan sesuaikan tema seperti di landing"
+- **Perubahan:** `[Updated]` Memperbarui tata letak dan estetika antarmuka `AdminLoginForm`:
+  1. `app/admin/page.tsx`: `[Updated]` Menyesuaikan wrapper kontainer menjadi `min-h-[calc(100vh-180px)] flex items-center justify-center w-full`, memposisikan kartu login tepat di tengah vertikal viewport tanpa memicu scrollbar saat logout/unauthorized.
+  2. `AdminLoginForm.tsx`: `[Updated]` Memoles desain visual mengadopsi estetika institusional landing page Omen: garis seam emerald aksen, lencana protokol `Protocol Governance • Arbitrum Sepolia`, tipografi header minimalis yang bersih, segmented switcher modern, tombol CTA dengan gradient emerald & shadow glow landing-grade, serta link demo quick-fill yang terintegrasi rapi.
+  3. `admin-login.test.tsx` & `admin-page.test.tsx`: `[Updated]` Menyesuaikan matcher test suite dan memvalidasi kelulusan 100% (124/124 tests pass).
+- **Path File:** `omen/web/components/AdminLoginForm.tsx`, `omen/web/app/admin/page.tsx`, `omen/web/tests/admin-login.test.tsx`, `omen/web/tests/admin-page.test.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:55:00] - Implementation: Pembuatan Robust Admin Login UI & Portal Otentikasi
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "buatkan login ui untuk admin, robust, dan error message"
