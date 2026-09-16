@@ -17,6 +17,26 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 17:51:00] - Implementation: Integrasi Web3 Provider Wagmi di Layout Web
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-39 (Integrasi Web3 Provider Wagmi di Layout Web)
+- **Perubahan:** `[Added]` Mengintegrasikan arsitektur Web3 provider Wagmi, Viem, dan TanStack React Query ke dalam Next.js frontend:
+  1. Dependensi: Memasang `wagmi`, `viem`, dan `@tanstack/react-query` pada `omen/web`.
+  2. `omen/web/lib/wagmi.ts`: Mengonfigurasi client Wagmi dengan chain Arbitrum Sepolia (421614), connector Phantom EVM & injected provider, dan HTTP transport RPC Arbitrum Sepolia.
+  3. `omen/web/app/providers.tsx`: Membangun komponen client `Web3Providers` dengan isolasi `QueryClient` dan `WagmiProvider`.
+  4. `omen/web/app/layout.tsx`: Mengintegrasikan `Web3Providers` ke dalam layout root aplikasi.
+  5. `omen/web/tests/providers.test.tsx`: Menyusun unit test suite Vitest (3 skenario uji) yang memvalidasi perenderan context Wagmi dan QueryClient, serta kepatuhan mutlak terhadap Zero-Comment Policy. Seluruh 23 test file lulus 100% (130 tests pass).
+- **Path File:** `omen/web/package.json`, `omen/web/lib/wagmi.ts`, `omen/web/app/providers.tsx`, `omen/web/app/layout.tsx`, `omen/web/tests/providers.test.tsx`, `nodes/omen/tickets/TICKET-39-web3-provider-wagmi-integration.md`, `nodes/omen/CHANGELOG.md`
+
+
+### [2026-09-16 17:50:00] - Implementation: Pembuatan API Route Ranking Poin
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-29 (Pembuatan API Route Ranking Poin)
+- **Perubahan:** `[Added]` Mengembangkan Next.js serverless route handler `GET /api/leaderboard/points` dan pengujian otomatis leaderboard poin:
+  1. `app/api/leaderboard/points/route.ts`: Membuat endpoint leaderboard ranking global dengan paginasi `limit` (default 50) dan `offset` (default 0), pengurutan `total_points DESC` dan `created_at ASC`, serta kalkulasi peringkat real-time objek `currentUserRank` menggunakan kueri agregasi headless count.
+  2. `tests/api-leaderboard.test.ts`: Menyusun unit test suite Vitest (5 skenario uji: paginasi default terurut, limit/offset dinamis, kalkulasi currentUserRank, penanganan error 500, dan Zero-Comment Policy). Seluruh 29 test file lulus 100% (172 tests pass).
+- **Path File:** `omen/web/app/api/leaderboard/points/route.ts`, `omen/web/tests/api-leaderboard.test.ts`, `nodes/omen/tickets/TICKET-29-api-points-leaderboard.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 17:46:00] - Implementation: Pembuatan API Route Verifikasi Quest
 > **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-28 (Pembuatan API Route Verifikasi Quest)
