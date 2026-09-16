@@ -17,6 +17,106 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 21:11:00] - Implementation: TICKET-54 Integrasi Live Platform Statistics pada Landing Page
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-54 (Integrasi Live Platform Statistics pada Landing Page)
+- **Perubahan:** `[Added/Modified]` Mengembangkan endpoint publik agregasi metrik dan menghubungkan antarmuka landing page dengan live database:
+  1. `web/app/api/stats/overview/route.ts`: Menyediakan serverless API route `GET /api/stats/overview` untuk menghitung agregasi total TVL volume (ETH), total pasar aktif, total poin terdistribusi, dan jumlah pengguna unik dari basis data Supabase.
+  2. `web/components/landing/StatsOverview.tsx`: Menghubungkan kartu metrik TVL, Active Markets, Points Distributed, dan Active Wallets ke endpoint agregasi dengan fallback data default yang mulus saat client mount.
+  3. `web/tests/api-stats-overview.test.ts`: Menyusun unit test suite Vitest untuk validasi route handler stats overview.
+  4. Validasi: Seluruh 31 file test (162 unit tests) di `web` dan 19 tests di `contracts` lulus 100% serta mematuhi Zero-Comment Policy.
+- **Path File:** `omen/web/app/api/stats/overview/route.ts`, `omen/web/components/landing/StatsOverview.tsx`, `omen/web/tests/api-stats-overview.test.ts`, `nodes/omen/tickets/TICKET-54-*.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 21:06:00] - Implementation: TICKET-53 Pembuatan API Route Admin Quests & Integrasi Live Metrics Admin Dashboard
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-53 (Pembuatan API Route Admin Quests & Integrasi Live Metrics Admin Dashboard)
+- **Perubahan:** `[Added/Modified]` Mengembangkan endpoint admin manajemen misi dan integrasi metrik live dashboard:
+  1. `web/app/api/admin/quests/route.ts` & `web/app/api/admin/quests/[id]/route.ts`: Menyediakan endpoint serverless CRUD admin untuk tabel `quests` Supabase via admin client.
+  2. `web/components/AdminQuestManagementForm.tsx`: Menghubungkan mutasi pembuatan quest baru, toggle `is_active`, dan pengarsipan misi dengan API backend.
+  3. `web/app/admin/page.tsx`: Mengintegrasikan kueri agregasi live untuk statistik platform (`Total Markets Created`, `Configured Quests`, `Pending Resolutions`).
+  4. Validasi: Seluruh 27/27 unit tests admin lulus 100% dan mematuhi Zero-Comment Policy.
+- **Path File:** `omen/web/app/api/admin/quests/route.ts`, `omen/web/app/api/admin/quests/[id]/route.ts`, `omen/web/components/AdminQuestManagementForm.tsx`, `omen/web/app/admin/page.tsx`, `nodes/omen/tickets/TICKET-53-*.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 21:01:00] - Implementation: TICKET-52 Integrasi Real User Betting History pada Halaman My Bets
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-52 (Integrasi Real User Betting History pada Halaman My Bets)
+- **Perubahan:** `[Added/Modified]` Menghubungkan portofolio taruhan pengguna dengan Supabase backend dan alur klaim hadiah:
+  1. `web/app/my-bets/page.tsx`: Mengintegrasikan fetching live riwayat taruhan dari `GET /api/bets?wallet_address=...` (tabel `bets` dan `markets` Supabase), mengkalkulasi metrik dinamis Total ETH Staked, Total Won, Win Rate, serta menghubungkan `handleClaimPayout` dengan `mockPredictionMarket.claimPayout`.
+  2. `web/tests/my-bets-page.test.tsx`: Memvalidasi kelulusan seluruh 8/8 unit tests dan kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/app/my-bets/page.tsx`, `nodes/omen/tickets/TICKET-52-*.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 21:00:00] - Implementation: TICKET-51 Integrasi Real Leaderboard & Ranking User dari Supabase
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-51 (Integrasi Real Leaderboard & Ranking User dari Supabase)
+- **Perubahan:** `[Added/Modified]` Menghubungkan halaman leaderboard dengan endpoint `GET /api/leaderboard/points`:
+  1. `web/app/leaderboard/page.tsx`: Mengintegrasikan fetching live ranking trader dan kalkulasi `currentUserRank` dari tabel `users` Supabase, mendukung filter pencarian alamat/ENS instan, dan mempertahankan rendering kartu podium metrik.
+  2. `web/tests/leaderboard-page.test.tsx`: Memvalidasi kelulusan seluruh 3/3 unit tests dan kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/app/leaderboard/page.tsx`, `nodes/omen/tickets/TICKET-51-*.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 21:00:00] - Implementation: TICKET-50 Integrasi Real Data & API Mutation Quests & Daily Check-in
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-50 (Integrasi Real Data & API Mutation Quests & Daily Check-in)
+- **Perubahan:** `[Added/Modified]` Menghubungkan modul gamifikasi quest dan daily check-in streak dengan Supabase backend:
+  1. `web/app/quests/page.tsx`: Mengintegrasikan fetching live dari `GET /api/quests?wallet_address=...` (tabel `quests` dan `points_events` Supabase) serta menghubungkan verifikasi tugas dengan mutasi `POST /api/quests/[id]/complete`.
+  2. `web/components/DailyCheckinWidget.tsx`: Menghubungkan tombol klaim harian ke endpoint `POST /api/checkin` dengan kalkulasi bonus multiplier streak dan cooldown 24 jam.
+  3. Validasi: Seluruh 7/7 unit tests pada komponen widget check-in dan kartu quest lulus 100% dan mematuhi Zero-Comment Policy.
+- **Path File:** `omen/web/app/quests/page.tsx`, `omen/web/components/DailyCheckinWidget.tsx`, `nodes/omen/tickets/TICKET-50-*.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 20:59:00] - Implementation: TICKET-49 Integrasi Real Supabase Feed & Mock Betting Flow pada Halaman Predictions
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-49 (Integrasi Real Supabase Feed & Mock Betting Flow pada Halaman Predictions)
+- **Perubahan:** `[Added/Modified]` Menghubungkan halaman katalog pasar prediksi dengan Supabase backend dan alur taruhan simulator:
+  1. `web/app/predictions/page.tsx`: Mengintegrasikan fetching live dari `GET /api/markets` (tabel `markets` Supabase) dengan pemetaan dinamis pool share dan status resolusi, serta menghubungkan `handleConfirmBet` dengan `mockPredictionMarket.placeBet` dan mutasi transaksi `POST /api/bets/index` yang memberikan reward 50 poin ke tabel `points_events`.
+  2. `web/tests/predictions-page.test.tsx`: Memvalidasi kelulusan 6/6 skenario uji UI dan penempatan taruhan.
+- **Path File:** `omen/web/app/predictions/page.tsx`, `omen/web/tests/predictions-page.test.tsx`, `nodes/omen/tickets/TICKET-49-*.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 20:58:00] - Implementation: TICKET-48 Integrasi Mock Wallet Connection & Auto-Registration ke Supabase
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-48 (Integrasi Mock Wallet Connection & Auto-Registration ke Supabase)
+- **Perubahan:** `[Added/Modified]` Mengintegrasikan mock wallet provider pada `ConnectWalletButton.tsx` dan sinkronisasi basis data:
+  1. `web/components/ConnectWalletButton.tsx`: Menghubungkan demo wallet (`0x71C6...4B29`, saldo 10.0 ETH virtual), memicu panggilan `POST /api/wallet/connect` untuk mendaftarkan akun pengguna ke tabel `users` Supabase saat koneksi terbentuk, serta menambahkan badge status "Demo Wallet (Mock Mode)".
+  2. `web/tests/mock-wallet-connect.test.tsx`: Menyusun unit test suite Vitest (2 skenario uji: validasi payload API `/api/wallet/connect` dan render lencana mock mode).
+  3. Validasi: 10/10 unit tests pada komponen wallet lulus 100% dan mematuhi Zero-Comment Policy.
+- **Path File:** `omen/web/components/ConnectWalletButton.tsx`, `omen/web/tests/mock-wallet-connect.test.tsx`, `omen/web/tests/wallet-button.test.tsx`, `nodes/omen/tickets/TICKET-48-*.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 20:37:00] - Implementation: TICKET-47 Implementasi Mock Contract Engine & Web3 Simulator Provider
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-47 (Implementasi Mock Contract Engine & Web3 Simulator Provider)
+- **Perubahan:** `[Added]` Mengembangkan arsitektur simulator in-memory Mock Contract untuk mengisolasi pengujian frontend dari gas fee dan ekstensi wallet eksternal:
+  1. `web/lib/mockPredictionMarket.ts`: Membangun singleton `MockPredictionMarketEngine` yang mengemulasi pool pasar likuiditas dinamis, saldo virtual 10.0 ETH, generator transaksi hash deterministik, serta method `placeBet`, `claimPayout`, `createMarket`, `resolveMarket`, dan `cancelMarket`.
+  2. `web/lib/contracts.ts`: Menambahkan export konstanta `USE_MOCK_CONTRACT` berbasis env flag `NEXT_PUBLIC_USE_MOCK_CONTRACT`.
+  3. `web/tests/mock-prediction-market.test.ts`: Menyusun unit test suite Vitest (8 skenario uji lulus 100%).
+  4. Restrukturisasi Roadmap: Memutakhirkan `development-planning.md` dan backlog tiket Tahap 5 (Mock Web3 & Real Supabase Integration) serta Tahap 6 (Live Testnet Activation).
+- **Path File:** `omen/web/lib/mockPredictionMarket.ts`, `omen/web/lib/contracts.ts`, `omen/web/tests/mock-prediction-market.test.ts`, `nodes/omen/tickets/TICKET-47-*.md`, `nodes/omen/docs/development-planning.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 19:53:00] - Implementation: Penyelesaian Setup Supabase & Eksekusi Skema Migrasi
+> **Trigger:** User Action | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-46 (Penyediaan Kredensial Supabase & Eksekusi Skema Migrasi Basis Data)
+- **Perubahan:** `[Completed]` Penyelesaian provisioning basis data PostgreSQL Supabase dan skema migrasi DDL:
+  1. Pengisian variabel lingkungan Supabase (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`) pada `omen/web/.env.local`.
+  2. Eksekusi migrasi skema `01_init_schema.sql` (tabel `users`, `quests`, `points_events`, `markets`, `bets`), indeks performa kueri, serta proteksi Row Level Security (RLS) policies.
+  3. Penyusunan skrip rollback `01_rollback_schema.sql` untuk reset database darurat.
+  4. Status TICKET-46 dimutakhirkan menjadi `Done` dengan seluruh kriteria penerimaan terpenuhi 100%.
+- **Path File:** `omen/web/.env.local`, `omen/web/db/migrations/01_init_schema.sql`, `omen/web/db/migrations/01_rollback_schema.sql`, `nodes/omen/tickets/TICKET-46-manual-supabase-provisioning-and-migration.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 18:48:00] - Development Planning: Gap Analysis Audit & Pembuatan Backlog Tahap 5
+> **Trigger:** User Request | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Evaluasi menyeluruh tiket terselesaikan, penandaan TODO pada mock code / disconnected features, pembuatan tiket baru TICKET-46 s/d TICKET-54, dan pemutakhiran roadmap development planning.
+- **Perubahan:** `[Added/Updated]` Audit gap komprehensif pada frontend, backend, dan smart contract:
+  1. Penandaan `// TODO(TICKET-...)` pada file-file frontend yang masih menggunakan mock data atau belum tersinkronisasi live API (`app/predictions/page.tsx`, `app/quests/page.tsx`, `app/leaderboard/page.tsx`, `app/my-bets/page.tsx`, `ConnectWalletButton.tsx`, `DailyCheckinWidget.tsx`, `NetworkSwitcherModal.tsx`, `app/admin/page.tsx`, `AdminQuestManagementForm.tsx`, `StatsOverview.tsx`).
+  2. Pembuatan 9 tiket baru di `nodes/omen/tickets/`:
+     - `TICKET-46` *(MANUAL)*: Penyediaan Kredensial Supabase & Eksekusi Skema Migrasi Basis Data
+     - `TICKET-47` *(MANUAL)*: Deployment Smart Contract ke Arbitrum Sepolia Testnet & Verifikasi Arbiscan
+     - `TICKET-48`: Integrasi Web3 Real Wallet & Network Switcher pada Header
+     - `TICKET-49`: Integrasi Fetching Real API & On-Chain Data pada Halaman Predictions Feed
+     - `TICKET-50`: Integrasi Real Data & API Mutation pada Halaman Quests & Daily Check-in
+     - `TICKET-51`: Integrasi Real Leaderboard & Ranking User pada Halaman Leaderboard
+     - `TICKET-52`: Integrasi Real User Betting History pada Halaman My Bets
+     - `TICKET-53`: Pembuatan API Route Admin Quests & Integrasi Live Metrics Admin Dashboard
+     - `TICKET-54`: Integrasi Live Platform Statistics pada Landing Page
+  3. Pemutakhiran `nodes/omen/docs/development-planning.md` dengan penambahan Tahap 5 (Full Off-Chain & Web3 Live Data Wiring).
+- **Path File:** `nodes/omen/docs/development-planning.md`, `nodes/omen/tickets/TICKET-46-*.md` s/d `TICKET-54-*.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 18:22:00] - Implementation: Validasi Siklus Hidup Penuh End-to-End di Browser
 > **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-44 (Validasi Siklus Hidup Penuh End-to-End di Browser)

@@ -15,7 +15,7 @@ Sesuai arahan, alur pengerjaan dipisahkan secara tegas menjadi **Frontend Dulu S
 Setiap tiket dirancang memiliki **satu tanggung jawab tunggal (single responsibility)** tanpa menggabungkan dua tugas berbeda dalam satu tiket, agar cakupannya terukur dan mudah dieksekusi.
 
 ```
-[Tahap 1: Frontend Dulu (22 Tiket)] ──► [Tahap 2: Backend dan DB (12 Tiket)] ──► [Tahap 3: Smart Contract (4 Tiket)] ──► [Tahap 4: Wiring dan E2E (6 Tiket)]
+[Tahap 1: Frontend Dulu (22 Tiket)] ──► [Tahap 2: Backend dan DB (12 Tiket)] ──► [Tahap 3: Smart Contract (4 Tiket)] ──► [Tahap 4: Wiring dan E2E (6 Tiket)] ──► [Tahap 5: Live Data & Setup (9 Tiket)]
 ```
 
 ---
@@ -91,6 +91,30 @@ Menghubungkan tombol aksi di frontend ke fungsi smart contract testnet dan memva
 | 43 | **[TICKET-43](../tickets/TICKET-43-admin-resolve-market-wiring.md)** | Integrasi Transaksi Admin Resolusi Pasar | Medium | `omen/web/components/AdminMarketResolutionTable.tsx` |
 | 44 | **[TICKET-44](../tickets/TICKET-44-testnet-e2e-browser-validation.md)** | Validasi Siklus Hidup Penuh End-to-End di Browser | High | `omen/web/tests/e2e/workflow.test.ts` |
 
+#### 5. Tahap 5: Full Mock Web3 Engine & Real Supabase Live Data Wiring
+Menghubungkan seluruh alur aplikasi frontend dengan basis data Supabase aktif, mengimplementasikan Mock Contract & Web3 Simulator Engine untuk pengujian end-to-end tanpa gas fee/ketergantungan ekstensi browser.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 46 | **[TICKET-46](../tickets/TICKET-46-manual-supabase-provisioning-and-migration.md)** *(DONE)* | Penyediaan Kredensial Supabase & Eksekusi Skema Migrasi Basis Data | High | `omen/web/.env.local`, `01_init_schema.sql` |
+| 47 | **[TICKET-47](../tickets/TICKET-47-mock-contract-and-web3-simulator-engine.md)** *(DONE)* | Implementasi Mock Contract Engine & Web3 Simulator Provider | High | `omen/web/lib/mockPredictionMarket.ts`, `contracts.ts` |
+| 48 | **[TICKET-48](../tickets/TICKET-48-mock-wallet-connection-and-supabase-sync.md)** *(DONE)* | Integrasi Mock Wallet Connection & Auto-Registration ke Supabase | High | `omen/web/components/ConnectWalletButton.tsx`, `Navbar.tsx` |
+| 49 | **[TICKET-49](../tickets/TICKET-49-predictions-feed-api-and-mock-betting-integration.md)** *(DONE)* | Integrasi Real Supabase Feed & Mock Betting Flow pada Halaman Predictions | High | `omen/web/app/predictions/page.tsx`, `BettingModal.tsx` |
+| 50 | **[TICKET-50](../tickets/TICKET-50-quests-daily-checkin-api-database-integration.md)** *(DONE)* | Integrasi Real Data & API Mutation pada Halaman Quests & Daily Check-in | High | `omen/web/app/quests/page.tsx`, `DailyCheckinWidget.tsx` |
+| 51 | **[TICKET-51](../tickets/TICKET-51-leaderboard-points-api-database-integration.md)** *(DONE)* | Integrasi Real Leaderboard & Ranking User pada Halaman Leaderboard | Medium | `omen/web/app/leaderboard/page.tsx` |
+| 52 | **[TICKET-52](../tickets/TICKET-52-my-bets-user-history-api-database-integration.md)** *(DONE)* | Integrasi Real User Betting History pada Halaman My Bets | High | `omen/web/app/my-bets/page.tsx` |
+| 53 | **[TICKET-53](../tickets/TICKET-53-admin-quest-api-and-metrics-integration.md)** *(DONE)* | Pembuatan API Route Admin Quests & Integrasi Live Metrics Admin Dashboard | Medium | `omen/web/app/api/admin/quests/route.ts`, `AdminQuestManagementForm.tsx`, `app/admin/page.tsx` |
+| 54 | **[TICKET-54](../tickets/TICKET-54-landing-page-live-statistics-integration.md)** *(DONE)* | Integrasi Live Platform Statistics pada Landing Page | Low | `omen/web/components/landing/StatsOverview.tsx`, `TrendingMarketsTeaser.tsx` |
+
+#### 6. Tahap 6: Live Testnet Activation (Pasca-MVP)
+Aktivasi smart contract on-chain di jaringan Arbitrum Sepolia dan integrasi live wallet browser.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 55 | **[TICKET-55](../tickets/TICKET-55-manual-arbitrum-sepolia-contract-deployment.md)** *(MANUAL)* | Deployment Smart Contract ke Arbitrum Sepolia Testnet & Verifikasi Arbiscan | High | `omen/contracts/.env`, `deploy.ts`, `contracts.ts` |
+| 56 | **[TICKET-56](../tickets/TICKET-56-real-web3-wallet-connection-integration.md)** | Integrasi Real Wagmi Web3 Wallet Connection & Network Switcher | High | `omen/web/components/ConnectWalletButton.tsx`, `NetworkSwitcherModal.tsx` |
+| 57 | **[TICKET-57](../tickets/TICKET-57-real-web3-live-onchain-switch.md)** | Real On-Chain Contract Wiring (Switch Mock Engine ke Live Arbitrum Sepolia) | High | `omen/web/.env.local`, `usePlaceBet.ts`, `useClaimPayout.ts` |
+
 ---
 
 ## 2. Fase 2: Advanced Utilities (Masa Depan)
@@ -99,3 +123,5 @@ Menghubungkan tombol aksi di frontend ke fungsi smart contract testnet dan memva
 2. Automated Price Feed Oracle (integrasi Pyth / Chainlink untuk pasar berbasis harga crypto otomatis).
 3. Leaderboard Prediktor Terbaik (ranking akurasi win-rate terpisah).
 4. Token Reward Claim Engine (konversi poin ke token reward on-chain).
+
+
