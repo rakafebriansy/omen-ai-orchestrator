@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:25:00] - Implementation: TICKET-17 Pembuatan Komponen Tombol Klaim Payout
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
+- **Perubahan:** `[Added]` Mengembangkan komponen tombol aksi penarikan payout hadiah kemenangan `ClaimPayoutButton`:
+  1. `ClaimPayoutButton.tsx`: `[Created]` Membangun komponen tombol klaim hadiah dengan visualisasi nominal reward ETH dinamis (*Claim {amount} ETH*), penanganan state loading transaksi async (*Claiming...*) dengan animasi spinner, serta badge pasif checkmark ketika status payout telah berhasil diklaim (*Claimed ✓*) yang responsif dan theme-aware.
+  2. `claim-button.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 4 pengujian mencakup verifikasi render tombol klaim, transisi state loading async `onClaim`, render badge Claimed, dan perilaku ketika disabled (total 87/87 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/ClaimPayoutButton.tsx`, `omen/web/tests/claim-button.test.tsx`, `nodes/omen/tickets/TICKET-17-payout-claim-button-ui.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:23:00] - Implementation: TICKET-16 Pembuatan Tabel Riwayat Taruhan Pengguna
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
