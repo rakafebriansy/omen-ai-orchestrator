@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 13:58:00] - Implementation: TICKET-11 Pembuatan Halaman Leaderboard Poin
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 7-20 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> buatlah permintaan add commit dan push -> repeat untuk task berikutnya"
+- **Perubahan:** `[Added]` Membangun halaman penuh Points Leaderboard di rute `app/leaderboard/page.tsx`:
+  1. `app/leaderboard/page.tsx`: `[Created]` Memadukan header kompetisi Season 1, kartu ringkasan personal ranking (Rank `#4`, Total Points `52,300 PTS`, Gap to Next Tier `+29,100 PTS to #3`), input pencarian instan filter ENS/0x address dompet, serta integrasi komponen `<LeaderboardTable />` berstandar Web3 institusional yang sepenuhnya responsif dan theme-aware.
+  2. `leaderboard-page.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 3 pengujian mencakup rendering header & 3 kartu personal stats, penyaringan pencarian ENS/address secara real-time, dan delegasi paginasi (total 55/55 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/app/leaderboard/page.tsx`, `omen/web/tests/leaderboard-page.test.tsx`, `nodes/omen/tickets/TICKET-11-points-leaderboard-page.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 13:54:00] - Implementation: TICKET-10 Pembuatan Tabel Ranking Leaderboard Poin
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 7-20 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> buatlah permintaan add commit dan push -> repeat untuk task berikutnya"

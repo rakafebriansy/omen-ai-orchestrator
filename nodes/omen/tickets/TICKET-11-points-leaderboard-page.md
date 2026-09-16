@@ -1,7 +1,7 @@
 ---
 id: TICKET-11
 title: Pembuatan Halaman Leaderboard
-status: Todo
+status: Done
 priority: Medium
 labels: [Frontend, UI]
 ---
@@ -24,9 +24,9 @@ Membangun halaman penuh Leaderboard di `omen/web/app/leaderboard/page.tsx` yang 
    - Integrasi komponen `LeaderboardTable`.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Halaman merender kartu metrik personal dan tabel leaderboard global secara terstruktur.
-- [ ] Tersedia input pencarian untuk menyaring alamat dompet tertentu.
-- [ ] Unit test halaman leaderboard berhasil lulus pengujian Vitest.
+- [x] Halaman merender kartu metrik personal dan tabel leaderboard global secara terstruktur.
+- [x] Tersedia input pencarian untuk menyaring alamat dompet tertentu.
+- [x] Unit test halaman leaderboard berhasil lulus pengujian Vitest.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/app/leaderboard/page.tsx`
@@ -38,5 +38,12 @@ Membangun halaman penuh Leaderboard di `omen/web/app/leaderboard/page.tsx` yang 
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
+  1. Membangun halaman rute `app/leaderboard/page.tsx` dengan header global Season 1, grid 3 kartu ringkasan personal ranking (*Your Current Rank #4, Your Total Points 52,300 PTS, Gap to Next Tier +29,100 PTS*), input pencarian ENS/address live dengan tombol clear, serta integrasi `<LeaderboardTable />`.
+  2. Mengimplementasikan filter query pencarian trader secara seketika berdasarkan kecocokan nama domain ENS atau alamat heksadesimal dompet.
+  3. Menyusun unit test Vitest di `tests/leaderboard-page.test.tsx` dengan 3 pengujian mencakup verifikasi render kartu personal summary, filtering baris tabel saat input diketik, dan fungsi pembersihan search input (total 55/55 tests pass 100%).
+  4. Menjalankan type checking `npx tsc --noEmit` (0 error) dan verifikasi Zero-Comment Policy.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/app/leaderboard/page.tsx` [Created]
+  - `omen/web/tests/leaderboard-page.test.tsx` [Created]
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Dataset leaderboard dihubungkan secara modular dengan komponen `LeaderboardTable`, siap menerima data dinamis dari API route `/api/leaderboard/points` pada tiket backend Fase 2.
