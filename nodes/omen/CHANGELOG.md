@@ -17,6 +17,23 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 15:45:00] - Implementation: Transformasi Admin Dashboard Menjadi Production-Ready
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "buatlah admin dashboard menjadi production ready. list lah apa saja yang belum komplit lalu perbaiki, contoh Create Prediction Market dan belum memiliki form validation, resolve yes no dan cancel di Expired Markets Pending Resolution isi formnya masih sama dan belum detail, dan lain lain"
+- **Perubahan:** `[Updated]` Merombak dan melengkapi seluruh modul Admin Dashboard menjadi *production-ready*:
+  1. `AdminMarketCreateForm.tsx`: Menambahkan sistem validasi inline per-field (judul min 10 karakter, batas waktu masa depan min 1 jam, nominal likuiditas min 0.01 ETH, regex validasi URL oracle), field baru **Resolution Rules & Criteria** (aturan penyelesaian hasil pasar), panel AMM seed calculation preview (YES/NO collateral breakdown, initial 50/50 odds, fee tier 1.0%), modal *Review & Deploy* sebelum siaran ke Arbitrum Sepolia, serta tombol reset form.
+  2. `AdminMarketResolutionTable.tsx`: Membedakan alur modal secara detail dan terspesialisasi:
+     - **Resolve YES**: Banner hijau emerald, kalkulasi pool share YES, verifikasi bukti oracle, konfirmasi finalitas.
+     - **Resolve NO**: Banner merah crimson, kalkulasi pool share NO, verifikasi bukti oracle, konfirmasi finalitas.
+     - **Cancel & Refund**: Banner amber, dropdown wajib **Cancellation Reason Category** (*ORACLE_FAILURE, AMBIGUOUS_CRITERIA, EVENT_CANCELLED, EMERGENCY_SAFEGUARD*), textarea justifikasi rinci, penegasan **pengembalian dana 100% tanpa potongan protocol fee**, dan proteksi konfirmasi ganda.
+     - Penambahan tab filter status (`ALL`, `PENDING`, `RESOLVED`, `CANCELLED`) serta modal *View Resolution Details* untuk melihat riwayat pasar yang telah diselesaikan.
+  3. `AdminQuestManagementForm.tsx`: Menambahkan validasi per-field, opsi *Recurrence Type* (*One-Time, Daily, Weekly*), penghitung statistik completions, serta aksi arsip/hapus quest dengan modal konfirmasi.
+  4. `app/admin/page.tsx`: Sinkronisasi metrik *real-time* (`Total Markets Created`, `Configured Quests`, `Pending Resolutions`), lencana hitungan aktif pada tab navigasi, dan sistem notifikasi toast global.
+  5. Test Suites: Memperbarui dan memperluas unit test di `admin-create-form.test.tsx`, `admin-resolution-table.test.tsx`, `admin-quest-form.test.tsx`, dan `admin-page.test.tsx` (seluruh 127 unit test pada 22 file lulus 100% di Vitest).
+- **Path File:** `omen/web/components/AdminMarketCreateForm.tsx`, `omen/web/components/AdminMarketResolutionTable.tsx`, `omen/web/components/AdminQuestManagementForm.tsx`, `omen/web/app/admin/page.tsx`, `omen/web/tests/admin-create-form.test.tsx`, `omen/web/tests/admin-resolution-table.test.tsx`, `omen/web/tests/admin-quest-form.test.tsx`, `omen/web/tests/admin-page.test.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 15:00:00] - Implementation: Penyempurnaan Desain Admin Login UI & Viewport Centering
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "revisi: 1. admin portal masih bisa scrollable, buat fix letakkan ditengah (tengahnya, tengah dari 100vh - navbar), 2. ui nya ai slop, buatlah lebih clean dan sesuaikan tema seperti di landing"
