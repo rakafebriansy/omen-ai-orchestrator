@@ -106,6 +106,18 @@ Menghubungkan seluruh alur aplikasi frontend dengan basis data Supabase aktif, m
 | 53 | **[TICKET-53](../tickets/TICKET-53-admin-quest-api-and-metrics-integration.md)** *(DONE)* | Pembuatan API Route Admin Quests & Integrasi Live Metrics Admin Dashboard | Medium | `omen/web/app/api/admin/quests/route.ts`, `AdminQuestManagementForm.tsx`, `app/admin/page.tsx` |
 | 54 | **[TICKET-54](../tickets/TICKET-54-landing-page-live-statistics-integration.md)** *(DONE)* | Integrasi Live Platform Statistics pada Landing Page | Low | `omen/web/components/landing/StatsOverview.tsx`, `TrendingMarketsTeaser.tsx` |
 
+#### 5.1 Tahap 5.1: Pembersihan Data Statis & Full Dynamic API Integration
+Menghapus seluruh fallback array statis (hardcoded dummy data) di semua halaman dan komponen, serta mengintegrasikan murni secara dinamis dengan API backend dan Supabase.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 58 | **[TICKET-58](../tickets/TICKET-58-quests-dynamic-data-and-user-profile-integration.md)** *(DONE)* | Integrasi Dynamic Data Supabase & User Profile pada Halaman Quests | High | `omen/web/app/quests/page.tsx`, `DailyCheckinWidget.tsx` |
+| 59 | **[TICKET-59](../tickets/TICKET-59-leaderboard-dynamic-data-and-podium-calculation.md)** *(DONE)* | Integrasi Dynamic Leaderboard & Kalkulasi Podium Real-time dari Supabase | High | `omen/web/app/leaderboard/page.tsx`, `LeaderboardTable.tsx` |
+| 60 | **[TICKET-60](../tickets/TICKET-60-my-bets-dynamic-portfolio-and-metric-calculation.md)** *(DONE)* | Integrasi Dynamic Portfolio My Bets & Kalkulasi Metrik Portofolio Real-time | High | `omen/web/app/my-bets/page.tsx`, `UserBetsTable.tsx` |
+| 61 | **[TICKET-61](../tickets/TICKET-61-predictions-feed-pure-dynamic-loading-and-category-sync.md)** *(DONE)* | Integrasi Pure Dynamic Feed Pasar Prediksi & Sinkronisasi Filter Kategori | High | `omen/web/app/predictions/page.tsx` |
+| 62 | **[TICKET-62](../tickets/TICKET-62-landing-page-teasers-api-sync.md)** *(DONE)* | Integrasi Live API Data pada Trending Markets Teaser dan Quests Teaser Landing Page | Medium | `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `QuestsTeaser.tsx` |
+| 63 | **[TICKET-63](../tickets/TICKET-63-admin-resolution-and-quest-forms-api-sync.md)** *(DONE)* | Integrasi Live API Data pada Admin Market Resolution Table & Quest Management Form | Medium | `omen/web/components/AdminMarketResolutionTable.tsx`, `AdminQuestManagementForm.tsx`, `app/admin/page.tsx` |
+
 #### 6. Tahap 6: Live Testnet Activation (Pasca-MVP)
 Aktivasi smart contract on-chain di jaringan Arbitrum Sepolia dan integrasi live wallet browser.
 

@@ -17,6 +17,25 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 22:10:00] - Implementation: TICKET-58 s/d TICKET-63 Penyempurnaan TDD & Eliminasi Hardcoded Mocks across Web Subsystem
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Audit menyeluruh baris demi baris pada seluruh komponen dan halaman frontend `omen/web` untuk mengeliminasi data mock tiruan/statis (`INITIAL_QUESTS`, `FULL_LEADERBOARD_DATA`, `INITIAL_USER_BETS`, `MOCK_MARKETS`, `DAYS`, `ACTIVE_QUESTS`, `DEFAULT_RESOLVABLE_MARKETS`, `DEFAULT_QUESTS`), menerapkan pendekatan Test-Driven Development (TDD) secara ketat, dan menghubungkan seluruh antarmuka ke backend API Supabase dan Web3 Contract Simulator.
+- **Perubahan:** `[Added/Modified/Deleted]`
+  1. `TICKET-58` (`web/app/quests/page.tsx`, `web/tests/quests-page.test.tsx`): Menghapus `INITIAL_QUESTS` dan nilai poin/streak statis; mengintegrasikan fetching live dari `GET /api/quests?wallet_address=...` serta profil pengguna dari `GET /api/leaderboard/points`, dilengkapi skeleton loader dan empty state.
+  2. `TICKET-59` (`web/components/LeaderboardTable.tsx`, `web/app/leaderboard/page.tsx`, `web/tests/leaderboard-page.test.tsx`): Menghapus `FULL_LEADERBOARD_DATA`, `DEFAULT_LEADERBOARD_ENTRIES`, dan rank statis #4; podium 3 besar dan tabel peringkat dihitung secara dinamis dari live database `GET /api/leaderboard/points`.
+  3. `TICKET-60` (`web/app/my-bets/page.tsx`, `web/tests/my-bets-page.test.tsx`): Menghapus `INITIAL_USER_BETS` dan kalkulasi net return statis; metrik ringkasan portofolio (Total Staked, Total Won, Win Rate, Net Return) dan tabel taruhan pengguna dikalkulasi secara dinamis dari `GET /api/bets?wallet_address=...`.
+  4. `TICKET-61` (`web/app/predictions/page.tsx`, `web/tests/predictions-page.test.tsx`): Menghapus `MOCK_MARKETS`; katalog pasar prediksi diisi secara dinamis dari `GET /api/markets` dengan kalkulasi counter per kategori dan filter pencarian real-time via `MarketCategoryFilter`.
+  5. `TICKET-62` (`web/components/landing/TrendingMarketsTeaser.tsx`, `web/components/landing/QuestsTeaser.tsx`, `web/tests/landing.test.tsx`): Menghapus array statis `MARKETS`, `DAYS`, dan `ACTIVE_QUESTS`; kartu preview pasar tren dan teaser misi pada landing page disinkronkan langsung ke live API.
+  6. `TICKET-63` (`web/components/AdminMarketResolutionTable.tsx`, `web/components/AdminQuestManagementForm.tsx`, `web/app/admin/page.tsx`, `web/tests/admin-*.test.tsx`): Menghapus `DEFAULT_RESOLVABLE_MARKETS` dan `DEFAULT_QUESTS`; tabel resolusi pasar dan form manajemen quest admin disuplai langsung dari live API backend dengan empty state yang bersih.
+  7. Validasi: Seluruh **43 test files (249 unit tests)** di `web` lulus 100%, TypeScript typecheck bersih (`tsc --noEmit` 0 error), dan kepatuhan 100% Zero-Comment Policy pada seluruh codebase.
+- **Path File:** `omen/web/app/quests/page.tsx`, `omen/web/components/LeaderboardTable.tsx`, `omen/web/app/leaderboard/page.tsx`, `omen/web/app/my-bets/page.tsx`, `omen/web/app/predictions/page.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/components/landing/QuestsTeaser.tsx`, `omen/web/components/AdminMarketResolutionTable.tsx`, `omen/web/components/AdminQuestManagementForm.tsx`, `omen/web/app/admin/page.tsx`, `omen/web/tests/*.test.tsx`, `nodes/omen/tickets/TICKET-58-*.md` s/d `TICKET-63-*.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 21:50:00] - Guideline: Mandatory Graphify Utilization & Auto-Generation Standard Sync
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Sinkronisasi pembaruan pedoman global dan SOP eksekusi dari template `ai-orchestrator-template` ke `omen-ai-orchestrator`.
+- **Perubahan:** `[Changed]` Menyelaraskan seluruh pedoman dan SOP Graphify: AI **WAJIB** memakai CLI `graphify query` untuk navigasi kode, pelacakan pemanggil/dependensi, dan penyusunan Implementation Plan di *Path Codebase* (`omen-dir/omen`). Jika direktori `.graphify` TIDAK ditemukan di *Path Codebase*, AI **WAJIB** men-generate-nya terlebih dahulu via `graphify build`. `[Added]` Menegaskan aturan isolasi direktori bahwa folder `.graphify` DILARANG KERAS berada atau dibuat di dalam repositori orchestrator, dan menghapus artefak `.graphify` usang dari root orchestrator.
+- **Path File:** `global-guidelines/coding.md`, `README.md`, `nodes/_template/main.md`, `nodes/_template/CHANGELOG.md`, `nodes/omen/main.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 21:35:00] - Implementation: Resolusi Merge Conflict `feat/backend` ke `main` & Rekonsiliasi API Test Suite
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Resolusi konflik penggabungan antara `origin/main` dan `origin/feat/backend` dengan preservasi seluruh fungsionalitas dan rekonsiliasi pengujian unit backend.
