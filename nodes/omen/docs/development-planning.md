@@ -129,11 +129,130 @@ Aktivasi smart contract on-chain di jaringan Arbitrum Sepolia dan integrasi live
 
 ---
 
-## 2. Fase 2: Advanced Utilities (Masa Depan)
+## 2. Fase V1: Social Belief Market Protocol Transformation
 
-1. Sistem Referral Multiplier (poin berjenjang untuk pengundang dan yang diundang).
-2. Automated Price Feed Oracle (integrasi Pyth / Chainlink untuk pasar berbasis harga crypto otomatis).
-3. Leaderboard Prediktor Terbaik (ranking akurasi win-rate terpisah).
-4. Token Reward Claim Engine (konversi poin ke token reward on-chain).
+Fase V1 mentransformasikan platform OMEN menjadi **Social Belief Market Protocol** terdesentralisasi multi-chain (Ethereum Sepolia + Robinhood Chain Testnet 46630), beralih dari prediksi biner biasa ke pasar keyakinan sosial (AGREE/DISAGREE), orakel deterministik Chainlink, dan konfirmasi kreator EIP-712.
+
+### Strategi Eksekusi V1
+
+```
+[P00: Foundation Refactor (3 Tiket)]
+  │
+  ├──► [P01: Smart Contracts Foundry (5 Tiket)]
+  │
+  ├──► [P02: Frontend Core Beliefs UI (11 Tiket)]
+  │       │
+  │       └──► [P03: Backend API V1 Supabase (10 Tiket)]
+  │
+  ├──► [P03.5: Web3 Wagmi Hooks (2 Tiket)]
+  │
+  ├──► [P04: Oracle Chainlink & Resolution Engine (2 Tiket)]
+  │
+  ├──► [P05: Creator Confirmation EIP-712 (1 Tiket)]
+  │
+  └──► [P06: Robinhood Chain & Dual-Testnet E2E (3 Tiket)]
+```
+
+> 🎨 **Prinsip Desain Visual V1:**
+> Seluruh implementasi tiket UI **WAJIB MEMPERTAHANKAN** tema OpenZeppelin dark mode, palet warna, tipografi, efek glassmorphism, dan komponen UI existing tanpa melakukan rewrite visual dari nol.
+
+---
+
+### Daftar Backlog Tiket V1
+
+#### 1. Phase P00 — Foundation Refactor (Prerequisite)
+Menyesuaikan konfigurasi provider, skema basis data 11 tabel, dan kerangka navigasi layout shell.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 64 | **[TICKET-64](../tickets/TICKET-64-refactor-wagmi-config-multi-chain.md)** | Refactor Wagmi Config & Web3 Providers untuk Ethereum Sepolia dan Robinhood Chain Testnet | High | `omen/web/lib/wagmi.ts`, `providers.tsx`, `NetworkSwitcherModal.tsx` |
+| 65 | **[TICKET-65](../tickets/TICKET-65-database-schema-v1-beliefs-migration.md)** | Migrasi Skema Basis Data Supabase V1 (11 Tabel Arsitektur Social Beliefs) | High | `omen/web/db/migrations/02_v1_belief_schema.sql`, `types/database.ts` |
+| 66 | **[TICKET-66](../tickets/TICKET-66-refactor-navbar-layout-shell-v1.md)** | Refactor Navbar, Footer & Layout Shell Navigasi V1 | High | `omen/web/components/Navbar.tsx`, `Footer.tsx`, `app/layout.tsx` |
+
+#### 2. Phase P01 — Smart Contract Core (Foundry)
+Membangun dan menguji `OmenFactory.sol` dan `OmenMarket.sol` menggunakan Foundry toolkit.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 67 | **[TICKET-67](../tickets/TICKET-67-foundry-initialization-and-multichain-config.md)** | Inisialisasi Lingkungan Foundry & Konfigurasi Multi-Chain | High | `omen/contracts/foundry.toml`, `remappings.txt`, `README.md` |
+| 68 | **[TICKET-68](../tickets/TICKET-68-omen-factory-contract-implementation.md)** | Implementasi Smart Contract OmenFactory.sol | High | `omen/contracts/src/OmenFactory.sol`, `IOmenFactory.sol` |
+| 69 | **[TICKET-69](../tickets/TICKET-69-omen-market-contract-implementation.md)** | Implementasi Smart Contract OmenMarket.sol | High | `omen/contracts/src/OmenMarket.sol`, `IOmenMarket.sol` |
+| 70 | **[TICKET-70](../tickets/TICKET-70-foundry-unit-testing-suite.md)** | Foundry Unit & Invariant Testing Suite untuk OmenFactory dan OmenMarket | High | `omen/contracts/test/OmenFactory.t.sol`, `OmenMarket.t.sol` |
+| 71 | **[TICKET-71](../tickets/TICKET-71-foundry-deployment-script-sepolia-abi-export.md)** | Script Deployment Foundry Ethereum Sepolia & Ekspor Artefak ABI ke Web | High | `omen/contracts/script/DeploySepolia.s.sol`, `web/lib/contracts.ts` |
+
+#### 3. Phase P02 — Frontend Core (Belief-Centric UI)
+Membangun antarmuka pasar keyakinan sosial (Landing, Markets Feed, Market Detail, Position Panel, Beliefs, Creators, Activity, Submit Wizard).
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 72 | **[TICKET-72](../tickets/TICKET-72-redesign-landing-page-social-belief-hero.md)** | Redesign Landing Page dengan Hero Social Belief & Live Market Feeds | High | `omen/web/app/page.tsx`, `HeroSection.tsx`, `StatsOverview.tsx` |
+| 73 | **[TICKET-73](../tickets/TICKET-73-belief-market-card-component.md)** | Pembuatan Komponen BeliefMarketCard (WHO, WHAT, WHEN, CONSENSUS, MONEY) | High | `omen/web/components/BeliefMarketCard.tsx`, `belief-market-card.test.tsx` |
+| 74 | **[TICKET-74](../tickets/TICKET-74-discovery-feed-markets-page.md)** | Pembuatan Halaman Discovery Feed Pasar Keyakinan (/markets) & Tab Filter | High | `omen/web/app/markets/page.tsx`, `DiscoveryFilter.tsx` |
+| 75 | **[TICKET-75](../tickets/TICKET-75-market-detail-multi-panel-page.md)** | Pembuatan Halaman Market Detail Multi-Panel (/market/[id]) | High | `omen/web/app/market/[id]/page.tsx`, `MarketDetailPanels.tsx` |
+| 76 | **[TICKET-76](../tickets/TICKET-76-position-panel-component.md)** | Pembuatan Komponen PositionPanel (AGREE / DISAGREE Inline Flow) | High | `omen/web/components/PositionPanel.tsx`, `position-panel.test.tsx` |
+| 77 | **[TICKET-77](../tickets/TICKET-77-beliefs-feed-page.md)** | Pembuatan Halaman Katalog Beliefs (/beliefs) | Medium | `omen/web/app/beliefs/page.tsx`, `beliefs-page.test.tsx` |
+| 78 | **[TICKET-78](../tickets/TICKET-78-belief-card-component.md)** | Pembuatan Komponen BeliefCard (Compact Belief & Status Badge) | Medium | `omen/web/components/BeliefCard.tsx`, `belief-card.test.tsx` |
+| 79 | **[TICKET-79](../tickets/TICKET-79-creator-profile-page.md)** | Pembuatan Halaman Profil Kreator (/creator/[address]) | Medium | `omen/web/app/creator/[address]/page.tsx`, `CreatorProfileHeader.tsx` |
+| 80 | **[TICKET-80](../tickets/TICKET-80-creators-directory-page.md)** | Pembuatan Halaman Direktori & Ranking Kreator (/creators) | Medium | `omen/web/app/creators/page.tsx`, `CreatorCard.tsx` |
+| 81 | **[TICKET-81](../tickets/TICKET-81-activity-feed-page.md)** | Pembuatan Halaman Feed Aktivitas Publik On-Chain (/activity) | Medium | `omen/web/app/activity/page.tsx`, `ActivityFeed.tsx` |
+| 82 | **[TICKET-82](../tickets/TICKET-82-submit-belief-page-and-form.md)** | Pembuatan Halaman & Formulir Submit Belief 3-Langkah (/create) | High | `omen/web/app/create/page.tsx`, `BeliefSubmitForm.tsx` |
+
+#### 4. Phase P03 — Backend API V1 (Supabase Route Handlers)
+Membangun endpoint API serverless V1 untuk belief extraction, submit, markets feed, positions indexer, creator confirmation, ranking, dan resolution.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 83 | **[TICKET-83](../tickets/TICKET-83-api-beliefs-get-list-and-detail.md)** | Pembuatan API Route Beliefs (GET /api/beliefs & GET /api/beliefs/[id]) | High | `omen/web/app/api/beliefs/route.ts`, `api/beliefs/[id]/route.ts` |
+| 84 | **[TICKET-84](../tickets/TICKET-84-api-beliefs-ai-extract.md)** | Pembuatan API Route Ekstraksi AI Terstruktur (POST /api/beliefs/extract) | High | `omen/web/app/api/beliefs/extract/route.ts`, `openrouter.ts` |
+| 85 | **[TICKET-85](../tickets/TICKET-85-api-beliefs-submit-and-market-creation.md)** | Pembuatan API Route Submit Belief & Trigger On-Chain Market (POST /api/beliefs/submit) | High | `omen/web/app/api/beliefs/submit/route.ts`, `factory-client.ts` |
+| 86 | **[TICKET-86](../tickets/TICKET-86-api-markets-v1-get-feed-and-detail.md)** | Refactor API Route Markets V1 (GET /api/markets & GET /api/markets/[id]) | High | `omen/web/app/api/markets/route.ts`, `api/markets/[id]/route.ts` |
+| 87 | **[TICKET-87](../tickets/TICKET-87-api-markets-positions-indexer-and-history.md)** | Pembuatan API Route Positions Indexer & History (POST /api/markets/[id]/position & GET /api/positions) | High | `omen/web/app/api/markets/[id]/position/route.ts`, `api/positions/route.ts` |
+| 88 | **[TICKET-88](../tickets/TICKET-88-api-creator-confirmation-eip712.md)** | Pembuatan API Route Konfirmasi Kreator EIP-712 (POST /api/beliefs/[id]/confirm) | High | `omen/web/app/api/beliefs/[id]/confirm/route.ts`, `confirmation.ts` |
+| 89 | **[TICKET-89](../tickets/TICKET-89-api-creator-profiles-and-directory.md)** | Pembuatan API Route Profil & Direktori Kreator (GET /api/creators & GET /api/creators/[address]) | Medium | `omen/web/app/api/creators/route.ts`, `api/creators/[address]/route.ts` |
+| 90 | **[TICKET-90](../tickets/TICKET-90-api-activity-feed-public.md)** | Pembuatan API Route Feed Aktivitas Publik On-Chain (GET /api/activity) | Medium | `omen/web/app/api/activity/route.ts`, `api-activity.test.ts` |
+| 91 | **[TICKET-91](../tickets/TICKET-91-api-oracle-price-snapshots.md)** | Pembuatan API Route Snapshot Harga Oracle Chainlink (POST /api/oracle/snapshot) | Medium | `omen/web/app/api/oracle/snapshot/route.ts`, `chainlink.ts` |
+| 92 | **[TICKET-92](../tickets/TICKET-92-api-market-resolution-v1.md)** | Refactor API Route Resolusi Pasar V1 (POST /api/markets/[id]/resolve) | High | `omen/web/app/api/markets/[id]/resolve/route.ts`, `resolution-helper.ts` |
+
+#### 5. Phase P03.5 — Web3 Hooks V1
+Menyusun custom hooks Wagmi & Viem untuk wiring frontend dengan smart contract `OmenMarket` dan `OmenFactory`.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 93 | **[TICKET-93](../tickets/TICKET-93-web3-hooks-position-claim-market.md)** | Pembuatan Web3 Wagmi Hooks (usePosition, useClaim, useMarket) | High | `omen/web/hooks/usePosition.ts`, `useClaim.ts`, `useMarket.ts` |
+| 94 | **[TICKET-94](../tickets/TICKET-94-web3-hook-admin-create-market.md)** | Pembuatan Web3 Wagmi Hook (useCreateMarket untuk OmenFactory) | Medium | `omen/web/hooks/useCreateMarket.ts`, `use-create-market.test.ts` |
+
+#### 6. Phase P04 — Oracle Integration (Chainlink)
+Integrasi Chainlink Data Feeds dan engine penyelesaian pasar otomatis berbasis data harga on-chain.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 95 | **[TICKET-95](../tickets/TICKET-95-chainlink-oracle-price-feed-reader.md)** | Integrasi Chainlink Oracle Price Feed Reader (ETH/USD, BTC/USD, SOL/USD) | High | `omen/contracts/src/interfaces/IChainlinkFeed.sol`, `web/lib/oracle/chainlink.ts` |
+| 96 | **[TICKET-96](../tickets/TICKET-96-market-resolution-engine-oracle.md)** | Implementasi Market Resolution Engine Berbasis Data Oracle Otomatis | High | `omen/web/lib/market/resolution-engine.ts`, `resolution-engine.test.ts` |
+
+#### 7. Phase P05 — Creator Confirmation (EIP-712)
+Alur konfirmasi keyakinan resmi oleh kreator via tanda tangan kriptografis gasless.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 97 | **[TICKET-97](../tickets/TICKET-97-creator-confirmation-flow-ui-and-hook.md)** | Pembuatan Komponen & Hook Konfirmasi Kreator EIP-712 (CreatorConfirmation UI) | Medium | `omen/web/components/CreatorConfirmation.tsx`, `hooks/useCreatorConfirm.ts` |
+
+#### 8. Phase P06 — Robinhood Chain & Multi-Chain E2E Validation
+Deployment smart contract ke Robinhood Chain Testnet (46630), pengujian E2E siklus penuh, dan checklist peluncuran.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 98 | **[TICKET-98](../tickets/TICKET-98-deploy-contracts-robinhood-chain-testnet.md)** | Deployment Smart Contract ke Robinhood Chain Testnet (Chain ID 46630) | High | `omen/contracts/script/DeployRobinhood.s.sol`, `web/lib/contracts.ts` |
+| 99 | **[TICKET-99](../tickets/TICKET-99-dual-testnet-e2e-validation.md)** | Validasi Siklus Hidup Penuh End-to-End pada Dual Testnet (Sepolia & Robinhood Chain) | High | `omen/web/tests/e2e/belief-market-cycle.test.tsx`, `dual-chain-workflow.test.ts` |
+| 100 | **[TICKET-100](../tickets/TICKET-100-environment-variables-and-trust-checklist.md)** | Konfigurasi Environment Variables Lengkap & Verifikasi Trust Checklist Peluncuran Publik | High | `omen/web/.env.example`, `omen/contracts/.env.example`, `omen/web/README.md` |
+
+---
+
+## 3. Fase Masa Depan (Post-V1)
+
+1. Sistem Referral Multiplier & Social Sharing Rewards.
+2. Cross-chain Bridge & Liquidity Aggregation.
+3. Creator DAO Tokenization & Revenue Share Engine.
+4. Autonomous Social Bot Scrapers & Live Stream Integrations.
+
 
 

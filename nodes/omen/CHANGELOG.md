@@ -17,6 +17,23 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 06:55:00] - Development Planning: OMEN V1 Social Belief Market Transformation (TICKET-64 s/d TICKET-100)
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Transformasi fundamental produk dari *Points/Quest Farming Dashboard* menjadi *Social Belief Market Protocol* multi-chain (Ethereum Sepolia & Robinhood Chain Testnet 46630) berbasis `update-brief-1.md` dan `implementation_plan.md`.
+- **Perubahan:** `[Added/Updated]`
+  1. **Pembuatan 37 Tiket V1 (`nodes/omen/tickets/TICKET-64-*.md` s/d `TICKET-100-*.md`):**
+     - **Phase P00 (Foundation Refactor):** `TICKET-64` (Wagmi Multi-Chain Sepolia & Robinhood), `TICKET-65` (Database Schema V1 11 Tabel), `TICKET-66` (Navbar & Shell Navigasi V1).
+     - **Phase P01 (Smart Contract Core):** `TICKET-67` (Foundry Setup & Multi-Chain), `TICKET-68` (`OmenFactory.sol`), `TICKET-69` (`OmenMarket.sol`), `TICKET-70` (Foundry Unit & Invariant Test Suite), `TICKET-71` (Foundry Deploy Script Sepolia & ABI Export).
+     - **Phase P02 (Frontend Core Beliefs UI):** `TICKET-72` (Landing Page Social Belief), `TICKET-73` (`BeliefMarketCard`), `TICKET-74` (Discovery Feed `/markets`), `TICKET-75` (Market Detail Multi-Panel `/market/[id]`), `TICKET-76` (`PositionPanel` AGREE/DISAGREE), `TICKET-77` (Beliefs Feed `/beliefs`), `TICKET-78` (`BeliefCard`), `TICKET-79` (Creator Profile `/creator/[address]`), `TICKET-80` (Creators Directory `/creators`), `TICKET-81` (Activity Feed `/activity`), `TICKET-82` (Submit Belief 3-Step Wizard `/create`).
+     - **Phase P03 (Backend API V1):** `TICKET-83` (`GET /api/beliefs`), `TICKET-84` (`POST /api/beliefs/extract` AI OpenRouter), `TICKET-85` (`POST /api/beliefs/submit` on-chain factory trigger), `TICKET-86` (`GET /api/markets`), `TICKET-87` (`POST /api/markets/[id]/position` & `GET /api/positions`), `TICKET-88` (`POST /api/beliefs/[id]/confirm` EIP-712), `TICKET-89` (`GET /api/creators`), `TICKET-90` (`GET /api/activity`), `TICKET-91` (`POST /api/oracle/snapshot`), `TICKET-92` (`POST /api/markets/[id]/resolve` V1 outcomes).
+     - **Phase P03.5 (Web3 Hooks V1):** `TICKET-93` (`usePosition`, `useClaim`, `useMarket`), `TICKET-94` (`useCreateMarket`).
+     - **Phase P04 (Oracle Chainlink):** `TICKET-95` (Chainlink Price Feed Reader), `TICKET-96` (Market Resolution Engine).
+     - **Phase P05 (Creator Confirmation):** `TICKET-97` (`CreatorConfirmation` UI & `useCreatorConfirm` EIP-712 Hook).
+     - **Phase P06 (Robinhood Chain & E2E Validation):** `TICKET-98` (Deployment Robinhood Testnet 46630), `TICKET-99` (Dual-Testnet Full Cycle E2E), `TICKET-100` (Environment Variables & Trust Checklist Final).
+  2. **Preservasi Style UI:** Setiap tiket komponen/antarmuka visual secara eksplisit memuat instruksi proteksi style: tema OpenZeppelin dark mode, palet warna, tipografi, efek glassmorphism, dan komponen UI existing **WAJIB DIPERTAHANKAN**.
+  3. **Pemutakhiran Roadmap:** Memperbarui `nodes/omen/docs/development-planning.md` dengan penambahan tabel backlog lengkap Fase V1 (P00 s/d P06).
+- **Path File:** `nodes/omen/tickets/TICKET-64-*.md` s/d `TICKET-100-*.md`, `nodes/omen/docs/development-planning.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 22:10:00] - Implementation: TICKET-58 s/d TICKET-63 Penyempurnaan TDD & Eliminasi Hardcoded Mocks across Web Subsystem
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Audit menyeluruh baris demi baris pada seluruh komponen dan halaman frontend `omen/web` untuk mengeliminasi data mock tiruan/statis (`INITIAL_QUESTS`, `FULL_LEADERBOARD_DATA`, `INITIAL_USER_BETS`, `MOCK_MARKETS`, `DAYS`, `ACTIVE_QUESTS`, `DEFAULT_RESOLVABLE_MARKETS`, `DEFAULT_QUESTS`), menerapkan pendekatan Test-Driven Development (TDD) secara ketat, dan menghubungkan seluruh antarmuka ke backend API Supabase dan Web3 Contract Simulator.
