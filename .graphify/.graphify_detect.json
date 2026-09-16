@@ -2,6 +2,7 @@
   "files": {
     "code": [],
     "document": [
+      ".graphify/GRAPH_REPORT.md",
       "README.md",
       "global-docs/LEARN.md",
       "global-docs/design-system.md",
@@ -99,15 +100,15 @@
     "image": [],
     "video": []
   },
-  "total_files": 92,
-  "total_words": 41203,
+  "total_files": 93,
+  "total_words": 43476,
   "needs_graph": false,
-  "warning": "Corpus is ~41,203 words - fits in a single context window. You may not need a graph.",
+  "warning": "Corpus is ~43,476 words - fits in a single context window. You may not need a graph.",
   "skipped_sensitive": [],
   "graphifyignore_patterns": 0,
   "git": {
     "source_owner": "git",
-    "source_hash": "459b711d1d6b5cc6be4c315dc41dce3b5ba6a3f2",
+    "source_hash": "e9b5501ba71c75a4f3320958192e2254436b5ba4",
     "branches": [
       "main"
     ],
@@ -120,10 +121,10 @@
     "source": "default-auto",
     "root": ".",
     "git_root": ".",
-    "head": "459b711d1d6b5cc6be4c315dc41dce3b5ba6a3f2",
-    "candidate_count": 101,
-    "included_count": 92,
-    "excluded_untracked_count": 8,
+    "head": "e9b5501ba71c75a4f3320958192e2254436b5ba4",
+    "candidate_count": 109,
+    "included_count": 93,
+    "excluded_untracked_count": 0,
     "excluded_ignored_count": 0,
     "excluded_sensitive_count": 0,
     "missing_committed_count": 0,

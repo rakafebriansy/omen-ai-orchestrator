@@ -17,6 +17,17 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 13:27:00] - Implementation: TICKET-05 Pembuatan Komponen Tombol Connect Wallet
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan TICKET-05-connect-wallet-button-ui.md"
+- **Perubahan:** `[Added]` Membangun komponen UI tombol dompet Web3 `ConnectWalletButton` dan mengintegrasikannya ke dalam layout header navigasi:
+  1. `ConnectWalletButton.tsx`: `[Created]` Mengembangkan komponen interaktif dengan 3 status (Disconnected, Connecting, Connected), representasi visual saldo ETH (`0.45 ETH`), chip alamat terpotong (`0x1234...5678`) dengan green status pulse dot, menu dropdown interaktif (Copy Address dengan feedback sementara "Copied!" 2s, View on Explorer ke Arbiscan Sepolia, Disconnect), outside-click listener, dan kelengkapan WAI-ARIA accessibility (`aria-haspopup`, `aria-expanded`, `aria-label`).
+  2. `Navbar.tsx`: `[Updated]` Mengintegrasikan komponen `ConnectWalletButton` pada baris navigasi desktop dan drawer navigasi mobile menggantikan tombol statis.
+  3. `wallet-button.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 8 pengujian mencakup seluruh transisi status, interaksi dropdown, clipboard copy, link explorer, dan event disconnect (total 32/32 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy terverifikasi.
+- **Path File:** `omen/web/components/ConnectWalletButton.tsx`, `omen/web/components/Navbar.tsx`, `omen/web/tests/wallet-button.test.tsx`, `nodes/omen/tickets/TICKET-05-connect-wallet-button-ui.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 13:18:00] - Guideline: Pembuatan Prompt Logo Aplikasi Omen & Pembaruan Retrospective Slop
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "dari omen-ai-orchestrator dan omen-dir buatlah prompt untuk logo aplikasi. prompt saja"

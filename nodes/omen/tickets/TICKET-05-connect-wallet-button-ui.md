@@ -1,7 +1,7 @@
 ---
 id: TICKET-05
 title: Pembuatan Komponen Tombol Connect Wallet
-status: Todo
+status: Done
 priority: High
 labels: [Frontend, UI, Web3]
 ---
@@ -29,14 +29,15 @@ Membangun komponen antarmuka tombol `ConnectWalletButton` di `omen/web/component
    - Opsi 3: "Disconnect" dengan teks merah `text-no-red hover:bg-no-red-soft`.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Tombol merender teks 'Connect Wallet' saat belum terhubung.
-- [ ] Menampilkan format alamat terpotong (0x12...34) dan saldo saat terhubung.
-- [ ] Dropdown menu interaktif dapat dibuka dan ditutup dengan opsi Copy Address dan Disconnect.
-- [ ] Dilengkapi atribut aksesibilitas ARIA labels (`aria-haspopup`, `aria-expanded`).
-- [ ] Unit test komponen ConnectWalletButton lulus pengujian Vitest.
+- [x] Tombol merender teks 'Connect Wallet' saat belum terhubung.
+- [x] Menampilkan format alamat terpotong (0x12...34) dan saldo saat terhubung.
+- [x] Dropdown menu interaktif dapat dibuka dan ditutup dengan opsi Copy Address dan Disconnect.
+- [x] Dilengkapi atribut aksesibilitas ARIA labels (`aria-haspopup`, `aria-expanded`).
+- [x] Unit test komponen ConnectWalletButton lulus pengujian Vitest.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/components/ConnectWalletButton.tsx`
+- `omen/web/components/Navbar.tsx`
 - `omen/web/tests/wallet-button.test.tsx`
 
 ---
@@ -45,5 +46,15 @@ Membangun komponen antarmuka tombol `ConnectWalletButton` di `omen/web/component
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
+  1. Membuat komponen `ConnectWalletButton.tsx` dengan dukungan 3 status koneksi (`disconnected`, `connecting`, `connected`), alamat terpotong EVM, saldo ETH, dan dropdown menu interaktif.
+  2. Mengimplementasikan fitur interaktif dropdown: tombol "Copy Address" dengan indikator feedback "Copied!" selama 2 detik via `navigator.clipboard`, tautan "View on Explorer" ke Arbiscan Sepolia, opsi "Disconnect", serta outside-click listener untuk menutup dropdown.
+  3. Memasang atribut aksesibilitas WAI-ARIA lengkap (`aria-haspopup="menu"`, `aria-expanded`, `aria-label`, `role="menu"`, `role="menuitem"`).
+  4. Mengintegrasikan `ConnectWalletButton` ke dalam `Navbar.tsx` (menggantikan tombol statis pada tampilan desktop maupun drawer navigasi mobile).
+  5. Membuat test suite komprehensif `tests/wallet-button.test.tsx` mencakup 8 unit tests yang menguji seluruh transisi status, interaksi dropdown, clipboard copy, dan pemutusan koneksi.
+  6. Memverifikasi seluruh pengujian (32/32 tests pass 100%), type check TypeScript lulus tanpa error (`npx tsc --noEmit`), serta kepatuhan mutlak terhadap Zero-Comment Policy.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/components/ConnectWalletButton.tsx` [Created]
+  - `omen/web/components/Navbar.tsx` [Modified]
+  - `omen/web/tests/wallet-button.test.tsx` [Created]
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Komponen dirancang sebagai pure UI mock state component yang theme-aware (`useTheme`), siap untuk diintegrasikan dengan wagmi/viem provider pada tiket integrasi Web3 lanjutan tanpa memerlukan refactoring tata letak atau aksesibilitas.
