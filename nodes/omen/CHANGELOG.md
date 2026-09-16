@@ -17,6 +17,26 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 17:46:00] - Implementation: Pembuatan API Route Verifikasi Quest
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-28 (Pembuatan API Route Verifikasi Quest)
+- **Perubahan:** `[Added]` Mengembangkan Next.js serverless route handler `POST /api/quests/[id]/complete` dan pengujian otomatis verifikasi misi:
+  1. `app/api/quests/[id]/complete/route.ts`: Membuat endpoint verifikasi penyelesaian misi dengan ekstraksi parameter asynchronous `await context.params`, validasi format EVM address, verifikasi status aktif quest (`is_active: true`), proteksi pencegahan klaim ganda berbasis audit log `points_events`, penambahan total poin pengguna, dan pencatatan riwayat transaksi poin ke database Supabase.
+  2. `tests/api-quest-complete.test.ts`: Menyusun unit test suite Vitest (8 skenario uji: validasi payload, 404 quest tidak ditemukan, 400 quest non-aktif, 404 user tidak ditemukan, 400 proteksi double claim, 200 klaim sukses, penanganan error 500, dan Zero-Comment Policy). Seluruh 28 test file lulus 100% (167 tests pass).
+- **Path File:** `omen/web/app/api/quests/[id]/complete/route.ts`, `omen/web/tests/api-quest-complete.test.ts`, `nodes/omen/tickets/TICKET-28-api-quest-completion-verification.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 17:45:00] - Implementation: Script Deployment Testnet dan Ekspor ABI
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-38 (Script Deployment Testnet dan Ekspor ABI)
+- **Perubahan:** `[Added]` Mengembangkan script deployment otomatis testnet Arbitrum Sepolia dan mekanisme ekspor artefak ABI kontrak ke lingkungan Next.js web:
+  1. `omen/contracts/scripts/deploy.ts`: Membangun script migrasi on-chain untuk deploy smart contract `PredictionMarket.sol`, konfirmasi receipt deployment, dan pembuatan petunjuk verifikasi Arbiscan Sepolia.
+  2. `omen/web/lib/contracts.ts`: Menyediakan konfigurasi kontrak frontend dengan contract address fallback ke `NEXT_PUBLIC_PREDICTION_MARKET_ADDRESS`, chain ID 421614, serta deklarasi ABI `as const` untuk *compile-time type safety* Wagmi hooks.
+  3. `omen/web/contracts/PredictionMarket.json`: Menyediakan artefak JSON ABI kontrak untuk interoperabilitas tooling Web3 eksternal.
+  4. `omen/contracts/README.md`: Menyusun dokumentasi lengkap prasyarat, instalasi, konfigurasi `.env`, eksekusi unit test, deployment testnet, dan verifikasi smart contract.
+  5. Validasi: Eksekusi deployment lokal berhasil 100%, type check `npx tsc --noEmit` bersih pada kedua package, dan unit test web 127/127 lulus.
+- **Path File:** `omen/contracts/scripts/deploy.ts`, `omen/contracts/README.md`, `omen/web/lib/contracts.ts`, `omen/web/contracts/PredictionMarket.json`, `nodes/omen/tickets/TICKET-38-testnet-deployment-abi-export.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-16 17:43:00] - Implementation: Pembuatan API Route Daftar Quest
 > **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-27 (Pembuatan API Route Daftar Quest)
