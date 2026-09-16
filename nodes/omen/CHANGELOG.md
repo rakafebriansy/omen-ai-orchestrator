@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:47:00] - Implementation: Integrasi Betting Confirmation Modal pada Pasar Prediksi
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "pada bet predictions, saat pilih yes no beri confirmation modal"
+- **Perubahan:** `[Added/Updated]` Mengintegrasikan dialog modal konfirmasi taruhan `BettingModal` pada halaman feed pasar prediksi `app/predictions/page.tsx`:
+  1. `app/predictions/page.tsx`: `[Updated]` Menghubungkan klik tombol "Bet YES" / "Bet NO" pada komponen `<MarketCard />` ke state `BettingModal`, menyajikan antarmuka konfirmasi peninjauan odds, input nominal ETH, estimasi kalkulasi payout / ROI, serta handler konfirmasi pendaftaran posisi taruhan dengan status feedback yang informatif.
+  2. `predictions-page.test.tsx`: `[Updated]` Memperbarui test suite 6 unit test untuk memvalidasi interaksi pembukaan dialog modal saat klik Bet YES / Bet NO, verifikasi heading pasar dalam dialog, eksekusi konfirmasi taruhan, dan penutupan modal (total 115/115 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/app/predictions/page.tsx`, `omen/web/tests/predictions-page.test.tsx`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:37:00] - Implementation: TICKET-22 Pembuatan Halaman Admin Dashboard
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
