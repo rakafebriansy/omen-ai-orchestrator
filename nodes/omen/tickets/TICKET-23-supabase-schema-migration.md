@@ -1,7 +1,7 @@
 ---
 id: TICKET-23
 title: Skema Basis Data Supabase Migration
-status: Todo
+status: Done
 priority: High
 labels: [Backend, Database]
 ---
@@ -54,9 +54,9 @@ Membuat berkas migrasi SQL lengkap di `omen/web/db/migrations/01_init_schema.sql
    - `created_at TIMESTAMPTZ NOT NULL DEFAULT now()`
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Seluruh 5 tabel utama terdefinisi lengkap dengan constraints, default values, dan foreign keys.
-- [ ] Semua kolom waktu menggunakan tipe data TIMESTAMPTZ sesuai pedoman database.
-- [ ] Indeks performa dibuat untuk kolom query kritis (wallet_address, contract_market_id, status).
+- [x] Seluruh 5 tabel utama terdefinisi lengkap dengan constraints, default values, dan foreign keys.
+- [x] Semua kolom waktu menggunakan tipe data TIMESTAMPTZ sesuai pedoman database.
+- [x] Indeks performa dibuat untuk kolom query kritis (wallet_address, contract_market_id, status).
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/db/migrations/01_init_schema.sql`
@@ -67,5 +67,15 @@ Membuat berkas migrasi SQL lengkap di `omen/web/db/migrations/01_init_schema.sql
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
+  1. Merancang dan menulis berkas migrasi SQL `omen/web/db/migrations/01_init_schema.sql` yang mendefinisikan 5 tabel utama (`users`, `quests`, `points_events`, `markets`, `bets`), ekstensi `pgcrypto`, relasi Foreign Keys, default values (`gen_random_uuid()`, `now()`), Check constraints domain, serta 10 indeks performa.
+  2. Mematuhi Zero-Comment Policy secara mutlak dengan memastikan tidak ada komentar SQL (`--` atau `/* */`) pada berkas migrasi.
+  3. Memastikan semua kolom datetime (`created_at`, `deadline`, `last_checkin_at`) menggunakan tipe data `TIMESTAMPTZ` (UTC netral waktu) sesuai pedoman arsitektur basis data.
+  4. Menulis unit test integritas skema dan validasi Zero-Comment Policy di `omen/web/tests/api-schema.test.ts`.
+  5. Memvalidasi eksekusi pengujian `npm run test` (23 test files, 135 tests pass 100%) dan verifikasi type checking `npx tsc --noEmit` bersih tanpa error.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/db/migrations/01_init_schema.sql` (Created)
+  - `omen/web/tests/api-schema.test.ts` (Created)
+  - `nodes/omen/tickets/TICKET-23-supabase-schema-migration.md` (Updated)
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Tipe data waktu menggunakan `TIMESTAMPTZ` untuk mematuhi Opsi 2 pada `global-guidelines/database.md`.
+  - Indeks performa dibuat tidak hanya untuk kueri kritis utama (`wallet_address`, `contract_market_id`, `status`), melainkan juga untuk `total_points DESC` guna mengoptimalkan query leaderboard TICKET-29.

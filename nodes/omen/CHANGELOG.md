@@ -17,6 +17,14 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 17:07:00] - Implementation: Skema Basis Data Supabase Migration
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-23 (Skema Basis Data Supabase Migration)
+- **Perubahan:** `[Added]` Menginisialisasi skema basis data PostgreSQL Supabase untuk platform Omen:
+  1. `db/migrations/01_init_schema.sql`: Membuat berkas migrasi SQL lengkap yang mendefinisikan ekstensi `pgcrypto`, 5 tabel utama (`users`, `quests`, `points_events`, `markets`, `bets`), UUID primary keys dengan default `gen_random_uuid()`, standarisasi zona waktu UTC pada tipe `TIMESTAMPTZ`, integritas referensial Foreign Keys, enum domain check constraints, dan 10 indeks performa kueri kritis. Mematuhi Zero-Comment Policy secara mutlak.
+  2. `tests/api-schema.test.ts`: Menyusun unit test suite komprehensif (8 skenario uji) untuk memvalidasi keberadaan migrasi, kepatuhan Zero-Comment Policy, definisi 5 tabel, kolom waktu `TIMESTAMPTZ`, constraints, dan indeks performa. Seluruh 23 file test lulus 100% (135 tests pass).
+- **Path File:** `omen/web/db/migrations/01_init_schema.sql`, `omen/web/tests/api-schema.test.ts`, `nodes/omen/tickets/TICKET-23-supabase-schema-migration.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 15:45:00] - Implementation: Transformasi Admin Dashboard Menjadi Production-Ready
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "buatlah admin dashboard menjadi production ready. list lah apa saja yang belum komplit lalu perbaiki, contoh Create Prediction Market dan belum memiliki form validation, resolve yes no dan cancel di Expired Markets Pending Resolution isi formnya masih sama dan belum detail, dan lain lain"
