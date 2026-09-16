@@ -17,6 +17,18 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:15:00] - Implementation: TICKET-45 Integrasi Logo Resmi Omen pada Navbar, Footer, dan Shell Branding
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
+- **Perubahan:** `[Added/Modified]` Mengintegrasikan visual logo resmi Omen (`/images/logo.png`) ke seluruh shell branding platform:
+  1. `Navbar.tsx`: `[Modified]` Mengganti placeholder simbol teks "Ω" dengan komponen Next.js `<Image src="/images/logo.png" alt="Omen Logo" width={32} height={32} />` dengan prioritas render tinggi (*priority*) untuk mencegah pergeseran tata letak (*zero CLS*).
+  2. `Footer.tsx`: `[Modified]` Memperbarui logo brand mark di footer aplikasi menggunakan aset logo resmi Omen 28x28px.
+  3. `layout.tsx`: `[Modified]` Menambahkan metadata icon favicon merujuk ke `/images/logo.png`.
+  4. `navbar.test.tsx` & `footer.test.tsx`: `[Modified]` Menyelaraskan test suite untuk memvalidasi render elemen brand image logo resmi Omen (total 65/65 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/Navbar.tsx`, `omen/web/components/Footer.tsx`, `omen/web/app/layout.tsx`, `omen/web/tests/navbar.test.tsx`, `omen/web/tests/footer.test.tsx`, `nodes/omen/tickets/TICKET-45-integrate-omen-brand-logo.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:12:00] - Implementation: TICKET-13 Pembuatan Komponen Kartu Pasar Prediksi
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
