@@ -49,6 +49,7 @@ Fokus pada antarmuka visual, interaktivitas komponen, palet tema OpenZeppelin, d
 | 20 | **[TICKET-20](../tickets/TICKET-20-admin-quest-management-form-ui.md)** | Pembuatan Form Admin Manajemen Quest | Medium | `omen/web/components/AdminQuestManagementForm.tsx` |
 | 21 | **[TICKET-21](../tickets/TICKET-21-admin-market-resolution-ui.md)** | Pembuatan Interface Admin Resolusi Pasar Prediksi | Medium | `omen/web/components/AdminMarketResolutionTable.tsx` |
 | 22 | **[TICKET-22](../tickets/TICKET-22-admin-dashboard-page.md)** | Pembuatan Halaman Admin Dashboard | Medium | `omen/web/app/admin/page.tsx` |
+| 45 | **[TICKET-45](../tickets/TICKET-45-integrate-omen-brand-logo.md)** | Integrasi Logo Resmi Omen pada Navbar, Footer, dan Shell Branding | Medium | `omen/web/components/Navbar.tsx`, `Footer.tsx` |
 
 #### 2. Tahap 2: Backend Engine dan Basis Data (Off-Chain)
 Membangun skema tabel persistensi di Supabase dan Route Handlers API per fungsionalitas tunggal.

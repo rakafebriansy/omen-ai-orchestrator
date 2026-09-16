@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/logo.png" alt="Omen Protocol Logo" width="140" />
+</p>
+
 # Local Tickets Directory (`tickets/`) — Omen
 
 Direktori ini berfungsi sebagai pusat komando atau sumber kebenaran (*source of truth*) lokal untuk manajemen tugas node **Omen**.

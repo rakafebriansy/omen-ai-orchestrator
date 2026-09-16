@@ -1,7 +1,7 @@
 ---
 id: TICKET-10
 title: Pembuatan Tabel Ranking Leaderboard Poin
-status: Todo
+status: Done
 priority: Medium
 labels: [Frontend, UI]
 ---
@@ -28,10 +28,10 @@ Membangun komponen tabel peringkat `LeaderboardTable` di `omen/web/components/Le
    - Tombol navigasi Previous dan Next dengan indikator halaman aktif.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Tabel merender header kolom dan baris data dengan penataan rapi.
-- [ ] Visual podium 1-3 tampil dengan badge warna khusus.
-- [ ] Baris pengguna yang sedang terhubung mendapat highlight visual yang jelas.
-- [ ] Unit test komponen LeaderboardTable lulus pengujian Vitest.
+- [x] Tabel merender header kolom dan baris data dengan penataan rapi.
+- [x] Visual podium 1-3 tampil dengan badge warna khusus.
+- [x] Baris pengguna yang sedang terhubung mendapat highlight visual yang jelas.
+- [x] Unit test komponen LeaderboardTable lulus pengujian Vitest.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/components/LeaderboardTable.tsx`
@@ -43,5 +43,13 @@ Membangun komponen tabel peringkat `LeaderboardTable` di `omen/web/components/Le
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
+  1. Membuat komponen tabel peringkat `LeaderboardTable.tsx` dengan dukungan podium 1-3 (*Gold, Silver, Bronze badges*), avatar inisial/ENS name, badge streak harian, multiplier, dan total poin terakumulasi.
+  2. Mengimplementasikan penandaan kontras pada baris akun pengguna aktif (`isCurrentUser`) dengan highlight `bg-primary-blue/15 border-l-4 border-l-primary-blue` dan badge "YOU".
+  3. Membangun kontrol baris paginasi bawah (*Previous/Next*) dengan indikator hitungan halaman dan batas slicing data.
+  4. Menyusun test suite `tests/leaderboard-table.test.tsx` dengan 4 unit tests Vitest mencakup verifikasi render tabel, styling podium, highlight current user, dan navigasi paginasi (total 52/52 tests pass 100%).
+  5. Menjalankan type checking `npx tsc --noEmit` (0 error) dan verifikasi Zero-Comment Policy.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/components/LeaderboardTable.tsx` [Created]
+  - `omen/web/tests/leaderboard-table.test.tsx` [Created]
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Tabel dirancang menerima data array `LeaderboardEntry[]` via props sehingga langsung kompatibel dengan endpoint leaderboard API `/api/leaderboard` pada tiket backend Fase 2.
