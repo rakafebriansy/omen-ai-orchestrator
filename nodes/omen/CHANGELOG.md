@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 18:03:00] - Implementation: Pembuatan API Route Simpan Pasar Baru
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-31 (Pembuatan API Route Simpan Pasar Baru)
+- **Perubahan:** `[Added]` Mengembangkan Next.js serverless route handler `POST /api/markets` dan pengujian otomatis pembuatan pasar prediksi:
+  1. `web/app/api/markets/route.ts`: Menyediakan endpoint `POST` khusus admin untuk menyimpan metadata pasar prediksi baru pasca pembuatan on-chain. Mendukung otorisasi melalui `x-admin-key`, `Authorization: Bearer <key>`, dan `x-admin-wallet`. Memvalidasi integritas data payload (`contract_market_id`, `title`, `deadline`, `category`, `description`), mencegah duplikasi ID dengan HTTP 409 Conflict, dan menyimpan ke Supabase via admin client.
+  2. `web/tests/api-markets-create.test.ts`: Menyusun unit test suite Vitest (10 skenario pengujian: otorisasi key, token, wallet, unauthorized rejection 401, payload validation 400, duplicate conflict 409, database error handling 500, dan Zero-Comment Policy). Seluruh 31 test files lulus 100% (187 unit tests pass).
+- **Path File:** `omen/web/app/api/markets/route.ts`, `omen/web/tests/api-markets-create.test.ts`, `nodes/omen/tickets/TICKET-31-api-markets-post-create.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-16 18:01:00] - Implementation: Pembuatan API Route Katalog Pasar
 > **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-30 (Pembuatan API Route Katalog Pasar)
