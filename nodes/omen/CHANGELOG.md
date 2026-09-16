@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 18:18:00] - Implementation: Integrasi Transaksi Admin Resolusi Pasar
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-43 (Integrasi Transaksi Admin Resolusi Pasar)
+- **Perubahan:** `[Added/Modified]` Integrasi Web3 Wagmi transaction hook `useAdminResolveMarket` ke dalam tabel resolusi admin `AdminMarketResolutionTable`:
+  1. `web/hooks/useAdminResolveMarket.ts`: Menghubungkan fungsi on-chain `resolveMarket(marketId, result)` (untuk YES/NO) dan `cancelMarket(marketId)` (untuk pembatalan & 100% refund) via Wagmi `useWriteContract`, `useWaitForTransactionReceipt`, `useAccount`, serta sinkronisasi status ke Supabase backend via `POST /api/markets/[id]/resolve`.
+  2. `web/components/AdminMarketResolutionTable.tsx`: Mengintegrasikan `useAdminResolveMarket` ke dalam konfirmasi resolusi modal (`handleConfirmResolution`) dengan preservasi callback `onResolveMarket`.
+  3. `web/tests/admin-resolve-market.test.ts`: Unit test suite memvalidasi pemanggilan `resolveMarket` YES/NO, `cancelMarket`, dan sinkronisasi endpoint `/resolve`.
+- **Path File:** `omen/web/hooks/useAdminResolveMarket.ts`, `omen/web/components/AdminMarketResolutionTable.tsx`, `omen/web/tests/admin-resolve-market.test.ts`, `nodes/omen/tickets/TICKET-43-admin-resolve-market-wiring.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 18:14:00] - Implementation: Integrasi Transaksi Admin Pembuatan Pasar
 > **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-42 (Integrasi Transaksi Admin Pembuatan Pasar)
