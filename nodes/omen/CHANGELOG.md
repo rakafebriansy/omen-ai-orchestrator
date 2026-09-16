@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 21:35:00] - Implementation: Resolusi Merge Conflict `feat/backend` ke `main` & Rekonsiliasi API Test Suite
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Resolusi konflik penggabungan antara `origin/main` dan `origin/feat/backend` dengan preservasi seluruh fungsionalitas dan rekonsiliasi pengujian unit backend.
+- **Perubahan:** `[Merged/Reconciled]` Penggabungan branch `feat/backend` ke dalam `main`:
+  1. Integrasi API Handlers: Menyelaraskan seluruh route handler `web/app/api/` (`wallet/connect`, `checkin`, `quests`, `quests/[id]/complete`, `leaderboard/points`, `markets`, `markets/[id]/resolve`, `bets`, `bets/index`) dengan penanganan error ketat, validasi EVM address, dan kompatibilitas Supabase v2.
+  2. Integrasi Test Suites: Mengimpor dan mengaktifkan 12 test suite backend (`api-*.test.ts`) dari `feat/backend`.
+  3. Validasi Lengkap: Seluruh **43 test files (244 unit tests)** di `web` lulus 100%, **19 unit tests** di `contracts` lulus 100%, TypeScript typecheck bersih (0 error), dan 100% Zero-Comment Policy terpenuhi.
+- **Path File:** `omen/web/app/api/`, `omen/web/tests/api-*.test.ts`, `omen/web/db/migrations/01_init_schema.sql`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 21:11:00] - Implementation: TICKET-54 Integrasi Live Platform Statistics pada Landing Page
 > **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-54 (Integrasi Live Platform Statistics pada Landing Page)
