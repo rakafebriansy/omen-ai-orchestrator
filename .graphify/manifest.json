@@ -148,12 +148,12 @@
     "hash": "f143fd2014b0f3a96cd23ea973c6460b"
   },
   "nodes/omen/CHANGELOG.md": {
-    "mtime": 1789540010738.1206,
-    "hash": "043d8d71587e00a98d0cd9d844ac1b46"
+    "mtime": 1789557282516.0732,
+    "hash": "7e0eee6c5bee20d0c0688457d86207f1"
   },
   "nodes/omen/docs/development-planning.md": {
-    "mtime": 1789483811994.7463,
-    "hash": "06c1fa913a7c1defac2a8cc42842678f"
+    "mtime": 1789541756984.8762,
+    "hash": "8c2c8c51c78da2087082aa67391a9a95"
   },
   "nodes/omen/docs/diagrams/README.md": {
     "mtime": 1789473942404.1545,
@@ -188,8 +188,8 @@
     "hash": "52607e753f42a8d5b7b9c436b15436d0"
   },
   "nodes/omen/tickets/README.md": {
-    "mtime": 1789487932804.3604,
-    "hash": "ed22b43fb53cdefba1c9e53bcb38d2ac"
+    "mtime": 1789541690032.822,
+    "hash": "c44f449cd3ffc6c9bb577270be0ffd43"
   },
   "nodes/omen/tickets/TICKET-01-setup-nextjs-tailwind-theme.md": {
     "mtime": 1789487932803.9294,
@@ -212,152 +212,152 @@
     "hash": "b6bb143bc98717233af6481c30447023"
   },
   "nodes/omen/tickets/TICKET-06-network-switcher-dialog-ui.md": {
-    "mtime": 1789487948415.7969,
-    "hash": "f70db8b2bbb956f6db362121162fb1c8"
+    "mtime": 1789540646507.0754,
+    "hash": "02c35add0ae09f41f8d99326dd85cbe9"
   },
   "nodes/omen/tickets/TICKET-07-daily-checkin-widget-ui.md": {
-    "mtime": 1789487948413.6055,
-    "hash": "2df65b72c634157f1c107c6ecd68bac7"
+    "mtime": 1789540979871.9014,
+    "hash": "ff530e94c98148f620eb05cc34606863"
   },
   "nodes/omen/tickets/TICKET-08-quest-list-cards-ui.md": {
-    "mtime": 1789487948415.2202,
-    "hash": "749ec2aa840e3fc3f4988599ca7d3790"
+    "mtime": 1789541330242.2893,
+    "hash": "77508379c14a5b88b53fca05f22ae105"
   },
   "nodes/omen/tickets/TICKET-09-quests-farming-page.md": {
-    "mtime": 1789487948415.729,
-    "hash": "764d7ce37aabb6abd627e646d38d92fe"
+    "mtime": 1789541484664.034,
+    "hash": "04a6c505887a1d419e77b166b48bfa28"
   },
   "nodes/omen/tickets/TICKET-10-points-leaderboard-table-ui.md": {
-    "mtime": 1789487948414.8735,
-    "hash": "74260511e1d793c61985922977e3cf9a"
+    "mtime": 1789541621576.7124,
+    "hash": "dd79b0f263bcc0322a4ac7c0e2115f10"
   },
   "nodes/omen/tickets/TICKET-11-points-leaderboard-page.md": {
-    "mtime": 1789487948413.7466,
-    "hash": "7982cf6681a713f4fa2f8d9201807b2b"
+    "mtime": 1789541896301.5037,
+    "hash": "22e6ea2550c1f84647c1fc332c8f1cd1"
   },
   "nodes/omen/tickets/TICKET-12-market-category-filter-ui.md": {
-    "mtime": 1789487948416.079,
-    "hash": "e6765c8d0b57a6974b8df4a45dfe905b"
+    "mtime": 1789542111103.278,
+    "hash": "462dc3095d371dc3d6df1d62eaa7d5e9"
   },
   "nodes/omen/tickets/TICKET-13-prediction-market-card-ui.md": {
-    "mtime": 1789487948415.4426,
-    "hash": "49fa1000f1a5464aa606cac3cbae66c8"
+    "mtime": 1789542728999.197,
+    "hash": "40b59ebfd86c628ec2d452603ee63449"
   },
   "nodes/omen/tickets/TICKET-14-prediction-markets-feed-page.md": {
-    "mtime": 1789487948416.1492,
-    "hash": "1b41d63fd085923a676c8e5ca629a1fc"
+    "mtime": 1789543054426.885,
+    "hash": "8038cd7e432f7f5f40b0be0479d90a41"
   },
   "nodes/omen/tickets/TICKET-15-betting-modal-dialog-ui.md": {
-    "mtime": 1789487948413.3716,
-    "hash": "d615c4dc49851b89286f27beb33192a5"
+    "mtime": 1789543192899.9485,
+    "hash": "2334a7deefeeeb5c5f8a7c797a650fa6"
   },
   "nodes/omen/tickets/TICKET-16-user-bets-table-ui.md": {
-    "mtime": 1789487948413.451,
-    "hash": "3f8fafa4fee0cd886493bafe7e1d6694"
+    "mtime": 1789543352309.9766,
+    "hash": "41adfa21edbccbdbdc77a450b49c9f84"
   },
   "nodes/omen/tickets/TICKET-17-payout-claim-button-ui.md": {
-    "mtime": 1789487948415.0837,
-    "hash": "b136ca05536222486d9a3aa61ef5117c"
+    "mtime": 1789543525948.5737,
+    "hash": "4785a140108d2d190c1628ea49466906"
   },
   "nodes/omen/tickets/TICKET-18-my-bets-page.md": {
-    "mtime": 1789487948414.5425,
-    "hash": "e9c2b1f6d2eeafe9ea40daa62760cf4e"
+    "mtime": 1789543674444.1045,
+    "hash": "66a8ad6ea506ea63b1055de43caa272d"
   },
   "nodes/omen/tickets/TICKET-19-admin-market-create-form-ui.md": {
-    "mtime": 1789487948415.3652,
-    "hash": "177b891eee389057228d2eac49eb7d4f"
+    "mtime": 1789543807815.1682,
+    "hash": "480d79f025344e67e03a3d20f79e36c5"
   },
   "nodes/omen/tickets/TICKET-20-admin-quest-management-form-ui.md": {
-    "mtime": 1789487948415.2854,
-    "hash": "5769e71339a179b3b3192b70c3219761"
+    "mtime": 1789543962208.1042,
+    "hash": "5f3a7e3015b2f58981d138e61803f362"
   },
   "nodes/omen/tickets/TICKET-21-admin-market-resolution-ui.md": {
-    "mtime": 1789487948413.529,
-    "hash": "539ff10aaa9e31eca829004ee2235a75"
+    "mtime": 1789544110466.238,
+    "hash": "460792973897c3b2711b8cd9cc127c94"
   },
   "nodes/omen/tickets/TICKET-22-admin-dashboard-page.md": {
-    "mtime": 1789487948416.016,
-    "hash": "88bb15377017ed33e6d036b596216500"
+    "mtime": 1789544230757.5327,
+    "hash": "2940316f3a190eb996be31f29a13cadc"
   },
   "nodes/omen/tickets/TICKET-23-supabase-schema-migration.md": {
-    "mtime": 1789487948414.1025,
-    "hash": "c36cabea7da305cc1e92c7c6c835330f"
+    "mtime": 1789553247798.176,
+    "hash": "9a091743292c1489edd0354a4d209942"
   },
   "nodes/omen/tickets/TICKET-24-supabase-database-client-helper.md": {
-    "mtime": 1789487948414.1675,
-    "hash": "8a25f5a2abcfce8a3fc71b1a69ea2f39"
+    "mtime": 1789553431796.2976,
+    "hash": "2331a401740402221206c3227264a675"
   },
   "nodes/omen/tickets/TICKET-25-api-wallet-connect-upsert.md": {
-    "mtime": 1789487948413.679,
-    "hash": "011e533d7998b6d044c357795ff0f0c3"
+    "mtime": 1789555148130.0688,
+    "hash": "14ed2327b1cbbb938444b54822e72961"
   },
   "nodes/omen/tickets/TICKET-26-api-daily-checkin-streak.md": {
-    "mtime": 1789487948415.0193,
-    "hash": "bafa5dd9561eb74347a2b3831d06679c"
+    "mtime": 1789555264871.599,
+    "hash": "0966af5eb2db034b4ef69ee2812fb56b"
   },
   "nodes/omen/tickets/TICKET-27-api-quests-list.md": {
-    "mtime": 1789487948414.6084,
-    "hash": "f1bbc037cec475d217594a9e482b8f87"
+    "mtime": 1789555375124.5894,
+    "hash": "b7962b5755546480359a07f7018ae6f8"
   },
   "nodes/omen/tickets/TICKET-28-api-quest-completion-verification.md": {
-    "mtime": 1789487948414.67,
-    "hash": "455bfd7f3e35fc557dbb36617f0f71e8"
+    "mtime": 1789555556242.8735,
+    "hash": "6374acc8dc57fe59fc41f36336a554bc"
   },
   "nodes/omen/tickets/TICKET-29-api-points-leaderboard.md": {
-    "mtime": 1789487948415.6616,
-    "hash": "43dd05fe4d408e2c465d7297a296cb89"
+    "mtime": 1789555823460.748,
+    "hash": "ea369b639783c3fcf6958703255fc76e"
   },
   "nodes/omen/tickets/TICKET-30-api-markets-get-feed.md": {
-    "mtime": 1789487948413.8855,
-    "hash": "a561297f36e5702ba8b99f2d16894f93"
+    "mtime": 1789556441941.5083,
+    "hash": "6e685ef85a40a97f0e30a32f82d3eb20"
   },
   "nodes/omen/tickets/TICKET-31-api-markets-post-create.md": {
-    "mtime": 1789487948414.9556,
-    "hash": "9691abfe317792c4b40396dd8938f463"
+    "mtime": 1789556575432.737,
+    "hash": "a40fa55772f68529a22bee3fd0cff3a2"
   },
   "nodes/omen/tickets/TICKET-32-api-markets-resolve-status.md": {
-    "mtime": 1789487948415.9275,
-    "hash": "59f970055bda029a750be00fcca77298"
+    "mtime": 1789556699197.2705,
+    "hash": "056a86abffffe2c12d22a7a032ceff13"
   },
   "nodes/omen/tickets/TICKET-33-api-user-bets-get.md": {
-    "mtime": 1789487948413.8147,
-    "hash": "ea47aed4d4349211d3c71f9323a3c3ad"
+    "mtime": 1789556906837.401,
+    "hash": "e79d6f454075b23558fe83e61e0aeda2"
   },
   "nodes/omen/tickets/TICKET-34-api-bets-indexer.md": {
-    "mtime": 1789487948414.405,
-    "hash": "50f47f9859fe4fb436bcec4549429502"
+    "mtime": 1789557069677.8845,
+    "hash": "ea9d193a64ffe89a8bb6b736373e53c6"
   },
   "nodes/omen/tickets/TICKET-35-hardhat-setup-arbitrum-sepolia.md": {
-    "mtime": 1789487948415.5356,
-    "hash": "51197fde31670115f95d4328e4f682db"
+    "mtime": 1789553487064.4646,
+    "hash": "ab075011ad4541f875037c88f2cf0cdf"
   },
   "nodes/omen/tickets/TICKET-36-prediction-market-contract-implementation.md": {
-    "mtime": 1789487948413.9583,
-    "hash": "9e5fea5744a3de07bbabe119bd1507ed"
+    "mtime": 1789555096330.008,
+    "hash": "e2dccafa18e5959b8a892b7580c25896"
   },
   "nodes/omen/tickets/TICKET-37-hardhat-contract-unit-testing.md": {
-    "mtime": 1789487948414.806,
-    "hash": "e547bdf6147192f23befe7a4f801dafd"
+    "mtime": 1789555349571.8396,
+    "hash": "6baec04b6d77956a47f9d49d84960241"
   },
   "nodes/omen/tickets/TICKET-38-testnet-deployment-abi-export.md": {
-    "mtime": 1789487948414.2307,
-    "hash": "d76b6f75f5f8dda0b592f37da66cc2f4"
+    "mtime": 1789555544014.6868,
+    "hash": "148fec5d6e7acd64024715c87dbe59a4"
   },
   "nodes/omen/tickets/TICKET-39-web3-provider-wagmi-integration.md": {
-    "mtime": 1789487948415.5986,
-    "hash": "b7ab6a34114fa3cbf74ed09ce12647b3"
+    "mtime": 1789556090151.1616,
+    "hash": "cb9e71b8c7bc0d41859d2b2c78deb5e8"
   },
   "nodes/omen/tickets/TICKET-40-web3-betting-transaction-wiring.md": {
-    "mtime": 1789487948415.8633,
-    "hash": "1c8db726eab27c5d366314d1555aad7e"
+    "mtime": 1789556608949.9453,
+    "hash": "50bf0e4a1f5198fab330ccebf389bd32"
   },
   "nodes/omen/tickets/TICKET-41-web3-claim-payout-wiring.md": {
-    "mtime": 1789487948415.1519,
-    "hash": "38bb4a56b27f7264982263e730a2e4fa"
+    "mtime": 1789556845496.509,
+    "hash": "4294fe6a4a901cdfd9f65360f60efb84"
   },
   "nodes/omen/tickets/TICKET-42-admin-create-market-wiring.md": {
-    "mtime": 1789487948414.3042,
-    "hash": "37136950ec2ca4580a7c111ce3e2005c"
+    "mtime": 1789557273527.146,
+    "hash": "47ea1ef9afaa77562be0873661da6827"
   },
   "nodes/omen/tickets/TICKET-43-admin-resolve-market-wiring.md": {
     "mtime": 1789487948414.026,
@@ -368,7 +368,19 @@
     "hash": "60ed6577960f388c50c4324c6fb2ae0f"
   },
   ".graphify/GRAPH_REPORT.md": {
-    "mtime": 1789537011933.1797,
-    "hash": "b34a4d2821c4eea932e29c32269cba10"
+    "mtime": 1789540020423.987,
+    "hash": "a2ac7ee6db6cb376d358dfaa0ce680be"
+  },
+  "nodes/omen/tickets/TICKET-45-integrate-omen-brand-logo.md": {
+    "mtime": 1789542929109.0742,
+    "hash": "75a8b9ee2519b456a13c3db5e580de93"
+  },
+  "nodes/omen/assets/logo.png": {
+    "mtime": 1789541684298.5828,
+    "hash": "aee1c04e105706a20f662a053f68eb92"
+  },
+  "nodes/omen/tickets/assets/logo.png": {
+    "mtime": 1789541684294.0217,
+    "hash": "aee1c04e105706a20f662a053f68eb92"
   }
 }

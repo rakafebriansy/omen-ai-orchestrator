@@ -94,21 +94,25 @@
       "nodes/omen/tickets/TICKET-41-web3-claim-payout-wiring.md",
       "nodes/omen/tickets/TICKET-42-admin-create-market-wiring.md",
       "nodes/omen/tickets/TICKET-43-admin-resolve-market-wiring.md",
-      "nodes/omen/tickets/TICKET-44-testnet-e2e-browser-validation.md"
+      "nodes/omen/tickets/TICKET-44-testnet-e2e-browser-validation.md",
+      "nodes/omen/tickets/TICKET-45-integrate-omen-brand-logo.md"
     ],
     "paper": [],
-    "image": [],
+    "image": [
+      "nodes/omen/assets/logo.png",
+      "nodes/omen/tickets/assets/logo.png"
+    ],
     "video": []
   },
-  "total_files": 93,
-  "total_words": 43476,
-  "needs_graph": false,
-  "warning": "Corpus is ~43,476 words - fits in a single context window. You may not need a graph.",
+  "total_files": 96,
+  "total_words": 79044,
+  "needs_graph": true,
+  "warning": null,
   "skipped_sensitive": [],
   "graphifyignore_patterns": 0,
   "git": {
     "source_owner": "git",
-    "source_hash": "e9b5501ba71c75a4f3320958192e2254436b5ba4",
+    "source_hash": "e1710648bc91ea7ef8fdb3a036374d13ac1f3b2d",
     "branches": [
       "main"
     ],
@@ -121,9 +125,9 @@
     "source": "default-auto",
     "root": ".",
     "git_root": ".",
-    "head": "e9b5501ba71c75a4f3320958192e2254436b5ba4",
-    "candidate_count": 109,
-    "included_count": 93,
+    "head": "e1710648bc91ea7ef8fdb3a036374d13ac1f3b2d",
+    "candidate_count": 112,
+    "included_count": 96,
     "excluded_untracked_count": 0,
     "excluded_ignored_count": 0,
     "excluded_sensitive_count": 0,
