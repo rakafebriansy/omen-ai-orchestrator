@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 18:11:00] - Implementation: Pembuatan API Route Indexer Taruhan
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-34 (Pembuatan API Route Indexer Taruhan)
+- **Perubahan:** `[Added]` Mengembangkan Next.js serverless route handler `POST /api/bets/index` dan pengujian otomatis indexer event taruhan on-chain:
+  1. `web/app/api/bets/index/route.ts`: Menyediakan endpoint `POST` untuk mengindeks event penempatan taruhan Web3 dari blockchain ke basis data Supabase. Memvalidasi payload (`tx_hash`, `contract_market_id`, `wallet_address`, `side`, `amount`), mencegah duplikasi transaksi dengan HTTP 409 Conflict, mencatat transaksi ke tabel `bets`, memperbarui pool likuiditas pasar di tabel `markets`, dan memberikan reward 50 poin aktivitas ke `points_events` serta `users.total_points`.
+  2. `web/tests/api-bets-index.test.ts`: Menyusun unit test suite Vitest (8 skenario pengujian: pengindeksan side Yes dan No, kalkulasi pembaruan pool pasar, reward poin, proteksi duplikasi tx_hash 409, validasi data 400, penanganan pasar tidak ditemukan 404, error database 500, dan Zero-Comment Policy). Seluruh 34 test files lulus 100% (209 unit tests pass).
+- **Path File:** `omen/web/app/api/bets/index/route.ts`, `omen/web/tests/api-bets-index.test.ts`, `nodes/omen/tickets/TICKET-34-api-bets-indexer.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-16 18:08:00] - Implementation: Pembuatan API Route Riwayat Taruhan
 > **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-33 (Pembuatan API Route Riwayat Taruhan)
