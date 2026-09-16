@@ -17,6 +17,24 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 17:43:00] - Implementation: Pembuatan API Route Daftar Quest
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-27 (Pembuatan API Route Daftar Quest)
+- **Perubahan:** `[Added]` Mengembangkan Next.js serverless route handler `GET /api/quests` dan pengujian otomatis katalog misi gamifikasi:
+  1. `app/api/quests/route.ts`: Membuat endpoint katalog quest dengan memfilter hanya quest aktif (`is_active = true`), mendukung parameter opsional `wallet_address` untuk mencocokkan riwayat audit di tabel `points_events`, serta memetakan status boolean `is_completed` secara efisien dengan O(1) in-memory Set.
+  2. `tests/api-quests.test.ts`: Menyusun unit test suite Vitest (4 skenario uji: fetch publik tanpa wallet, pencocokan status is_completed dengan wallet, penanganan error database 500, dan Zero-Comment Policy). Seluruh 27 test file lulus 100% (160 tests pass).
+- **Path File:** `omen/web/app/api/quests/route.ts`, `omen/web/tests/api-quests.test.ts`, `nodes/omen/tickets/TICKET-27-api-quests-list.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-16 17:42:00] - Implementation: Unit Testing Hardhat PredictionMarket.sol
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-37 (Unit Testing Hardhat PredictionMarket.sol)
+- **Perubahan:** `[Added]` Membangun unit test suite komprehensif smart contract `PredictionMarket.sol` di `omen/contracts/test/PredictionMarket.test.ts`:
+  1. `PredictionMarket.test.ts`: Menyusun 19 skenario pengujian komprehensif (Market Creation, Betting Lifecycle, Market Resolution, Proportional Payout Claims YES, Proportional Payout Claims NO, Emergency Cancellation & 100% Refunds, serta Edge Cases & View Helpers).
+  2. Cakupan Uji: Memverifikasi matematika odds, pembagian pool proporsional multi-bettor, verifikasi pertambahan saldo Native ETH menggunakan `changeEtherBalance`, proteksi akses `onlyOwner`, perlindungan pencegahan klaim ganda, dan kepatuhan mutlak terhadap Zero-Comment Policy.
+  3. Validasi: Menjalankan eksekusi `npx hardhat test` dengan hasil 19 passing (100% lulus), verifikasi type check `npx tsc --noEmit` lolos, dan suite vitest web `omen/web` 127/127 lulus.
+- **Path File:** `omen/contracts/test/PredictionMarket.test.ts`, `nodes/omen/tickets/TICKET-37-hardhat-contract-unit-testing.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-16 17:41:00] - Implementation: Pembuatan API Route Daily Check-in Streak
 > **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-26 (Pembuatan API Route Daily Check-in Streak)
