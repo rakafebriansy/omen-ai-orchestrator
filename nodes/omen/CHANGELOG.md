@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 18:05:00] - Implementation: Pembuatan API Route Pembaruan Status Pasar
+> **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-32 (Pembuatan API Route Pembaruan Status Pasar)
+- **Perubahan:** `[Added]` Mengembangkan Next.js serverless route handler `POST /api/markets/[id]/resolve` dan pengujian otomatis pembaruan status resolusi pasar:
+  1. `web/app/api/markets/[id]/resolve/route.ts`: Menyediakan endpoint `POST` untuk resolusi pasar prediksi dengan dukungan status `resolved_yes`, `resolved_no`, dan `cancelled`. Dilengkapi otorisasi admin (`x-admin-key`, `Authorization: Bearer`, `x-admin-wallet`), resolusi ID dinamis (UUID atau `contract_market_id`), pembaruan `resolution_source`, dan proteksi status (menolak perubahan jika pasar sudah tidak `active`).
+  2. `web/tests/api-markets-resolve.test.ts`: Menyusun unit test suite Vitest (8 skenario pengujian: resolusi yes/no/cancelled, lookup ID numeric, unauthorized 401, status invalid 400, not found 404, anti-double resolve 400, DB error 500, dan Zero-Comment Policy). Seluruh 32 test files lulus 100% (195 unit tests pass).
+- **Path File:** `omen/web/app/api/markets/[id]/resolve/route.ts`, `omen/web/tests/api-markets-resolve.test.ts`, `nodes/omen/tickets/TICKET-32-api-markets-resolve-status.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-16 18:04:00] - Implementation: Integrasi Transaksi Taruhan pada Betting Modal
 > **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-40 (Integrasi Transaksi Taruhan pada Betting Modal)
