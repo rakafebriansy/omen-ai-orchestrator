@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 18:04:00] - Implementation: Integrasi Transaksi Taruhan pada Betting Modal
+> **Trigger:** Autonomous Planning | **Branch:** `feat/contracts` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-40 (Integrasi Transaksi Taruhan pada Betting Modal)
+- **Perubahan:** `[Added/Modified]` Integrasi Web3 Wagmi transaction hook `usePlaceBet` ke dalam dialog modal `BettingModal`:
+  1. `web/hooks/usePlaceBet.ts`: Menghubungkan fungsi on-chain `placeBet(marketId, side)` via Wagmi `useWriteContract`, `useWaitForTransactionReceipt`, `useAccount`, dan Viem `parseEther`. Mengakomodasi sinkronisasi off-chain database via `POST /api/bets/index` saat transaksi on-chain terkonfirmasi, serta context guard untuk unit test isolation.
+  2. `web/components/BettingModal.tsx`: Memanggil `usePlaceBet` dengan fallback backward compatibility saat `onConfirmBet` disediakan eksternal, dilengkapi state visual loading pada tombol transaksi.
+  3. `web/tests/use-place-bet.test.ts`: Unit test suite memvalidasi parsing wei, parameter address dan ABI, serta penanganan error penolakan wallet.
+- **Path File:** `omen/web/hooks/usePlaceBet.ts`, `omen/web/components/BettingModal.tsx`, `omen/web/tests/use-place-bet.test.ts`, `nodes/omen/tickets/TICKET-40-web3-betting-transaction-wiring.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-16 18:03:00] - Implementation: Pembuatan API Route Simpan Pasar Baru
 > **Trigger:** Autonomous Planning | **Branch:** `feat/backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-31 (Pembuatan API Route Simpan Pasar Baru)
