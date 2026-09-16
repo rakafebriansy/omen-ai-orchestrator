@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-16 14:12:00] - Implementation: TICKET-13 Pembuatan Komponen Kartu Pasar Prediksi
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "kerjakan ticket 13 sampai 45 dikerjakan secara paralel oleh 3 ai agent berbeda -> AGENT 1: Frontend & UI Specialist"
+- **Perubahan:** `[Added]` Mengembangkan komponen kartu pasar prediksi `MarketCard`:
+  1. `MarketCard.tsx`: `[Created]` Membangun komponen kartu pasar prediksi berstandar Web3 dengan badge kategori semantik (*CRYPTO, MEME, L2, dsb.*), live status pulse (*Active, Closing Soon, Resolved*), countdown timer waktu penutupan pasar (*Ends in Xd Yh*), dual progress bar persentase odds Yes/No dwi-warna, metrik likuiditas total pool & volume, serta tombol aksi cepat pemilihan posisi dua arah (*Bet YES / Bet NO*) yang responsif dan theme-aware.
+  2. `market-card.test.tsx`: `[Created]` Menyusun test suite unit testing Vitest 5 pengujian mencakup verifikasi rendering elemen detail kartu, eksekusi tombol taruhan YES dan NO, status countdown closing-soon, dan tampilan banner settled outcome ketika pasar resolved (total 65/65 tests pass 100% pada suite Vitest). Kepatuhan mutlak Zero-Comment Policy dan type check TypeScript terverifikasi.
+- **Path File:** `omen/web/components/MarketCard.tsx`, `omen/web/tests/market-card.test.tsx`, `nodes/omen/tickets/TICKET-13-prediction-market-card-ui.md`, `nodes/omen/CHANGELOG.md`
+
+
+
 ### [2026-09-16 14:02:00] - Implementation: TICKET-12 Pembuatan Komponen Filter Kategori Pasar Prediksi
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "kerjakan ticket 7-20 dengan workflow: buat implementation plan -> saya proceed -> kerjakan -> testing -> linter -> beritahu informasi terkait apa yang diubah untuk saya cek manual -> buatlah permintaan add commit dan push -> repeat untuk task berikutnya"
