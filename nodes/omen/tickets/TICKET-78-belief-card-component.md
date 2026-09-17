@@ -1,7 +1,7 @@
 ---
 id: TICKET-78
 title: Pembuatan Komponen BeliefCard (Compact Belief & Status Badge)
-status: Todo
+status: Done
 priority: Medium
 labels: [Frontend, UI, Component]
 ---
@@ -21,12 +21,12 @@ Elemen-elemen kartu:
 > Style kartu — border halus dengan warna netral gelap, badge pill berwarna tegas, font sizing teks pernyataan, dan efek hover glow — **WAJIB DIPERTAHANKAN** sesuai design system yang berlaku di OMEN.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Mengimplementasikan komponen `BeliefCard.tsx` di `omen/web/components/BeliefCard.tsx`.
-- [ ] Menampilkan author handle, statement, dan link ke sumber asli.
-- [ ] Merender badge status verifikasi (`AI DETECTED` / `CONFIRMED`) dan confidence badge.
-- [ ] Menyediakan tombol navigasi kondisional ke detail pasar jika market_id tersedia.
-- [ ] Mempertahankan style UI, warna, dan tema OpenZeppelin dark mode existing.
-- [ ] Menyusun unit test pada `web/tests/belief-card.test.tsx` dan memastikan lulus 100% dengan Zero-Comment Policy.
+- [x] Mengimplementasikan komponen `BeliefCard.tsx` di `omen/web/components/BeliefCard.tsx`.
+- [x] Menampilkan author handle, statement, dan link ke sumber asli.
+- [x] Merender badge status verifikasi (`AI DETECTED` / `CONFIRMED`) dan confidence badge.
+- [x] Menyediakan tombol navigasi kondisional ke detail pasar jika market_id tersedia.
+- [x] Mempertahankan style UI, warna, dan tema OpenZeppelin dark mode existing.
+- [x] Menyusun unit test pada `web/tests/belief-card.test.tsx` dan memastikan lulus 100% dengan Zero-Comment Policy.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/components/BeliefCard.tsx`
@@ -35,9 +35,13 @@ Elemen-elemen kartu:
 ---
 
 ## AI Execution Log dan Output
-*⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
-
 - **Langkah Teknis Tereksekusi:**
-  1. ...
+  1. Menulis unit test komprehensif `omen/web/tests/belief-card.test.tsx` untuk pengujian rendering profil author, pernyataan keyakinan, badge verifikasi & confidence AI, tautan sumber eksternal, dan aksi kondisional View/Create Market.
+  2. Mengimplementasikan komponen `omen/web/components/BeliefCard.tsx` dengan preservasi styling OpenZeppelin dark mode, metadata chips, dan transisi hover.
+  3. Memvalidasi dengan Vitest (`npx vitest run tests/belief-card.test.tsx` -> 5/5 passing 100%) dan ESLint (`npx eslint components/BeliefCard.tsx tests/belief-card.test.tsx` -> 0 errors / 0 warnings).
+  4. Menerapkan 100% Zero-Comment Policy pada seluruh berkas kode.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/components/BeliefCard.tsx`
+  - `omen/web/tests/belief-card.test.tsx`
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Menyediakan fallback aksi dinamis: jika `marketId` telah terbit, tautan langsung mengarah ke `/market/[id]`, jika belum, tombol memanggil handler atau navigasi pembuatan pasar `/create`.

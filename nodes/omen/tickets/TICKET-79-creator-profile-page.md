@@ -1,7 +1,7 @@
 ---
 id: TICKET-79
 title: Pembuatan Halaman Profil Kreator (/creator/[address])
-status: Todo
+status: Done
 priority: Medium
 labels: [Frontend, UI, Page]
 ---
@@ -25,13 +25,13 @@ Informasi yang disajikan:
 > Tata letak header profil, kartu metrik reputasi, tab navigasi rekam jejak, badge persentase akurasi, dan perenderan daftar kartu **WAJIB DIPERTAHANKAN** sesuai standar estetika antarmuka OMEN.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Mengimplementasikan halaman `app/creator/[address]/page.tsx`.
-- [ ] Mengambil data profil dan agregasi statistik dari `GET /api/creators/[address]`.
-- [ ] Menampilkan kartu metrik: Total Beliefs, Confirmation Rate, Accuracy Rate, dan Total Volume Generated.
-- [ ] Menyediakan tab navigasi untuk melihat `Active Beliefs` dan `Resolved Beliefs`.
-- [ ] Menghubungkan setiap belief ke halaman detail pasarnya.
-- [ ] Mempertahankan style UI, warna, dan tema OpenZeppelin dark mode existing.
-- [ ] Menyusun unit test pada `web/tests/creator-profile-page.test.tsx` dan memastikan lulus 100% dengan Zero-Comment Policy.
+- [x] Mengimplementasikan halaman `app/creator/[address]/page.tsx`.
+- [x] Mengambil data profil dan agregasi statistik dari `GET /api/creators/[address]`.
+- [x] Menampilkan kartu metrik: Total Beliefs, Confirmation Rate, Accuracy Rate, dan Total Volume Generated.
+- [x] Menyediakan tab navigasi untuk melihat `Active Beliefs` dan `Resolved Beliefs`.
+- [x] Menghubungkan setiap belief ke halaman detail pasarnya.
+- [x] Mempertahankan style UI, warna, dan tema OpenZeppelin dark mode existing.
+- [x] Menyusun unit test pada `web/tests/creator-profile-page.test.tsx` dan memastikan lulus 100% dengan Zero-Comment Policy.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/app/creator/[address]/page.tsx`
@@ -41,9 +41,14 @@ Informasi yang disajikan:
 ---
 
 ## AI Execution Log dan Output
-*⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
-
 - **Langkah Teknis Tereksekusi:**
-  1. ...
+  1. Menulis unit test komprehensif `omen/web/tests/creator-profile-page.test.tsx` untuk pengujian header kreator, 4 metrik reputasi sosial on-chain, switching tab rekam jejak (`Active Beliefs`, `Resolved Beliefs`, `All Origins`), dan integrasi kartu belief.
+  2. Mengimplementasikan komponen `omen/web/components/CreatorProfileHeader.tsx` dan halaman dinamis `omen/web/app/creator/[address]/page.tsx` dengan penanganan asinkron parameter route, tema OpenZeppelin dark mode, lencana EIP-712 terverifikasi, dan navigasi detail pasar.
+  3. Memvalidasi dengan Vitest (`npx vitest run tests/creator-profile-page.test.tsx` -> 2/2 passing 100%) dan ESLint (`npx eslint "app/creator/[address]/page.tsx" ...` -> 0 errors / 0 warnings).
+  4. Menerapkan 100% Zero-Comment Policy pada seluruh berkas kode.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/app/creator/[address]/page.tsx`
+  - `omen/web/components/CreatorProfileHeader.tsx`
+  - `omen/web/tests/creator-profile-page.test.tsx`
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Mengisolasi pembacaan route parameter asinkron di dalam `useEffect` guna menjamin kompatibilitas penuh antar-lingkungan Next.js 15 App Router dan Vitest DOM.

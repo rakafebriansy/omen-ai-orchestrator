@@ -1,7 +1,7 @@
 ---
 id: TICKET-94
 title: Pembuatan Web3 Wagmi Hook (useCreateMarket untuk OmenFactory)
-status: Todo
+status: Done
 priority: Medium
 labels: [Frontend, Web3, Hooks, Factory]
 ---
@@ -19,10 +19,10 @@ Fitur hook:
 > Tampilan form pembuatan pasar, dialog status deployment, animasi loading progress bar, dan tombol submit on-chain **WAJIB MEMPERTAHANKAN** tema visual OpenZeppelin dark mode dan styling Tailwind yang konsisten.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Mengimplementasikan `omen/web/hooks/useCreateMarket.ts`.
-- [ ] Mendekode event log `MarketCreated` untuk mengekstrak alamat kontrak pasar baru secara otomatis.
-- [ ] Menyediakan penanganan error yang ramah pengguna jika wallet menolak transaksi atau jaringan tidak cocok.
-- [ ] Menyusun unit test pada `omen/web/tests/use-create-market.test.ts` dan memastikan lulus 100% dengan Zero-Comment Policy.
+- [x] Mengimplementasikan `omen/web/hooks/useCreateMarket.ts`.
+- [x] Mendekode event log `MarketCreated` untuk mengekstrak alamat kontrak pasar baru secara otomatis.
+- [x] Menyediakan penanganan error yang ramah pengguna jika wallet menolak transaksi atau jaringan tidak cocok.
+- [x] Menyusun unit test pada `omen/web/tests/use-create-market.test.ts` dan memastikan lulus 100% dengan Zero-Comment Policy.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/hooks/useCreateMarket.ts`
@@ -31,9 +31,14 @@ Fitur hook:
 ---
 
 ## AI Execution Log dan Output
-*⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
-
 - **Langkah Teknis Tereksekusi:**
-  1. ...
+  1. Menambahkan `OMEN_FACTORY_ADDRESS` dan event `MarketCreated` pada `lib/contracts.ts`.
+  2. Mengimplementasikan `useCreateMarket.ts` yang menangani pembuatan pasar via `writeContractAsync` ke `OmenFactory.sol` serta simulasi dev mode (`USE_MOCK_CONTRACT`) dengan sinkronisasi otomatis ke `/api/beliefs/submit`.
+  3. Menyusun unit test suite `tests/use-create-market.test.ts` memverifikasi inisialisasi state, eksekusi pemanggilan on-chain/mock, dan mekanisme reset status.
+  4. Memvalidasi 3/3 test lulus 100% pada Vitest dan ESLint dengan Zero-Comment Policy.
 - **Ringkasan File Terpengaruh:**
+  - `web/lib/contracts.ts`
+  - `web/hooks/useCreateMarket.ts`
+  - `web/tests/use-create-market.test.ts`
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Menyediakan fallback address creator dan oracle price feed default untuk kemudahan testing dan eksekusi instan.

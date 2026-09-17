@@ -1,7 +1,7 @@
 ---
 id: TICKET-80
 title: Pembuatan Halaman Direktori & Ranking Kreator (/creators)
-status: Todo
+status: Done
 priority: Medium
 labels: [Frontend, UI, Page]
 ---
@@ -22,13 +22,13 @@ Fitur direktori:
 > Desain kartu profil kreator, podium ranking (jika ada), tombol sorting pills, form search input, dan layout grid kartu **WAJIB DIPERTAHANKAN** sesuai design system yang berlaku di OMEN.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Mengimplementasikan halaman `app/creators/page.tsx` dan komponen `CreatorCard.tsx`.
-- [ ] Mengambil daftar kreator terurut dari endpoint `GET /api/creators` dengan opsi sorting dinamis.
-- [ ] Menyediakan filter pengurutan: `Highest Accuracy`, `Most Confirmed`, `Most Volume`, `Most Beliefs`.
-- [ ] Menyediakan input filter pencarian berbasis handle atau wallet address.
-- [ ] Merender kartu `CreatorCard` dalam grid responsif dengan navigasi ke `/creator/[address]`.
-- [ ] Mempertahankan style UI, warna, dan tema OpenZeppelin dark mode existing.
-- [ ] Menyusun unit test pada `web/tests/creators-page.test.tsx` dan memastikan lulus 100% dengan Zero-Comment Policy.
+- [x] Mengimplementasikan halaman `app/creators/page.tsx` dan komponen `CreatorCard.tsx`.
+- [x] Mengambil daftar kreator terurut dari endpoint `GET /api/creators` dengan opsi sorting dinamis.
+- [x] Menyediakan filter pengurutan: `Highest Accuracy`, `Most Confirmed`, `Most Volume`, `Most Beliefs`.
+- [x] Menyediakan input filter pencarian berbasis handle atau wallet address.
+- [x] Merender kartu `CreatorCard` dalam grid responsif dengan navigasi ke `/creator/[address]`.
+- [x] Mempertahankan style UI, warna, dan tema OpenZeppelin dark mode existing.
+- [x] Menyusun unit test pada `web/tests/creators-page.test.tsx` dan memastikan lulus 100% dengan Zero-Comment Policy.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/app/creators/page.tsx`
@@ -38,9 +38,14 @@ Fitur direktori:
 ---
 
 ## AI Execution Log dan Output
-*⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
-
 - **Langkah Teknis Tereksekusi:**
-  1. ...
+  1. Menulis unit test komprehensif `omen/web/tests/creators-page.test.tsx` untuk pengujian ranking kreator, sorting pills (`Highest Accuracy`, `Most Confirmed`, `Most Volume`, `Most Beliefs`), pencarian berbasis teks/address, dan navigasi profil `/creator/[address]`.
+  2. Mengimplementasikan komponen `omen/web/components/CreatorCard.tsx` dan halaman `omen/web/app/creators/page.tsx` dengan preservasi styling OpenZeppelin dark mode, lencana EIP-712 terverifikasi, grid metrik (akurasi, volume ETH, fee earned), dan transisi hover.
+  3. Memvalidasi dengan Vitest (`npx vitest run tests/creators-page.test.tsx` -> 4/4 passing 100%) dan ESLint (`npx eslint app/creators/page.tsx components/CreatorCard.tsx tests/creators-page.test.tsx` -> 0 errors / 0 warnings).
+  4. Menerapkan 100% Zero-Comment Policy pada seluruh berkas kode.
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/app/creators/page.tsx`
+  - `omen/web/components/CreatorCard.tsx`
+  - `omen/web/tests/creators-page.test.tsx`
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Menyertakan ranking badge dan sorting komputasi multi-kriteria untuk merangsang transparansi rekam jejak kreator opini terverifikasi EIP-712.

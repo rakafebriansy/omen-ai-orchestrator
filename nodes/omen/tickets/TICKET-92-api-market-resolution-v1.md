@@ -1,7 +1,7 @@
 ---
 id: TICKET-92
 title: Refactor API Route Resolusi Pasar V1 (POST /api/markets/[id]/resolve)
-status: Todo
+status: Done
 priority: High
 labels: [Backend, API, Resolution, Settlement]
 ---
@@ -17,11 +17,11 @@ Endpoint resolusi pasar (`POST /api/markets/[id]/resolve`) perlu diselaraskan de
    - Menghitung akurasi kreator pada `creator_profiles` (menambah `resolved_beliefs` dan `correct_beliefs` jika prediksi kreator terbukti akurat).
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Memperbarui `omen/web/app/api/markets/[id]/resolve/route.ts` dengan dukungan outcome V1.
-- [ ] Menerapkan otorisasi admin/resolver key yang ketat.
-- [ ] Melakukan mutasi terkoordinasi pada tabel `markets`, `beliefs`, `market_resolutions`, `market_settlements`, dan `creator_profiles`.
-- [ ] Mencegah resolusi ulang pada pasar yang sudah berstatus `RESOLVED`, `SETTLED`, atau `VOID` (HTTP 400).
-- [ ] Menyusun unit test pada `omen/web/tests/api-markets-v1-resolve.test.ts` dan memastikan lulus 100% dengan Zero-Comment Policy.
+- [x] Memperbarui `omen/web/app/api/markets/[id]/resolve/route.ts` dengan dukungan outcome V1.
+- [x] Menerapkan otorisasi admin/resolver key yang ketat.
+- [x] Melakukan mutasi terkoordinasi pada tabel `markets`, `beliefs`, `market_resolutions`, `market_settlements`, dan `creator_profiles`.
+- [x] Mencegah resolusi ulang pada pasar yang sudah berstatus `RESOLVED`, `SETTLED`, atau `VOID` (HTTP 400).
+- [x] Menyusun unit test pada `omen/web/tests/api-markets-v1-resolve.test.ts` dan memastikan lulus 100% dengan Zero-Comment Policy.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/app/api/markets/[id]/resolve/route.ts`
@@ -34,6 +34,13 @@ Endpoint resolusi pasar (`POST /api/markets/[id]/resolve`) perlu diselaraskan de
 *⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
 
 - **Langkah Teknis Tereksekusi:**
-  1. ...
+  1. Menyusun unit test TDD pada `omen/web/tests/api-markets-v1-resolve.test.ts` untuk pengujian normalisasi outcome V1/legacy, kalkulasi settlement pool, proteksi otentikasi admin, penolakan resolusi ganda (HTTP 400), dan update terkoordinasi pada seluruh tabel terkait.
+  2. Mengembangkan modul helper `omen/web/lib/market/resolution-helper.ts` dengan fungsi `normalizeOutcome`, `calculateSettlementPool` (termasuk 0 fee untuk VOID refund), dan `evaluateOracleCondition`.
+  3. Memperbarui handler `POST /api/markets/[id]/resolve` pada `omen/web/app/api/markets/[id]/resolve/route.ts` dengan mutasi atomik pada `markets`, `beliefs`, `market_resolutions`, `market_settlements`, dan `creator_profiles`.
+  4. Menjalankan pengujian vitest (313 tests pass di 54 test files), typecheck `tsc`, dan linter ESLint (0 error).
 - **Ringkasan File Terpengaruh:**
+  - `omen/web/lib/market/resolution-helper.ts`
+  - `omen/web/app/api/markets/[id]/resolve/route.ts`
+  - `omen/web/tests/api-markets-v1-resolve.test.ts`
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Mengadopsi arsitektur resolusi hybrid yang mempertahankan kompatibilitas payload legacy (`resolved_yes`, `resolved_no`, `cancelled`) sekaligus mendukung standar V1 (`AGREE`, `DISAGREE`, `VOID`) dengan kalkulasi otomatis pemotongan biaya protokol 2% saat settlement.

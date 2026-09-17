@@ -1,7 +1,7 @@
 ---
 id: TICKET-93
 title: Pembuatan Web3 Wagmi Hooks (usePosition, useClaim, useMarket)
-status: Todo
+status: Done
 priority: High
 labels: [Frontend, Web3, Hooks, Wagmi]
 ---
@@ -23,11 +23,11 @@ Tiket ini menyediakan custom React hooks berbasis Wagmi v2 dan Viem untuk intera
 > Integrasi hooks ke komponen UI (seperti `PositionPanel`, `ClaimPayoutButton`, dan `MarketDetailPanels`) **WAJIB MEMPERTAHANKAN** seluruh styling visual, indikator loading spinner, badge status, tombol bertema OpenZeppelin dark mode, dan alert dialog notifikasi transaksi.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Mengimplementasikan `omen/web/hooks/usePosition.ts`, `omen/web/hooks/useClaim.ts`, dan `omen/web/hooks/useMarket.ts`.
-- [ ] Menerapkan penanganan konversi nominal Wei/Ether yang aman dengan Viem `parseEther` dan `formatEther`.
-- [ ] Melakukan sinkronisasi off-chain otomatis ke backend API saat transaksi berhasil.
-- [ ] Menyediakan isolasi pengujian aman tanpa memerlukan koneksi ekstensi dompet nyata saat unit test dijalankan.
-- [ ] Menyusun unit test pada `omen/web/tests/web3-hooks-v1.test.ts` dan memastikan lulus 100% dengan Zero-Comment Policy.
+- [x] Mengimplementasikan `omen/web/hooks/usePosition.ts`, `omen/web/hooks/useClaim.ts`, dan `omen/web/hooks/useMarket.ts`.
+- [x] Menerapkan penanganan konversi nominal Wei/Ether yang aman dengan Viem `parseEther` dan `formatEther`.
+- [x] Melakukan sinkronisasi off-chain otomatis ke backend API saat transaksi berhasil.
+- [x] Menyediakan isolasi pengujian aman tanpa memerlukan koneksi ekstensi dompet nyata saat unit test dijalankan.
+- [x] Menyusun unit test pada `omen/web/tests/web3-hooks-v1.test.ts` dan memastikan lulus 100% dengan Zero-Comment Policy.
 
 ## Target Lingkup File (Affected Files)
 - `omen/web/hooks/usePosition.ts`
@@ -38,9 +38,18 @@ Tiket ini menyediakan custom React hooks berbasis Wagmi v2 dan Viem untuk intera
 ---
 
 ## AI Execution Log dan Output
-*⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
-
 - **Langkah Teknis Tereksekusi:**
-  1. ...
+  1. Membuat `lib/contracts.ts` yang mendefinisikan ABI untuk `OmenMarket` dan `OmenFactory` serta `USE_MOCK_CONTRACT` toggle.
+  2. Mengimplementasikan `usePosition.ts` dengan dukungan `depositAgree` dan `depositDisagree` berbasis Wagmi `useWriteContract` dan sinkronisasi off-chain `/api/markets/[id]/position`.
+  3. Mengimplementasikan `useClaim.ts` untuk pemanggilan `claimPayout` on-chain dan sinkronisasi off-chain `/api/markets/[id]/claim`.
+  4. Mengimplementasikan `useMarket.ts` untuk pembacaan pool summary `getMarketSummary` on-chain dan konversi Ether/Wei yang aman.
+  5. Membuat suite unit test `tests/web3-hooks-v1.test.ts` dengan viem/wagmi hoisting mocks yang tervalidasi 100% lulus pada Vitest dan ESLint.
 - **Ringkasan File Terpengaruh:**
+  - `web/lib/contracts.ts`
+  - `web/hooks/usePosition.ts`
+  - `web/hooks/useClaim.ts`
+  - `web/hooks/useMarket.ts`
+  - `web/tests/web3-hooks-v1.test.ts`
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Mengeliminasi mutasi state di dalam `useEffect` pada `useMarket.ts` untuk memastikan kepatuhan penuh terhadap aturan rendering murni React 19 Compiler.
+  - Mematuhi aturan Zero-Comment Policy pada seluruh source code dan test file.

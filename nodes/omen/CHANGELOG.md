@@ -17,6 +17,195 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 08:35:00] - Implementation: TICKET-100 (MANUAL) Penyediaan Kredensial Environment Variables & Trust Checklist V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-100 ((MANUAL) Penyediaan Kredensial Environment Variables & Verifikasi Trust Checklist Peluncuran Publik)
+- **Perubahan:** `[Added/Modified]` Menyusun konfigurasi environment template dan dokumentasi arsitektur peluncuran publik OMEN V1:
+  1. `web/.env.example`: Template lengkap variabel lingkungan dual-testnet (Sepolia `11155111` dan Robinhood Chain Testnet `46630`), feeds Chainlink oracle, contract addresses, dan AI model keys.
+  2. `web/README.md`: Dokumentasi arsitektur OMEN V1, panduan instalasi, dan perintah verifikasi test.
+  3. Verifikasi: 302/302 tests (59 test files) lulus 100% pada Vitest, `npm run build` berhasil pada 23 routes Next.js 15, `npx eslint .` 0 error/warning, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/.env.example`, `omen/web/README.md`, `nodes/omen/tickets/TICKET-100-manual-environment-variables-and-trust-checklist.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:29:00] - Implementation: TICKET-99 Validasi Siklus Hidup Penuh End-to-End pada Dual Testnet V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-99 (Validasi Siklus Hidup Penuh End-to-End pada Dual Testnet - Sepolia & Robinhood Chain)
+- **Perubahan:** `[Added/Modified]` Mengembangkan suite pengujian integrasi E2E multi-chain penuh:
+  1. `web/tests/e2e/belief-market-cycle.test.tsx`: E2E test memvalidasi siklus hidup komprehensif (Creation -> Staking -> EIP-712 Creator Attestation -> Oracle Resolution -> Settlement / Payout Claim).
+  2. `web/tests/e2e/dual-chain-workflow.test.ts`: E2E test memvalidasi konfigurasi dual testnet (Ethereum Sepolia `11155111` dan Robinhood Chain Testnet `46630`), kalkulasi payout proporsional, dan penanganan kasus pasar VOID.
+  3. `web/lib/oracle/chainlink.ts`: Menambahkan utilitas `calculateResolutionResult` untuk pemetaan hasil resolusi deterministik.
+  4. Validasi: 6/6 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/tests/e2e/belief-market-cycle.test.tsx`, `omen/web/tests/e2e/dual-chain-workflow.test.ts`, `omen/web/lib/oracle/chainlink.ts`, `omen/web/lib/wagmi.ts`, `nodes/omen/tickets/TICKET-99-dual-testnet-e2e-validation.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:28:00] - Implementation: TICKET-75 Pembuatan Halaman Market Detail Multi-Panel (/market/[id]) V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-75 (Pembuatan Halaman Market Detail Multi-Panel - /market/[id])
+- **Perubahan:** `[Added/Modified]` Mengembangkan antarmuka detail pasar keyakinan sosial multi-panel:
+  1. `web/components/MarketDetailPanels.tsx`: Komponen arsitektur 5 panel (Belief & Origin, Staking `PositionPanel`, Consensus & Pool Metrics, Oracle & Resolution Rules, dan On-Chain Transparency).
+  2. `web/app/market/[id]/page.tsx`: Halaman detail pasar publik dengan integrasi `Suspense`, asynchronous params safety, skeleton loading state, dan penyelesaian payout klaim.
+  3. `web/hooks/useClaim.ts`: Menambahkan shorthand method `claim()` dengan default contract address untuk pemanggilan klaim satu baris yang ergonomis.
+  4. `web/tests/market-detail-page.test.tsx`: Unit test suite memvalidasi rendering data detail pasar, navigasi breadcrumbs, metrik consensus, dan interaksi tombol payout claim.
+  5. Validasi: 2/2 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/components/MarketDetailPanels.tsx`, `omen/web/app/market/[id]/page.tsx`, `omen/web/hooks/useClaim.ts`, `omen/web/tests/market-detail-page.test.tsx`, `nodes/omen/tickets/TICKET-75-market-detail-multi-panel-page.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:27:00] - Implementation: TICKET-97 Pembuatan Komponen & Hook Konfirmasi Kreator EIP-712 (CreatorConfirmation UI) V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-97 (Pembuatan Komponen & Hook Konfirmasi Kreator EIP-712 - CreatorConfirmation UI)
+- **Perubahan:** `[Added/Modified]` Mengembangkan antarmuka dan hook tanda tangan kriptografis gasless EIP-712 untuk otentikasi opini kreator:
+  1. `web/hooks/useCreatorConfirm.ts`: Hook untuk konstruksi EIP-712 typed data (`ConfirmBelief`), eksekusi signature via `useSignTypedData`, fallback dev simulator, dan auto-sync ke `/api/beliefs/[id]/confirm`.
+  2. `web/components/CreatorConfirmation.tsx`: Komponen visual konfirmasi kreator dengan indikator status gasless, feedback spinner interaktif, dan lencana resmi `EIP-712 Authenticated`.
+  3. `web/tests/creator-confirmation.test.tsx`: Unit test suite memvalidasi pemanggilan hook, rendering komponen, transisi tanda tangan, dan callback handler.
+  4. Validasi: 3/3 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/hooks/useCreatorConfirm.ts`, `omen/web/components/CreatorConfirmation.tsx`, `omen/web/tests/creator-confirmation.test.tsx`, `nodes/omen/tickets/TICKET-97-creator-confirmation-flow-ui-and-hook.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:26:00] - Implementation: TICKET-94 Pembuatan Web3 Wagmi Hook (useCreateMarket untuk OmenFactory) V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-94 (Pembuatan Web3 Wagmi Hook - useCreateMarket untuk OmenFactory)
+- **Perubahan:** `[Added/Modified]` Mengembangkan custom React hook `useCreateMarket` untuk deploy dan registrasi pasar sosial baru ke `OmenFactory.sol`:
+  1. `web/lib/contracts.ts`: Menambahkan konstanta `OMEN_FACTORY_ADDRESS` dan event definition `MarketCreated`.
+  2. `web/hooks/useCreateMarket.ts`: Implementasi hook pembuatan pasar dengan integrasi Wagmi v2 `writeContractAsync`, parsing parameter BigInt/Ether aman, fallback mock simulation mode, dan sinkronisasi otomatis ke `/api/beliefs/submit`.
+  3. `web/tests/use-create-market.test.ts`: Unit test suite memvalidasi inisialisasi state, alur deploy berhasil, eksekusi backend sync, dan reset state.
+  4. Validasi: 3/3 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/lib/contracts.ts`, `omen/web/hooks/useCreateMarket.ts`, `omen/web/tests/use-create-market.test.ts`, `nodes/omen/tickets/TICKET-94-web3-hook-admin-create-market.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:25:00] - Implementation: TICKET-93 Pembuatan Web3 Wagmi Hooks (usePosition, useClaim, useMarket) V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-93 (Pembuatan Web3 Wagmi Hooks - usePosition, useClaim, useMarket)
+- **Perubahan:** `[Added/Modified]` Mengembangkan custom React hooks berbasis Wagmi v2 dan Viem untuk interaksi terintegrasi dengan smart contract `OmenMarket.sol`:
+  1. `web/lib/contracts.ts`: Definisi ABI `OMEN_MARKET_ABI` dan `OMEN_FACTORY_ABI` beserta toggle mock contract.
+  2. `web/hooks/usePosition.ts`: Hook untuk transaksi `depositAgree()` & `depositDisagree()` dengan auto sync off-chain ke `/api/markets/[id]/position`.
+  3. `web/hooks/useClaim.ts`: Hook untuk klaim hadiah `claimPayout()` dengan auto sync off-chain ke `/api/markets/[id]/claim`.
+  4. `web/hooks/useMarket.ts`: Hook untuk pembacaan real-time summary pool pasar (`getMarketSummary`) dengan konversi desimal Ether/Wei aman tanpa efek samping re-render.
+  5. `web/tests/web3-hooks-v1.test.ts`: Unit test suite memvalidasi seluruh fungsionalitas hooks web3 dengan isolasi mock.
+  6. Validasi: 4/4 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/lib/contracts.ts`, `omen/web/hooks/usePosition.ts`, `omen/web/hooks/useClaim.ts`, `omen/web/hooks/useMarket.ts`, `omen/web/tests/web3-hooks-v1.test.ts`, `nodes/omen/tickets/TICKET-93-web3-hooks-position-claim-market.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:24:00] - Implementation: TICKET-82 Pembuatan Halaman & Formulir Submit Belief 3-Langkah (/create) V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-82 (Pembuatan Halaman & Formulir Submit Belief 3-Langkah - /create)
+- **Perubahan:** `[Added/Modified]` Mengembangkan wizard pembuatan pasar keyakinan sosial 3-langkah terpandu AI:
+  1. `web/components/BeliefSubmitForm.tsx`: Komponen formulir wizard 3 langkah: Step 1 (Input opini mentah, URL sumber, author handle), Step 2 (Review parameter ekstraksi AI dengan confidence score & editor interaktif), Step 3 (Ringkasan peluncuran & tombol deploy pasar on-chain).
+  2. `web/app/create/page.tsx`: Halaman pembuatan pasar publik dengan pembungkus `Suspense` untuk menangkap pre-fill query URL (`?text=...&author=...`).
+  3. `web/tests/create-belief-page.test.tsx`: Unit test suite memvalidasi seluruh siklus 3-step wizard dan pengalihan rute otomatis ke `/market/[id]`.
+  4. Validasi: 3/3 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/app/create/page.tsx`, `omen/web/components/BeliefSubmitForm.tsx`, `omen/web/tests/create-belief-page.test.tsx`, `nodes/omen/tickets/TICKET-82-submit-belief-page-and-form.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:23:00] - Implementation: TICKET-79 Pembuatan Halaman Profil Kreator (/creator/[address]) V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-79 (Pembuatan Halaman Profil Kreator - /creator/[address])
+- **Perubahan:** `[Added/Modified]` Mengembangkan profil rekam jejak reputasi dan akurasi opini kreator terverifikasi EIP-712:
+  1. `web/components/CreatorProfileHeader.tsx`: Komponen header profil dengan avatar initial, bio, lencana EIP-712 terverifikasi, dan 4 kartu reputasi (Win Rate %, EIP-712 Confirmation Rate, Total Beliefs Indexed, Total Pool Volume ETH).
+  2. `web/app/creator/[address]/page.tsx`: Halaman profil dinamis dengan tab navigasi rekam jejak (`Active Beliefs`, `Resolved Beliefs`, `All Origins`) dan daftar kartu keyakinan interaktif.
+  3. `web/tests/creator-profile-page.test.tsx`: Unit test suite memvalidasi rendering profil kreator, metrik akurasi, dan tab switching rekam jejak.
+  4. Validasi: 2/2 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/app/creator/[address]/page.tsx`, `omen/web/components/CreatorProfileHeader.tsx`, `omen/web/tests/creator-profile-page.test.tsx`, `nodes/omen/tickets/TICKET-79-creator-profile-page.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:22:00] - Implementation: TICKET-74 Pembuatan Halaman Discovery Feed Pasar Keyakinan (/markets) V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-74 (Pembuatan Halaman Discovery Feed Pasar Keyakinan - /markets & Tab Filter)
+- **Perubahan:** `[Added/Modified]` Mengembangkan antarmuka penjelajahan pasar keyakinan publik OMEN V1:
+  1. `web/components/DiscoveryFilter.tsx`: Komponen bilah filter multi-dimensi dengan discovery tabs (`Trending`, `Newest`, `Ending Soon`, `Most Volume`, `Confirmed`), chips kategori (`All Topics`, `Crypto`, `AI & Tech`, `Macro`), dan pencarian teks bebas.
+  2. `web/app/markets/page.tsx`: Halaman discovery feed yang mengintegrasikan komponen `DiscoveryFilter`, grid layout `BeliefMarketCard` responsif, skeleton loading, dan empty state.
+  3. `web/tests/markets-page.test.tsx`: Unit test suite memvalidasi rendering katalog pasar, aktivasi tab filter, dan pencarian query.
+  4. Validasi: 3/3 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/app/markets/page.tsx`, `omen/web/components/DiscoveryFilter.tsx`, `omen/web/tests/markets-page.test.tsx`, `nodes/omen/tickets/TICKET-74-discovery-feed-markets-page.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:21:00] - Implementation: TICKET-95 Integrasi Chainlink Oracle Price Feed Reader V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-95 (Integrasi Chainlink Oracle Price Feed Reader - ETH/USD, BTC/USD, SOL/USD)
+- **Perubahan:** `[Added/Modified]` Mengembangkan modul integrasi on-chain Chainlink AggregatorV3 data feeds:
+  1. `web/lib/oracle/chainlink.ts`: Modul helper viem client untuk membaca latestRoundData dan decimals dari feed resmi Ethereum Sepolia (`ETH/USD`, `BTC/USD`, `SOL/USD`), fungsi normalisasi desimal presisi tinggi BigInt, penanganan batas toleransi data usang (*stale price threshold*), dan kalkulasi otomatis 3 model resolusi pasar (`PRICE_ABOVE`, `PRICE_BELOW`, `RELATIVE_PERFORMANCE`).
+  2. `web/tests/oracle-chainlink.test.ts`: Unit test suite memvalidasi konversi desimal 8 & 18, 3 mode resolusi pasar, dan pemanggilan Viem readContract on-chain.
+  3. Validasi: 6/6 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/lib/oracle/chainlink.ts`, `omen/web/tests/oracle-chainlink.test.ts`, `nodes/omen/tickets/TICKET-95-chainlink-oracle-price-feed-reader.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:20:00] - Implementation: TICKET-81 Pembuatan Halaman Feed Aktivitas Publik On-Chain (/activity) V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-81 (Pembuatan Halaman Feed Aktivitas Publik On-Chain - /activity)
+- **Perubahan:** `[Added/Modified]` Mengembangkan antarmuka feed aktivitas on-chain publik dengan auto-refresh:
+  1. `web/components/ActivityFeed.tsx`: Komponen visual timeline aktivitas dengan badge status aksi (AGREE, DISAGREE, EIP-712 SIGNED, PAYOUT CLAIM, RESOLUTION), format waktu relatif dinamis, tautan detail pasar, dan tautan multi-chain block explorer (Sepolia & Robinhood).
+  2. `web/app/activity/page.tsx`: Halaman feed aktivitas publik dengan filter kategori tabs (`All Activity`, `Market Stakes`, `Confirmations`, `Payouts & Settled`) dan interval polling real-time setiap 30 detik.
+  3. `web/tests/activity-page.test.tsx`: Unit test suite memvalidasi filter kategori, rendering stream aktivitas, dan validitas tautan.
+  4. Validasi: 3/3 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/app/activity/page.tsx`, `omen/web/components/ActivityFeed.tsx`, `omen/web/tests/activity-page.test.tsx`, `nodes/omen/tickets/TICKET-81-activity-feed-page.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:19:00] - Implementation: TICKET-80 Pembuatan Halaman Direktori & Ranking Kreator (/creators) V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-80 (Pembuatan Halaman Direktori & Ranking Kreator - /creators)
+- **Perubahan:** `[Added/Modified]` Mengembangkan direktori dan leaderboard pembuat opini/kreator terverifikasi EIP-712:
+  1. `web/components/CreatorCard.tsx`: Komponen kartu profil kreator dengan visual rank badge, lencana verifikasi kriptografis, ringkasan metrik (win rate %, confirmed beliefs, pool volume ETH, creator fee earned), dan CTA "View Profile".
+  2. `web/app/creators/page.tsx`: Halaman direktori publik dengan 4 mode sorting (`Highest Accuracy`, `Most Confirmed`, `Most Volume`, `Most Beliefs`), pencarian cepat multi-field, dan grid kartu responsif.
+  3. `web/tests/creators-page.test.tsx`: Unit test suite memvalidasi sorting dinamis, pencarian query, dan tautan profil.
+  4. Validasi: 4/4 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/app/creators/page.tsx`, `omen/web/components/CreatorCard.tsx`, `omen/web/tests/creators-page.test.tsx`, `nodes/omen/tickets/TICKET-80-creators-directory-page.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:18:00] - Implementation: TICKET-77 Pembuatan Halaman Katalog Beliefs (/beliefs) V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-77 (Pembuatan Halaman Katalog Beliefs - /beliefs)
+- **Perubahan:** `[Added/Modified]` Mengembangkan antarmuka katalog direktori keyakinan sosial (*Social Beliefs Directory*):
+  1. `web/app/beliefs/page.tsx`: Halaman katalog belief dengan filter tab status (`All`, `AI Detected`, `Confirmed`, `Market Live`), input pencarian instan untuk teks pernyataan/kreator, integrasi `BeliefCard`, dan tombol CTA "Submit New Belief" (`/create`).
+  2. `web/tests/beliefs-page.test.tsx`: Unit test suite komprehensif menguji rendering katalog, filter status tabs, dan fungsionalitas pencarian.
+  3. Validasi: 3/3 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/app/beliefs/page.tsx`, `omen/web/tests/beliefs-page.test.tsx`, `nodes/omen/tickets/TICKET-77-beliefs-feed-page.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:17:00] - Implementation: TICKET-72 Redesign Landing Page Social Belief Hero & Live Feeds V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-72 (Redesign Landing Page dengan Hero Social Belief & Live Market Feeds)
+- **Perubahan:** `[Added/Modified]` Merombak halaman utama OMEN V1 berfokus pada protokol keyakinan sosial (*Social Belief Protocol*):
+  1. `web/components/landing/HeroSection.tsx`: Headline proposisi baru *"The Internet is Full of Opinions. OMEN Gives Them a Market."*, Dual-Testnet badge (Ethereum Sepolia & Robinhood Chain), dan CTA ganda ("Explore Markets" `/markets` & "Submit Belief" `/create`).
+  2. `web/components/landing/StatsOverview.tsx`: Mengagregasikan 4 metrik platform V1: Total Volume (ETH), Active Markets, Total Beliefs (AI Extracted), dan Verified Creators (EIP-712).
+  3. `web/components/landing/TrendingMarketsTeaser.tsx`: Mengintegrasikan feed kartu pasar `BeliefMarketCard` dinamis dengan kategori tab filter.
+  4. `web/components/landing/OnboardingJourney.tsx` & `web/app/page.tsx`: Menyajikan alur 3-step Social Belief (AI Ingestion -> Creator Confirmation -> Dual-Chain Settlement) dan membersihkan komponen Quests lama.
+  5. `web/tests/landing.test.tsx`: Unit test suite komprehensif memvalidasi seluruh elemen landing page V1.
+  6. Validasi: 5/5 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/app/page.tsx`, `omen/web/components/landing/HeroSection.tsx`, `omen/web/components/landing/StatsOverview.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/components/landing/OnboardingJourney.tsx`, `omen/web/tests/landing.test.tsx`, `nodes/omen/tickets/TICKET-72-redesign-landing-page-social-belief-hero.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:16:00] - Implementation: TICKET-78 Pembuatan Komponen BeliefCard V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-78 (Pembuatan Komponen BeliefCard - Compact Belief & Status Badge)
+- **Perubahan:** `[Added/Modified]` Mengembangkan komponen kartu ringkas belief untuk feed opini dan ekstraksi AI:
+  1. `web/components/BeliefCard.tsx`: Komponen kartu belief ringkas dengan author profile, badge status verifikasi EIP-712 vs AI, skor keyakinan AI (*confidence score*), tautan sumber asli (Twitter/Warpcast), metadata chips (subjek, arah, target), dan aksi cerdas View Market / Create Market.
+  2. `web/tests/belief-card.test.tsx`: Unit test suite komprehensif memvalidasi rendering profil author, badges, eksternal link, dan conditional actions.
+  3. Validasi: 5/5 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/components/BeliefCard.tsx`, `omen/web/tests/belief-card.test.tsx`, `nodes/omen/tickets/TICKET-78-belief-card-component.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:15:00] - Implementation: TICKET-76 Pembuatan Komponen PositionPanel V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-76 (Pembuatan Komponen PositionPanel - AGREE / DISAGREE Inline Flow)
+- **Perubahan:** `[Added/Modified]` Mengembangkan komponen interaksi pasang posisi inline berbasis AGREE/DISAGREE untuk OMEN V1:
+  1. `web/components/PositionPanel.tsx`: Panel inline dengan selektor AGREE/DISAGREE, input ETH dengan preset (0.01, 0.05, 0.10, MAX), kalkulasi estimasi pool share dan payout potensial (ROI), validasi saldo dan batas minimum, alert notifikasi sukses/error, serta state loading.
+  2. `web/tests/position-panel.test.tsx`: Unit test suite komprehensif menguji interaksi tombol seleksi side, presets, validasi form, eksekusi callback submit, dan status loading spinner.
+  3. Validasi: 6/6 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/components/PositionPanel.tsx`, `omen/web/tests/position-panel.test.tsx`, `nodes/omen/tickets/TICKET-76-position-panel-component.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:14:00] - Implementation: TICKET-73 Pembuatan Komponen BeliefMarketCard V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-73 (Pembuatan Komponen BeliefMarketCard - WHO, WHAT, WHEN, CONSENSUS, MONEY)
+- **Perubahan:** `[Added/Modified]` Mengimplementasikan komponen kartu pasar belief komprehensif untuk OMEN V1:
+  1. `web/components/BeliefMarketCard.tsx`: Komponen kartu interaktif yang menampilkan 5 dimensi (WHO kreator + badge EIP-712/AI, WHAT pernyataan belief, WHEN sisa waktu countdown, CONSENSUS rasio partisipan, dan MONEY rasio ETH pool) dengan preservasi OpenZeppelin dark mode dan transisi hover.
+  2. `web/tests/belief-market-card.test.tsx`: Unit test suite komprehensif menguji 5 dimensi informasi, status badge terverifikasi vs AI, routing link `/market/[id]`, dan handler `onSelect`.
+  3. Validasi: 4/4 unit tests lulus 100%, ESLint 0 warning/error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/components/BeliefMarketCard.tsx`, `omen/web/tests/belief-market-card.test.tsx`, `nodes/omen/tickets/TICKET-73-belief-market-card-component.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:12:00] - Implementation: TICKET-66 Refactor Navbar, Footer & Layout Shell Navigasi V1
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-66 (Refactor Navbar, Footer & Layout Shell Navigasi V1)
+- **Perubahan:** `[Added/Modified]` Menyelaraskan kerangka navigasi aplikasi dengan model OMEN V1 Social Belief Protocol:
+  1. `web/components/Navbar.tsx`: Memperbarui navigasi ke `/markets`, `/beliefs`, `/creators`, `/activity`, dan menambahkan tombol CTA "Submit Belief" (`/create`) dengan preservasi tema OpenZeppelin dark mode dan responsivitas mobile.
+  2. `web/components/Footer.tsx`: Memperbarui deskripsi protokol, tautan multi-chain explorer (Sepolia & Robinhood Blockscout), tautan navigasi V1, dan badge status "Dual-Testnet Active".
+  3. `web/tests/navbar.test.tsx` & `web/tests/footer.test.tsx`: Memperbarui unit test suite untuk memvalidasi tautan V1 dan tombol CTA.
+  4. Validasi: Seluruh 15/15 unit tests navigasi & footer lulus 100%, TypeScript typecheck bersih, dan kepatuhan 100% Zero-Comment Policy.
+- **Path File:** `omen/web/components/Navbar.tsx`, `omen/web/components/Footer.tsx`, `omen/web/tests/navbar.test.tsx`, `omen/web/tests/footer.test.tsx`, `nodes/omen/tickets/TICKET-66-refactor-navbar-layout-shell-v1.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 08:10:00] - Implementation: TICKET-64 Refactor Wagmi Config & Web3 Providers untuk Dual Testnet
+> **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Referensi Tiket: TICKET-64 (Refactor Wagmi Config & Web3 Providers untuk Ethereum Sepolia dan Robinhood Chain Testnet)
+- **Perubahan:** `[Added/Modified]` Mengonfigurasi dual-chain provider dan multi-connector Wagmi untuk arsitektur OMEN V1:
+  1. `web/lib/wagmi.ts`: Mendaftarkan Ethereum Sepolia (`11155111`) dan custom chain `robinhoodTestnet` (`46630`) via Viem `defineChain`, mendukung connector Phantom, MetaMask, Rabby, Coinbase Wallet, dan generic EIP-6963 provider discovery.
+  2. `web/components/NetworkSwitcherModal.tsx`: Memperbarui modal dialog untuk mendukung pemilihan interaktif antara Ethereum Sepolia dan Robinhood Chain Testnet dengan preservasi tema OpenZeppelin dark mode dan ARIA accessibility.
+  3. `web/tests/providers.test.tsx` & `web/tests/network-switcher.test.tsx`: Memperbarui unit test suite untuk memvalidasi konfigurasi dual-chain.
+  4. Validasi: Seluruh unit test lulus 100%, TypeScript typecheck bersih, dan kepatuhan 100% Zero-Comment Policy.
+- **Path File:** `omen/web/lib/wagmi.ts`, `omen/web/components/NetworkSwitcherModal.tsx`, `omen/web/tests/providers.test.tsx`, `omen/web/tests/network-switcher.test.tsx`, `nodes/omen/tickets/TICKET-64-refactor-wagmi-config-multi-chain.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-17 07:20:00] - Development Planning: Optimalisasi Rencana Eksekusi Paralel 2-Agent Zero-Clash V1
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Restrukturisasi rencana eksekusi paralel multi-agent menjadi format optimal 2-Agent dengan pemisahan batas direktori fisik (*Physical Directory Isolation*) untuk menjamin 0% konflik file (*zero git clash*) dan efisiensi throughput maksimal.
