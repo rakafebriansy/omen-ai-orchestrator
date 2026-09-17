@@ -1,7 +1,7 @@
 ---
 id: TICKET-71
 title: (MANUAL) Deployment Smart Contract ke Ethereum Sepolia & Ekspor Artefak ABI ke Web
-status: Done
+status: In Progress (Pending Manual Action)
 priority: High
 labels: [SmartContract, Foundry, Deployment, Web3, ManualAction]
 ---
@@ -14,11 +14,11 @@ Tiket ini mencakup pembuatan script deployment Foundry (`DeploySepolia.s.sol`), 
 ## Acceptance Criteria (Kriteria Penerimaan)
 - [x] AI Agent menyusun script deployment Foundry pada `omen/contracts/script/DeploySepolia.s.sol`.
 - [x] AI Agent menyiapkan konfigurasi network dan template `.env.example` di `omen/contracts/`.
-- [x] **(Manual Developer)** Developer menyiapkan private key wallet deployer dan saldo Sepolia ETH (via faucet).
-- [x] **(Manual Developer)** Developer mengeksekusi script deployment: `forge script script/DeploySepolia.s.sol:DeploySepolia --rpc-url sepolia --broadcast --verify`.
+- [ ] **(Manual Developer)** Developer menyiapkan private key wallet deployer dan saldo Sepolia ETH (via faucet).
+- [ ] **(Manual Developer)** Developer mengeksekusi script deployment: `forge script script/DeploySepolia.s.sol:DeploySepolia --rpc-url sepolia --broadcast --verify`.
 - [x] AI Agent mengekspor artefak ABI `OmenFactory.json` dan `OmenMarket.json` ke direktori `omen/web/contracts/`.
 - [x] AI Agent memperbarui `omen/web/lib/contracts.ts` dengan ABI terdefinisi `as const` dan mapping alamat kontrak `OmenFactory` Sepolia.
-- [x] **(Manual Developer)** Developer mengisi `NEXT_PUBLIC_OMEN_FACTORY_ADDRESS_SEPOLIA` pada `omen/web/.env.local`.
+- [ ] **(Manual Developer)** Developer mengisi `NEXT_PUBLIC_OMEN_FACTORY_ADDRESS_SEPOLIA` pada `omen/web/.env.local`.
 - [x] Memastikan `npx tsc --noEmit` di `omen/web` lulus tanpa type error.
 
 ## Target Lingkup File (Affected Files)

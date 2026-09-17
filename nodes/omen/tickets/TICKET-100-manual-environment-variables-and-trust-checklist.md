@@ -1,7 +1,7 @@
 ---
 id: TICKET-100
 title: (MANUAL) Penyediaan Kredensial Environment Variables & Verifikasi Trust Checklist Peluncuran Publik
-status: Done
+status: In Progress (Pending Manual Configuration)
 priority: High
 labels: [DevOps, Security, Documentation, Configuration, ManualAction]
 ---
@@ -37,7 +37,7 @@ Item Trust Checklist yang diverifikasi:
 ## Acceptance Criteria (Kriteria Penerimaan)
 - [x] AI Agent memperbarui `omen/web/.env.example` dan `omen/contracts/.env.example` dengan seluruh variabel lingkungan V1.
 - [x] AI Agent menyusun dokumentasi arsitektur dan panduan menjalankan proyek pada `omen/web/README.md`.
-- [x] **(Manual Developer)** Developer mengisi kredensial nyata (`AI_API_KEY` OpenRouter, `ADMIN_PRIVATE_KEY`, RPC URLs) pada `omen/web/.env.local`.
+- [ ] **(Manual Developer)** Developer mengisi kredensial nyata (`AI_API_KEY` OpenRouter, `ADMIN_PRIVATE_KEY`, RPC URLs) pada `omen/web/.env.local`.
 - [x] Memastikan tidak ada secret/API key yang terekspos ke bundle browser client (`NEXT_PUBLIC_`).
 - [x] Memverifikasi kelulusan 100% build Next.js (`npm run build`), TypeScript typecheck (`tsc --noEmit`), dan seluruh test suite Vitest.
 - [x] Mematuhi Zero-Comment Policy pada seluruh codebase.

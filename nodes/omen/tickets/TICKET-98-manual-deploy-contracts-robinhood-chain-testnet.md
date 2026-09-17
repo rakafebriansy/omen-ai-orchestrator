@@ -1,7 +1,7 @@
 ---
 id: TICKET-98
 title: (MANUAL) Deployment Smart Contract ke Robinhood Chain Testnet (Chain ID 46630)
-status: Done
+status: In Progress (Pending Manual Action)
 priority: High
 labels: [SmartContract, Deployment, RobinhoodChain, ManualAction]
 ---
@@ -14,11 +14,11 @@ Tiket ini mencakup pembuatan script deployment Foundry (`DeployRobinhood.s.sol`)
 ## Acceptance Criteria (Kriteria Penerimaan)
 - [x] AI Agent menyusun script deployment Foundry pada `omen/contracts/script/DeployRobinhood.s.sol`.
 - [x] AI Agent menyiapkan konfigurasi network Robinhood Chain Testnet di `foundry.toml`.
-- [x] **(Manual Developer)** Developer menyiapkan private key wallet deployer dan saldo Robinhood Chain Testnet ETH (via faucet).
-- [x] **(Manual Developer)** Developer mengeksekusi script deployment: `forge script script/DeployRobinhood.s.sol:DeployRobinhood --rpc-url robinhood_testnet --broadcast`.
-- [x] **(Manual Developer)** Developer memverifikasi transaksi deployment di Blockscout explorer (`https://explorer.testnet.chain.robinhood.com`).
+- [ ] **(Manual Developer)** Developer menyiapkan private key wallet deployer dan saldo Robinhood Chain Testnet ETH (via faucet).
+- [ ] **(Manual Developer)** Developer mengeksekusi script deployment: `forge script script/DeployRobinhood.s.sol:DeployRobinhood --rpc-url robinhood_testnet --broadcast`.
+- [ ] **(Manual Developer)** Developer memverifikasi transaksi deployment di Blockscout explorer (`https://explorer.testnet.chain.robinhood.com`).
 - [x] AI Agent memperbarui `omen/web/lib/contracts.ts` dengan alamat kontrak `OmenFactory` untuk Chain ID 46630.
-- [x] **(Manual Developer)** Developer mengisi `NEXT_PUBLIC_OMEN_FACTORY_ADDRESS_ROBINHOOD` pada `omen/web/.env.local`.
+- [ ] **(Manual Developer)** Developer mengisi `NEXT_PUBLIC_OMEN_FACTORY_ADDRESS_ROBINHOOD` pada `omen/web/.env.local`.
 - [x] Memastikan `npx tsc --noEmit` di `omen/web` lulus tanpa type error.
 
 ## Target Lingkup File (Affected Files)
