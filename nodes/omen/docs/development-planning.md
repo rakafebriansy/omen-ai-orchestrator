@@ -182,7 +182,7 @@ Membangun dan menguji `OmenFactory.sol` dan `OmenMarket.sol` menggunakan Foundry
 | 68 | **[TICKET-68](../tickets/TICKET-68-omen-factory-contract-implementation.md)** | Implementasi Smart Contract OmenFactory.sol | High | `omen/contracts/src/OmenFactory.sol`, `IOmenFactory.sol` |
 | 69 | **[TICKET-69](../tickets/TICKET-69-omen-market-contract-implementation.md)** | Implementasi Smart Contract OmenMarket.sol | High | `omen/contracts/src/OmenMarket.sol`, `IOmenMarket.sol` |
 | 70 | **[TICKET-70](../tickets/TICKET-70-foundry-unit-testing-suite.md)** | Foundry Unit & Invariant Testing Suite untuk OmenFactory dan OmenMarket | High | `omen/contracts/test/OmenFactory.t.sol`, `OmenMarket.t.sol` |
-| 71 | **[TICKET-71](../tickets/TICKET-71-manual-foundry-deployment-sepolia-abi-export.md)** *(MANUAL)* | (MANUAL) Deployment Smart Contract ke Ethereum Sepolia & Ekspor Artefak ABI ke Web | High | `omen/contracts/script/DeploySepolia.s.sol`, `web/lib/contracts.ts` |
+| 71 | **[TICKET-71](../tickets/TICKET-71-mock-smart-contract-abi-export.md)** | Setup Mock Smart Contract Environment, Ekspor Artefak ABI ke Web & Konfigurasi Contracts Helper | High | `omen/web/contracts/`, `web/lib/contracts.ts`, `tests/contracts-abi.test.ts` |
 
 #### 3. Phase P02 — Frontend Core (Belief-Centric UI)
 Membangun antarmuka pasar keyakinan sosial (Landing, Markets Feed, Market Detail, Position Panel, Beliefs, Creators, Activity, Submit Wizard).
@@ -248,6 +248,7 @@ Deployment smart contract ke Robinhood Chain Testnet (46630), pengujian E2E sikl
 | 98 | **[TICKET-98](../tickets/TICKET-98-manual-deploy-contracts-robinhood-chain-testnet.md)** *(MANUAL)* | (MANUAL) Deployment Smart Contract ke Robinhood Chain Testnet (Chain ID 46630) | High | `omen/contracts/script/DeployRobinhood.s.sol`, `web/lib/contracts.ts` |
 | 99 | **[TICKET-99](../tickets/TICKET-99-dual-testnet-e2e-validation.md)** | Validasi Siklus Hidup Penuh End-to-End pada Dual Testnet (Sepolia & Robinhood Chain) | High | `omen/web/tests/e2e/belief-market-cycle.test.tsx`, `dual-chain-workflow.test.ts` |
 | 100 | **[TICKET-100](../tickets/TICKET-100-manual-environment-variables-and-trust-checklist.md)** *(MANUAL)* | (MANUAL) Penyediaan Kredensial Environment Variables & Verifikasi Trust Checklist Peluncuran Publik | High | `omen/web/.env.example`, `omen/contracts/.env.example`, `omen/web/README.md` |
+| 101 | **[TICKET-101](../tickets/TICKET-101-manual-foundry-deployment-sepolia.md)** *(MANUAL)* | (MANUAL) Deployment Smart Contract ke Ethereum Sepolia Testnet & Verifikasi Etherscan | High | `omen/contracts/script/DeploySepolia.s.sol`, `omen/web/.env.local` |
 
 ---
 

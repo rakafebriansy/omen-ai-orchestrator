@@ -121,11 +121,12 @@ flowchart TD
 | **3** | **[TICKET-89](../tickets/TICKET-89-api-creator-profiles-and-directory.md)** | Creators Directory API (`GET /api/creators`)| `web/app/api/creators/route.ts`, `[address]/route.ts` | Butuh T65 |
 | **3** | **[TICKET-90](../tickets/TICKET-90-api-activity-feed-public.md)** | Activity Feed API (`GET /api/activity`) | `web/app/api/activity/route.ts` | Butuh T65 |
 | **3** | **[TICKET-91](../tickets/TICKET-91-api-oracle-price-snapshots.md)** | Oracle Snapshot API (`POST /api/oracle/snapshot`)| `web/app/api/oracle/snapshot/route.ts` | Butuh T65 |
-| **4** | **[TICKET-71](../tickets/TICKET-71-manual-foundry-deployment-sepolia-abi-export.md)** *(MANUAL)* | Deploy Sepolia & Ekspor Artefak ABI Web | `contracts/script/DeploySepolia.s.sol`, `web/contracts/` | Butuh T70 |
+| **4** | **[TICKET-71](../tickets/TICKET-71-mock-smart-contract-abi-export.md)** | Setup Mock Contracts, Ekspor ABI & Lib Config | `contracts/src/`, `web/contracts/`, `web/lib/contracts.ts` | Butuh T70 |
 | **4** | **[TICKET-92](../tickets/TICKET-92-api-market-resolution-v1.md)** | Market Resolution API (`POST /resolve`) | `web/app/api/markets/[id]/resolve/route.ts` | Butuh T65, T91 |
 | **5** | **[TICKET-85](../tickets/TICKET-85-api-beliefs-submit-and-market-creation.md)** | Submit Belief & On-Chain Trigger API | `web/app/api/beliefs/submit/route.ts`, `factory-client.ts`| Butuh T65, T71 |
 | **5** | **[TICKET-96](../tickets/TICKET-96-market-resolution-engine-oracle.md)** | Market Resolution Engine Otomatis | `web/lib/market/resolution-engine.ts` | Butuh T71, T92 |
 | **6** | **[TICKET-98](../tickets/TICKET-98-manual-deploy-contracts-robinhood-chain-testnet.md)** *(MANUAL)* | Deploy ke Robinhood Chain Testnet (46630) | `contracts/script/DeployRobinhood.s.sol` | Butuh T70 |
+| **6** | **[TICKET-101](../tickets/TICKET-101-manual-foundry-deployment-sepolia.md)** *(MANUAL)* | Deploy ke Ethereum Sepolia Testnet (11155111) | `contracts/script/DeploySepolia.s.sol` | Butuh T70, T100 |
 
 ---
 

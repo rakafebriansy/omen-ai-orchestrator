@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 10:14:00] - Refactor: TICKET-71 Setup Mock Smart Contract & Pembuatan TICKET-101 Deployment On-Chain
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/rakafebriansy/omen-ai-orchestrator.git`
+- **Konteks:** Menyesuaikan TICKET-71 menjadi *Mock Smart Contract Environment & ABI Export* agar pengembangan frontend/client dapat berjalan instan tanpa ketergantungan faucet publik, serta memindahkan *Live On-Chain Deployment ke Ethereum Sepolia* ke tiket penutup akhir: TICKET-101.
+- **Perubahan:** `[Added/Modified]`
+  1. `TICKET-71-mock-smart-contract-abi-export.md`: Disesuaikan untuk fokus pada kompilasi Foundry, ekspor ABI (`OmenFactory.json` dan `OmenMarket.json`), serta konfigurasi mock address fallback (`0x1111111111111111111111111111111111111111` & `USE_MOCK_CONTRACT = true`). Status: `Done`.
+  2. `TICKET-101-manual-foundry-deployment-sepolia.md`: Tiket baru untuk eksekusi manual deployment on-chain ke Ethereum Sepolia publik dan verifikasi Etherscan di akhir siklus. Status: `Pending Manual Action`.
+  3. Memperbarui matriks dependensi pada `v1-parallel-execution-plan.md` dan `development-planning.md`.
+- **Path File:** `nodes/omen/tickets/TICKET-71-mock-smart-contract-abi-export.md`, `nodes/omen/tickets/TICKET-101-manual-foundry-deployment-sepolia.md`, `nodes/omen/docs/v1-parallel-execution-plan.md`, `nodes/omen/docs/development-planning.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-17 08:35:00] - Implementation: TICKET-100 (MANUAL) Penyediaan Kredensial Environment Variables & Trust Checklist V1
 > **Trigger:** Autonomous Planning | **Branch:** `feat/v1-client` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Referensi Tiket: TICKET-100 ((MANUAL) Penyediaan Kredensial Environment Variables & Verifikasi Trust Checklist Peluncuran Publik)
