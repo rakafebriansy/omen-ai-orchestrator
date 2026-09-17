@@ -1,7 +1,7 @@
 ---
 id: TICKET-69
 title: Implementasi Smart Contract OmenMarket.sol
-status: Todo
+status: Done
 priority: High
 labels: [SmartContract, Foundry, Solidity, Market]
 ---
@@ -17,24 +17,33 @@ Prinsip dan aturan ketat arsitektur V1:
 5. **Penanganan Kasus Ekstrem & VOID:** Jika status `VOID` (oracle gagal atau pembatalan darurat), seluruh partisipan dapat menarik 100% dana pokok mereka secara proporsional.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Mengimplementasikan `OmenMarket.sol` di `omen/contracts/src/OmenMarket.sol`.
-- [ ] Menyediakan fungsi `depositAgree()` dan `depositDisagree()` dengan payable Native ETH.
-- [ ] Menyediakan fungsi `resolveMarket(Outcome outcome)` yang hanya dapat dipanggil oleh Resolver role atau Factory setelah `closeTime`.
-- [ ] Menyediakan fungsi `claimPayout()` dengan kalkulasi proporsional pool share dan proteksi `hasClaimed`.
-- [ ] Menyediakan fungsi `voidMarket()` untuk penanganan darurat/oracle failure yang mengizinkan penarikan refund penuh.
-- [ ] Memancarkan events: `PositionTaken`, `MarketClosed`, `MarketResolved`, `PayoutClaimed`, `MarketVoided`.
-- [ ] Mematuhi Zero-Comment Policy dan lulus kompilasi `forge build` 100%.
+- [x] Mengimplementasikan `OmenMarket.sol` di `omen/contracts/src/OmenMarket.sol`.
+- [x] Menyediakan fungsi `depositAgree()` dan `depositDisagree()` dengan payable Native ETH.
+- [x] Menyediakan fungsi `resolveMarket(Outcome outcome)` yang hanya dapat dipanggil oleh Resolver role atau Factory setelah `closeTime`.
+- [x] Menyediakan fungsi `claimPayout()` dengan kalkulasi proporsional pool share dan proteksi `hasClaimed`.
+- [x] Menyediakan fungsi `voidMarket()` untuk penanganan darurat/oracle failure yang mengizinkan penarikan refund penuh.
+- [x] Memancarkan events: `PositionTaken`, `MarketClosed`, `MarketResolved`, `PayoutClaimed`, `MarketVoided`.
+- [x] Mematuhi Zero-Comment Policy dan lulus kompilasi `forge build` 100%.
 
 ## Target Lingkup File (Affected Files)
 - `omen/contracts/src/OmenMarket.sol`
 - `omen/contracts/src/interfaces/IOmenMarket.sol`
+- `omen/contracts/test/OmenMarket.t.sol`
 
 ---
 
 ## AI Execution Log dan Output
-*⚠️ Peringatan untuk AI Agent: Bagian ini KHUSUS diisi oleh Anda SAAT dan SETELAH mengeksekusi tiket ini.*
-
 - **Langkah Teknis Tereksekusi:**
-  1. ...
+  1. Menulis Foundry unit testing suite mendalam di `omen/contracts/test/OmenMarket.t.sol` (12 skenario pengujian komprehensif: setoran biner, validasi timing `closeTime`, penolakan `0 ETH`, otorisasi resolver/admin, kalkulasi proporsional payout, proteksi double-claim, skenario refund 100% `VOID`, dan darurat `pause`/`unpause`).
+  2. Mengimplementasikan kontrak `OmenMarket.sol` yang mewarisi `ReentrancyGuard` dan `Pausable` OpenZeppelin, mendukung otorisasi peran dinamis via `OmenFactory` (`RESOLVER_ROLE` / `DEFAULT_ADMIN_ROLE`).
+  3. Memvalidasi emisi event `PositionTaken`, `MarketResolved`, `PayoutClaimed`, `MarketVoided`.
+  4. Menjalankan `forge test --match-contract OmenMarketTest -vv` dengan 12 test lulus 100%.
+  5. Menjalankan seluruh test suite Foundry (20 total tests across 3 suites) dengan 100% PASS.
 - **Ringkasan File Terpengaruh:**
+  - `omen/contracts/src/OmenMarket.sol` (Implementasi smart contract individual market settlement & escrow)
+  - `omen/contracts/src/interfaces/IOmenMarket.sol` (Antarmuka publik IOmenMarket)
+  - `omen/contracts/test/OmenMarket.t.sol` (Foundry test suite komprehensif untuk OmenMarket)
 - **Catatan dan Keputusan Arsitektural (Jika Ada):**
+  - Menggunakan pola Pull Claim (user menarik sendiri payout) untuk mencegah kegagalan DoS gas limit pada penyelesaian massal.
+  - Otorisasi fungsi `resolveMarket` dan `voidMarket` terintegrasi langsung dengan RBAC di `OmenFactory` (`RESOLVER_ROLE` & `DEFAULT_ADMIN_ROLE`).
+  - Zero-Comment Policy ditegakkan 100% pada seluruh berkas Solidity.
