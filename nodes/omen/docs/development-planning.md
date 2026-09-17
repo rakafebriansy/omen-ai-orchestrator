@@ -118,14 +118,13 @@ Menghapus seluruh fallback array statis (hardcoded dummy data) di semua halaman 
 | 62 | **[TICKET-62](../tickets/TICKET-62-landing-page-teasers-api-sync.md)** *(DONE)* | Integrasi Live API Data pada Trending Markets Teaser dan Quests Teaser Landing Page | Medium | `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `QuestsTeaser.tsx` |
 | 63 | **[TICKET-63](../tickets/TICKET-63-admin-resolution-and-quest-forms-api-sync.md)** *(DONE)* | Integrasi Live API Data pada Admin Market Resolution Table & Quest Management Form | Medium | `omen/web/components/AdminMarketResolutionTable.tsx`, `AdminQuestManagementForm.tsx`, `app/admin/page.tsx` |
 
-#### 6. Tahap 6: Live Testnet Activation (Pasca-MVP)
-Aktivasi smart contract on-chain di jaringan Arbitrum Sepolia dan integrasi live wallet browser.
+#### 6. Tahap 6: Live Testnet Activation (Telah Digantikan oleh Arsitektur V1 Dual-Testnet)
+*Catatan: Rencana legacy deployment Arbitrum Sepolia (TICKET-55) telah dihapus dan digantikan oleh arsitektur Dual-Testnet Foundry V1 (Ethereum Sepolia di TICKET-101 & Robinhood Chain Testnet di TICKET-98).*
 
 | No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
 |:---:|---|---|:---:|---|
-| 55 | **[TICKET-55](../tickets/TICKET-55-manual-arbitrum-sepolia-contract-deployment.md)** *(MANUAL)* | Deployment Smart Contract ke Arbitrum Sepolia Testnet & Verifikasi Arbiscan | High | `omen/contracts/.env`, `deploy.ts`, `contracts.ts` |
-| 56 | **[TICKET-56](../tickets/TICKET-56-real-web3-wallet-connection-integration.md)** | Integrasi Real Wagmi Web3 Wallet Connection & Network Switcher | High | `omen/web/components/ConnectWalletButton.tsx`, `NetworkSwitcherModal.tsx` |
-| 57 | **[TICKET-57](../tickets/TICKET-57-real-web3-live-onchain-switch.md)** | Real On-Chain Contract Wiring (Switch Mock Engine ke Live Arbitrum Sepolia) | High | `omen/web/.env.local`, `usePlaceBet.ts`, `useClaimPayout.ts` |
+| 56 | **[TICKET-56](../tickets/TICKET-56-real-web3-wallet-connection-integration.md)** *(DONE via TICKET-64)* | Integrasi Real Wagmi Web3 Wallet Connection & Network Switcher | High | `omen/web/components/ConnectWalletButton.tsx`, `NetworkSwitcherModal.tsx` |
+| 57 | **[TICKET-57](../tickets/TICKET-57-real-web3-live-onchain-switch.md)** *(DONE via TICKET-93..101)* | Real On-Chain Contract Wiring (Dual-Testnet Sepolia & Robinhood) | High | `omen/web/.env.local`, `usePlaceBet.ts`, `useClaimPayout.ts` |
 
 ---
 

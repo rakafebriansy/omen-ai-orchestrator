@@ -17,6 +17,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 13:40:00] - Refactor: Eliminasi Legacy TICKET-55 & Script Deployment Hardhat Arbitrum Sepolia
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/rakafebriansy/omen-ai-orchestrator.git`
+- **Konteks:** Menghapus tiket manual usang dan script deployment Hardhat lama yang telah digantikan secara penuh oleh arsitektur Dual-Testnet Foundry V1 (Ethereum Sepolia di TICKET-101 dan Robinhood Chain Testnet di TICKET-98).
+- **Perubahan:** `[Deleted/Modified]`
+  1. `omen/contracts/scripts/deploy.ts` & `omen/contracts/scripts/` (DELETED): Menghapus script deployment Hardhat legacy Arbitrum Sepolia dari codebase.
+  2. `nodes/omen/tickets/TICKET-55-manual-arbitrum-sepolia-contract-deployment.md` (DELETED): Menghapus tiket manual Phase 5 legacy dari backlog orchestrator.
+  3. `nodes/omen/docs/development-planning.md`: Memperbarui tabel backlog Tahap 6 menandai eliminasi TICKET-55 dan penegasan arsitektur Dual-Testnet V1.
+- **Path File:** `omen/contracts/scripts/deploy.ts`, `nodes/omen/tickets/TICKET-55-manual-arbitrum-sepolia-contract-deployment.md`, `nodes/omen/docs/development-planning.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-17 11:42:00] - Refactor: Isolasi File Kontrak Produksi, Error Handling Eksplisit, Migrasi Wagmi mutateAsync & Pragma Compatibility
 > **Trigger:** User Request | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Penyempurnaan arsitektur smart contracts pada layer frontend web3, pemisahan total mock vs production, penegakan explicit error throwing, migrasi method mutasi Wagmi v3 deprecated, serta perbaikan pragma compiler Solidity pada script deployment.
