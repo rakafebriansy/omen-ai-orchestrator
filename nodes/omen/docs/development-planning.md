@@ -133,6 +133,10 @@ Aktivasi smart contract on-chain di jaringan Arbitrum Sepolia dan integrasi live
 
 Fase V1 mentransformasikan platform OMEN menjadi **Social Belief Market Protocol** terdesentralisasi multi-chain (Ethereum Sepolia + Robinhood Chain Testnet 46630), beralih dari prediksi biner biasa ke pasar keyakinan sosial (AGREE/DISAGREE), orakel deterministik Chainlink, dan konfirmasi kreator EIP-712.
 
+> ⚡ **Multi-Agent Parallel Execution Plan:**
+> Untuk pemetaan alur eksekusi paralel 4 AI Agent (Smart Contract, Backend, Frontend UI, dan Web3 Integrator) beserta matriks dependensi antar-tiket lengkap (DAG), lihat dokumen:
+> 👉 **[v1-parallel-execution-plan.md](./v1-parallel-execution-plan.md)**
+
 ### Strategi Eksekusi V1
 
 ```
