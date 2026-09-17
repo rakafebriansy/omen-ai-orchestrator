@@ -17,6 +17,73 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 14:00:00] - Refactor: Eliminasi Fallback Values & Penegakan Explicit Error Throwing di openrouter.ts
+> **Trigger:** User Request | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menghilangkan seluruh nilai fallback/dummy bawaan pada modul produksi `web/lib/ai/openrouter.ts`. Jika variabel `AI_API_KEY`/`OPENROUTER_API_KEY` atau `AI_MODEL`/`OPENROUTER_MODEL` tidak tersedia/kosong, sistem secara ketat melempar `Error` eksplisit.
+- **Perubahan:** `[Purified/Updated]`
+  1. `web/lib/ai/openrouter.ts`: Menghapus fallback string `"mock-openrouter-key"` dan default model; menegakkan `throw new Error(...)` ketika environment variables tidak terkonfigurasi.
+  2. `web/tests/api-beliefs-extract.test.ts`: Menambahkan unit test suite untuk memverifikasi penolakan eksekusi saat API key dan Model key kosong.
+  3. `graphify update`: Menyelaraskan AST graph (677 nodes, 1864 edges).
+- **Path File:** `omen/web/lib/ai/openrouter.ts`, `omen/web/tests/api-beliefs-extract.test.ts`, `nodes/omen/CHANGELOG.md`
+
+
+
+### [2026-09-17 13:58:00] - Refactor: Standarisasi Konvensi Penamaan File Mock Menjadi Format mockXxx
+> **Trigger:** User Request | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menyelaraskan seluruh konvensi penamaan file mock dari kebab-case (`mock-xxx.ts`) ke format `mockXxx.ts` (`mockContracts.ts`, `mockOpenRouter.ts`) sesuai arahan standar penamaan codebase.
+- **Perubahan:** `[Renamed/Updated]`
+  1. `web/lib/mock-contracts.ts` ➔ `web/lib/mockContracts.ts`.
+  2. `web/lib/ai/mock-openrouter.ts` ➔ `web/lib/ai/mockOpenRouter.ts`.
+  3. Memperbarui seluruh jalur import di hooks (`usePosition.ts`, `useClaim.ts`, `useCreateMarket.ts`, `useCreatorConfirm.ts`, `useMarket.ts`), route handler (`extract/route.ts`), dan test suite (`contracts-abi.test.ts`).
+  4. `graphify update`: Menyelaraskan AST code graph.
+- **Path File:** `omen/web/lib/mockContracts.ts`, `omen/web/lib/ai/mockOpenRouter.ts`, `omen/web/hooks/`, `omen/web/app/api/beliefs/extract/route.ts`, `omen/web/tests/contracts-abi.test.ts`, `nodes/omen/CHANGELOG.md`
+
+
+
+### [2026-09-17 13:56:00] - Refactor: Pemisahan Fisik Total Antara File Produksi dan File Mock (AI & Contracts)
+> **Trigger:** User Request | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menegakkan pemisahan fisik murni antara file kode produksi (`openrouter.ts`, `contracts.ts`) dan file mock simulator (`mock-openrouter.ts`, `mock-contracts.ts`), memastikan file produksi bersih dari logika mock dan file mock terisolasi secara modular.
+- **Perubahan:** `[Added/Modified/Isolated]`
+  1. `web/lib/ai/openrouter.ts`: Dimurnikan menjadi modul produksi 100% untuk pemanggilan live OpenRouter API, HTTP payload framing, dan Zod schema validation tanpa ada helper mock di dalamnya.
+  2. `web/lib/ai/mock-openrouter.ts` (NEW): Modul mock murni yang mengisolasi `USE_MOCK_AI` dan `extractMockBelief` (analisis heuristik offline untuk ekstraksi opini).
+  3. `web/app/api/beliefs/extract/route.ts`: Mengarahkan pemanggilan secara type-safe antara `openrouter.ts` (mode live) dan `mock-openrouter.ts` (mode mock/dummy).
+  4. `web/lib/contracts.ts` vs `web/lib/mock-contracts.ts`: Mempertahankan isolasi kontrak produksi murni vs fallback mock dual-chain.
+- **Path File:** `omen/web/lib/ai/openrouter.ts`, `omen/web/lib/ai/mock-openrouter.ts`, `omen/web/app/api/beliefs/extract/route.ts`, `omen/web/lib/contracts.ts`, `omen/web/lib/mock-contracts.ts`, `nodes/omen/CHANGELOG.md`
+
+
+
+### [2026-09-17 13:54:00] - Refactor: Integrasi Mock Heuristic Runtime di Layer Produksi/Aplikasi (TICKET-98 & TICKET-100)
+> **Trigger:** User Request | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menanamkan fallback mock otomatis di tingkat runtime aplikasi/produksi (bukan hanya pada unit test), sehingga saat aplikasi dijalankan dengan konfigurasi dummy (TICKET-100) atau simulasi Robinhood (TICKET-98), fitur AI Extraction dan Smart Contract interaction tetap berjalan mulus secara offline/simulator tanpa ketergantungan API key eksternal.
+- **Perubahan:** `[Added/Modified]`
+  1. `web/lib/ai/openrouter.ts`: Menambahkan fungsi `extractMockBelief` dengan deteksi aset, arah, harga target, dan batas waktu secara heuristik; otomatis aktif saat `AI_API_KEY` menggunakan dummy key atau terjadi kegagalan jaringan di luar testing.
+  2. `web/.env.example`: Menyelaraskan seluruh template variabel dummy dual-chain (`NEXT_PUBLIC_USE_MOCK_CONTRACT=true`, `NEXT_PUBLIC_OMEN_FACTORY_ADDRESS_SEPOLIA`, `NEXT_PUBLIC_OMEN_FACTORY_ADDRESS_ROBINHOOD`).
+  3. `graphify update`: Melakukan sinkronisasi AST code graph (679 nodes, 1872 edges).
+- **Path File:** `omen/web/lib/ai/openrouter.ts`, `omen/web/.env.example`, `omen/web/lib/mock-contracts.ts`, `nodes/omen/CHANGELOG.md`
+
+
+
+### [2026-09-17 13:48:00] - Refactor: TICKET-100 Konfigurasi Environment Dummy & Pembuatan TICKET-103 Kredensial Produksi
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/rakafebriansy/omen-ai-orchestrator.git`
+- **Konteks:** Menyesuaikan TICKET-100 menjadi *Konfigurasi Environment Template (Dummy) & Verifikasi Trust Checklist V1* (Status: Done) agar pengembangan lokal dan build/test suite dapat berjalan instan dengan dummy secrets tanpa setup manual, serta memindahkan *Penyediaan Kredensial Nyata & Konfigurasi Environment Production (.env.local)* ke tiket baru: TICKET-103.
+- **Perubahan:** `[Added/Modified/Renamed]`
+  1. `TICKET-100-dummy-environment-variables-and-trust-checklist.md`: Dikonfigurasi fokus pada template `.env.example`, nilai dummy yang aman untuk pengujian lokal, dan kelulusan Trust Checklist. Status: `Done`.
+  2. `TICKET-103-manual-production-credentials-and-environment-setup.md` (NEW): Tiket manual untuk penyediaan API keys nyata (OpenRouter), private key server-side admin ber-saldo gas, RPC endpoints, dan live factory contract addresses ke `.env.local`. Status: `In Progress (Pending Manual Configuration)`.
+  3. Memperbarui matriks dependensi pada `development-planning.md` dan `v1-parallel-execution-plan.md`.
+- **Path File:** `nodes/omen/tickets/TICKET-100-dummy-environment-variables-and-trust-checklist.md`, `nodes/omen/tickets/TICKET-103-manual-production-credentials-and-environment-setup.md`, `nodes/omen/docs/development-planning.md`, `nodes/omen/docs/v1-parallel-execution-plan.md`, `nodes/omen/CHANGELOG.md`
+
+
+
+### [2026-09-17 13:45:00] - Refactor: TICKET-98 Konfigurasi Mock Robinhood & Pembuatan TICKET-102 Live Deployment On-Chain
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/rakafebriansy/omen-ai-orchestrator.git`
+- **Konteks:** Menyesuaikan TICKET-98 menjadi *Mock Smart Contract Environment & Dual-Chain Robinhood Simulation* (Status: Done) agar pengembangan lokal dan pengujian multi-chain dapat berjalan tanpa wallet/faucet, serta memindahkan *Live On-Chain Deployment ke Robinhood Chain Testnet (46630)* ke tiket baru: TICKET-102.
+- **Perubahan:** `[Added/Modified/Renamed]`
+  1. `TICKET-98-mock-contracts-robinhood-chain-testnet.md`: Dikonfigurasi fokus pada mock address fallback `MOCK_OMEN_FACTORY_ADDRESS_ROBINHOOD` (`0x2222222222222222222222222222222222222222`) dan simulasi dual-chain. Status: `Done`.
+  2. `TICKET-102-manual-deploy-contracts-robinhood-chain-testnet.md` (NEW): Tiket manual untuk live on-chain deployment ke Robinhood Chain Testnet publik via Foundry broadcast dan verifikasi Blockscout. Status: `In Progress (Pending Manual Action)`.
+  3. Memperbarui matriks dependensi pada `development-planning.md` dan `v1-parallel-execution-plan.md`.
+- **Path File:** `nodes/omen/tickets/TICKET-98-mock-contracts-robinhood-chain-testnet.md`, `nodes/omen/tickets/TICKET-102-manual-deploy-contracts-robinhood-chain-testnet.md`, `nodes/omen/docs/development-planning.md`, `nodes/omen/docs/v1-parallel-execution-plan.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-17 13:40:00] - Refactor: Eliminasi Legacy TICKET-55 & Script Deployment Hardhat Arbitrum Sepolia
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/rakafebriansy/omen-ai-orchestrator.git`
 - **Konteks:** Menghapus tiket manual usang dan script deployment Hardhat lama yang telah digantikan secara penuh oleh arsitektur Dual-Testnet Foundry V1 (Ethereum Sepolia di TICKET-101 dan Robinhood Chain Testnet di TICKET-98).

@@ -125,8 +125,9 @@ flowchart TD
 | **4** | **[TICKET-92](../tickets/TICKET-92-api-market-resolution-v1.md)** | Market Resolution API (`POST /resolve`) | `web/app/api/markets/[id]/resolve/route.ts` | Butuh T65, T91 |
 | **5** | **[TICKET-85](../tickets/TICKET-85-api-beliefs-submit-and-market-creation.md)** | Submit Belief & On-Chain Trigger API | `web/app/api/beliefs/submit/route.ts`, `factory-client.ts`| Butuh T65, T71 |
 | **5** | **[TICKET-96](../tickets/TICKET-96-market-resolution-engine-oracle.md)** | Market Resolution Engine Otomatis | `web/lib/market/resolution-engine.ts` | Butuh T71, T92 |
-| **6** | **[TICKET-98](../tickets/TICKET-98-manual-deploy-contracts-robinhood-chain-testnet.md)** *(MANUAL)* | Deploy ke Robinhood Chain Testnet (46630) | `contracts/script/DeployRobinhood.s.sol` | Butuh T70 |
+| **6** | **[TICKET-98](../tickets/TICKET-98-mock-contracts-robinhood-chain-testnet.md)** | Setup Mock Contracts & Dual-Chain Robinhood Simulation | `contracts/script/DeployRobinhood.s.sol`, `web/lib/mockContracts.ts` | Butuh T70 |
 | **6** | **[TICKET-101](../tickets/TICKET-101-manual-foundry-deployment-sepolia.md)** *(MANUAL)* | Deploy ke Ethereum Sepolia Testnet (11155111) | `contracts/script/DeploySepolia.s.sol` | Butuh T70, T100 |
+| **6** | **[TICKET-102](../tickets/TICKET-102-manual-deploy-contracts-robinhood-chain-testnet.md)** *(MANUAL)* | Deploy ke Robinhood Chain Testnet (46630) | `contracts/script/DeployRobinhood.s.sol` | Butuh T70, T100 |
 
 ---
 
@@ -154,7 +155,8 @@ flowchart TD
 | **4** | **[TICKET-97](../tickets/TICKET-97-creator-confirmation-flow-ui-and-hook.md)** | `CreatorConfirmation` UI & EIP-712 Hook | `web/components/CreatorConfirmation.tsx`, `hooks/` | Butuh T64, **Gate 1 (T71 ABI)** |
 | **5** | **[TICKET-75](../tickets/TICKET-75-market-detail-multi-panel-page.md)** | Halaman Market Detail Multi-Panel (`/market/[id]`)| `web/app/market/[id]/page.tsx`, `MarketDetailPanels.tsx`| Butuh T76, T93 |
 | **6** | **[TICKET-99](../tickets/TICKET-99-dual-testnet-e2e-validation.md)** | Dual-Testnet Full Cycle E2E Test Suite | `web/tests/e2e/belief-market-cycle.test.tsx` | Butuh **Gate 2 (All Assembled)** |
-| **6** | **[TICKET-100](../tickets/TICKET-100-manual-environment-variables-and-trust-checklist.md)** *(MANUAL)* | Environment Variables & Final Trust Checklist | `web/.env.example`, `contracts/.env.example`, `README.md`| Butuh T99 |
+| **6** | **[TICKET-100](../tickets/TICKET-100-dummy-environment-variables-and-trust-checklist.md)** | Environment Variables Template & Trust Checklist | `web/.env.example`, `README.md`| Butuh T99 |
+| **6** | **[TICKET-103](../tickets/TICKET-103-manual-production-credentials-and-environment-setup.md)** *(MANUAL)* | Kredensial Nyata & Production Environment Setup | `web/.env.local`, `contracts/.env` | Butuh T100, T101, T102 |
 
 ---
 
@@ -169,7 +171,7 @@ Hanya ada **2 momen komunikasi** yang dibutuhkan antara kedua agent:
 ### 🤝 Sync Point 2: Konvergensi Pengujian E2E (Setelah Semua Komponen Terpasang)
 1. **Pemicu:** Agent 1 telah menyelesaikan seluruh API & kontrak Robinhood (`TICKET-98`), dan Agent 2 telah menyelesaikan seluruh UI & Hooks (`TICKET-75, 97`).
 2. **Dampak:** Agent 2 mengeksekusi `TICKET-99` (E2E Test Suite) untuk memvalidasi siklus penuh di browser/simulator pada kedua chain.
-3. **Penyelesaian:** Developer dan Agent 2 menyelesaikan `TICKET-100` (Review Final).
+3. **Penyelesaian:** Penyelesaian `TICKET-100` (Review Template & Trust Checklist), diikuti `TICKET-101`, `TICKET-102`, dan `TICKET-103` untuk live on-chain deployment & kredensial nyata.
 
 ---
 
@@ -191,7 +193,7 @@ Lingkup kerjamu DIBATASI HANYA pada direktori:
 DILARANG KERAS mengedit file di components/, hooks/, atau app/ selain folder api/.
 
 Misi tugasmu adalah mengeksekusi 18 tiket berikut secara berurutan:
-TICKET-67 -> TICKET-65 (MANUAL) -> TICKET-68 -> TICKET-69 -> TICKET-84 -> TICKET-70 -> TICKET-83 -> TICKET-86 -> TICKET-87 -> TICKET-88 -> TICKET-89 -> TICKET-90 -> TICKET-91 -> TICKET-71 (MANUAL) -> TICKET-92 -> TICKET-85 -> TICKET-96 -> TICKET-98 (MANUAL).
+TICKET-67 -> TICKET-65 (MANUAL) -> TICKET-68 -> TICKET-69 -> TICKET-84 -> TICKET-70 -> TICKET-83 -> TICKET-86 -> TICKET-87 -> TICKET-88 -> TICKET-89 -> TICKET-90 -> TICKET-91 -> TICKET-71 -> TICKET-92 -> TICKET-85 -> TICKET-96 -> TICKET-98. (Deployment live ditutup pada TICKET-101, TICKET-102, dan TICKET-103).
 
 Mulai sekarang dari TICKET-67 dan TICKET-65.
 ```
@@ -211,7 +213,7 @@ DILARANG KERAS mengedit file di contracts/, db/migrations/, atau app/api/.
 WAJIB MEMPERTAHANKAN seluruh tema OpenZeppelin dark mode, palet warna, tipografi, dan style existing (jangan rebuild dari nol).
 
 Misi tugasmu adalah mengeksekusi 19 tiket berikut secara berurutan:
-TICKET-64 -> TICKET-66 -> TICKET-73 -> TICKET-76 -> TICKET-78 -> TICKET-72 -> TICKET-77 -> TICKET-80 -> TICKET-81 -> TICKET-95 -> TICKET-74 -> TICKET-79 -> TICKET-82 -> (Tunggu ABI Kontrak T71) -> TICKET-93 -> TICKET-94 -> TICKET-97 -> TICKET-75 -> TICKET-99 -> TICKET-100 (MANUAL).
+TICKET-64 -> TICKET-66 -> TICKET-73 -> TICKET-76 -> TICKET-78 -> TICKET-72 -> TICKET-77 -> TICKET-80 -> TICKET-81 -> TICKET-95 -> TICKET-74 -> TICKET-79 -> TICKET-82 -> (Tunggu ABI Kontrak T71) -> TICKET-93 -> TICKET-94 -> TICKET-97 -> TICKET-75 -> TICKET-99 -> TICKET-100 (Dummy Setup).
 
 Mulai sekarang dari TICKET-64 dan TICKET-66.
 ```

@@ -244,10 +244,12 @@ Deployment smart contract ke Robinhood Chain Testnet (46630), pengujian E2E sikl
 
 | No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
 |:---:|---|---|:---:|---|
-| 98 | **[TICKET-98](../tickets/TICKET-98-manual-deploy-contracts-robinhood-chain-testnet.md)** *(MANUAL)* | (MANUAL) Deployment Smart Contract ke Robinhood Chain Testnet (Chain ID 46630) | High | `omen/contracts/script/DeployRobinhood.s.sol`, `web/lib/contracts.ts` |
-| 99 | **[TICKET-99](../tickets/TICKET-99-dual-testnet-e2e-validation.md)** | Validasi Siklus Hidup Penuh End-to-End pada Dual Testnet (Sepolia & Robinhood Chain) | High | `omen/web/tests/e2e/belief-market-cycle.test.tsx`, `dual-chain-workflow.test.ts` |
-| 100 | **[TICKET-100](../tickets/TICKET-100-manual-environment-variables-and-trust-checklist.md)** *(MANUAL)* | (MANUAL) Penyediaan Kredensial Environment Variables & Verifikasi Trust Checklist Peluncuran Publik | High | `omen/web/.env.example`, `omen/contracts/.env.example`, `omen/web/README.md` |
+| 98 | **[TICKET-98](../tickets/TICKET-98-mock-contracts-robinhood-chain-testnet.md)** *(DONE)* | Konfigurasi Mock Smart Contract & Simulasi Dual-Chain Robinhood Testnet (Chain ID 46630) | High | `omen/contracts/script/DeployRobinhood.s.sol`, `web/lib/mockContracts.ts` |
+| 99 | **[TICKET-99](../tickets/TICKET-99-dual-testnet-e2e-validation.md)** *(DONE)* | Validasi Siklus Hidup Penuh End-to-End pada Dual Testnet (Sepolia & Robinhood Chain) | High | `omen/web/tests/e2e/belief-market-cycle.test.tsx`, `dual-chain-workflow.test.ts` |
+| 100 | **[TICKET-100](../tickets/TICKET-100-dummy-environment-variables-and-trust-checklist.md)** *(DONE)* | Konfigurasi Environment Template (Dummy) & Verifikasi Trust Checklist V1 | High | `omen/web/.env.example`, `omen/web/README.md` |
 | 101 | **[TICKET-101](../tickets/TICKET-101-manual-foundry-deployment-sepolia.md)** *(MANUAL)* | (MANUAL) Deployment Smart Contract ke Ethereum Sepolia Testnet & Verifikasi Etherscan | High | `omen/contracts/script/DeploySepolia.s.sol`, `omen/web/.env.local` |
+| 102 | **[TICKET-102](../tickets/TICKET-102-manual-deploy-contracts-robinhood-chain-testnet.md)** *(MANUAL)* | (MANUAL) Deployment Smart Contract ke Robinhood Chain Testnet (Chain ID 46630) | High | `omen/contracts/script/DeployRobinhood.s.sol`, `omen/web/.env.local` |
+| 103 | **[TICKET-103](../tickets/TICKET-103-manual-production-credentials-and-environment-setup.md)** *(MANUAL)* | (MANUAL) Penyediaan Kredensial Nyata & Konfigurasi Environment Production (.env.local) | High | `omen/web/.env.local`, `omen/contracts/.env` |
 
 ---
 
