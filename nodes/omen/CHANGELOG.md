@@ -17,6 +17,20 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 23:20:00] - Implementation: Admin Deployment Mock Fallback, Theme Consistency, Belief Submission Fix, Mobile Responsiveness & TICKET-111 AI Review Setup
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Perbaikan tombol Confirm & Deploy On-Chain, standardisasi dark/light mode pada seluruh komponen, perbaikan database constraint error pada submit social belief, pembuatan TICKET-111 untuk integrasi AI Review riil (Free API Key), dan optimasi mobile responsiveness.
+- **Perubahan:** `[Fixed/Added/Enhanced]`
+  1. `web/app/api/beliefs/submit/route.ts`: Menyertakan `contract_market_id: generatedMarketId`, `title`, dan `deadline` pada insert tabel `markets` untuk mencegah error constraint `null value in column "contract_market_id" of relation "markets" violates not-null constraint`.
+  2. `web/db/migrations/03_relax_market_constraints.sql`: Menyediakan migrasi database relaksasi constraint `NOT NULL` pada `contract_market_id`, `title`, dan `deadline`.
+  3. `web/hooks/useAdminCreateMarket.ts` & `web/hooks/useAdminResolveMarket.ts`: Menyelaraskan integrasi kontrak on-chain dengan `PREDICTION_MARKET_ADDRESS` dan `mutateAsync`, mendukung mock simulator dan penanganan status transaksi yang tangguh.
+  4. `web/components/ThemeProvider.tsx` & `web/app/globals.css`: Mengonfigurasi `@custom-variant dark (&:where(.dark, .dark *));` dan sinkronisasi class `dark` serta `colorScheme` pada `<html>` untuk Tailwind CSS v4.
+  5. `web/components/AdminMarketCreateForm.tsx`, `AdminQuestManagementForm.tsx`, `AdminMarketResolutionTable.tsx`, `MarketDetailPanels.tsx`, `CreatorConfirmation.tsx`, `BeliefSubmitForm.tsx`: Menstandarkan tema dark/light beresolusi tinggi, memperbaiki modal konfirmasi yang kini responsif dengan scroll (`max-h-[90vh] overflow-y-auto`), input contrast, dan touch layout ramah mobile.
+  6. `nodes/omen/tickets/TICKET-111-live-ai-review-integration-and-free-api-key-setup.md`: Membuat tiket komprehensif untuk mengintegrasikan model LLM riil pada AI Review menggunakan Free AI API key (OpenRouter free tier, Groq cloud, Google AI Studio Gemini).
+  7. `web/tests/`: Memverifikasi 74 test suite (383 unit tests lulus 100%), 0 error ESLint, lulus `npx tsc --noEmit`, dan 100% patuh pada Zero-Comment Policy.
+- **Path File:** `omen/web/app/api/beliefs/submit/route.ts`, `omen/web/db/migrations/03_relax_market_constraints.sql`, `omen/web/hooks/`, `omen/web/components/`, `omen/web/app/globals.css`, `nodes/omen/tickets/TICKET-111-live-ai-review-integration-and-free-api-key-setup.md`, `nodes/omen/CHANGELOG.md`
+
+
 ### [2026-09-17 16:40:00] - Ticket: TICKET-110 Frontend Animation System Implementation (Pure CSS Keyframes, Fade & Slide)
 > **Trigger:** Prompt Driven | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "buatlah animasi dari frontend@app . rincikan semua page dan berikan ide animasi lengkap untuk setiap element di page tersebut. untuk sederhana pakai animasi fade atau slide saja. buatlah yang cocok dan sesuai" (TICKET-110)
