@@ -17,6 +17,17 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 11:42:00] - Refactor: Isolasi File Kontrak Produksi, Error Handling Eksplisit, Migrasi Wagmi mutateAsync & Pragma Compatibility
+> **Trigger:** User Request | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Penyempurnaan arsitektur smart contracts pada layer frontend web3, pemisahan total mock vs production, penegakan explicit error throwing, migrasi method mutasi Wagmi v3 deprecated, serta perbaikan pragma compiler Solidity pada script deployment.
+- **Perubahan:** `[Added/Modified/Refactored]`
+  1. `web/lib/mock-contracts.ts` (NEW): Modul khusus mock yang mengisolasi seluruh konstanta fallback testing (`MOCK_OMEN_FACTORY_ADDRESS_SEPOLIA`, `MOCK_OMEN_FACTORY_ADDRESS_ROBINHOOD`, `MOCK_PREDICTION_MARKET_ADDRESS`, `USE_MOCK_CONTRACT`, `getMockOmenFactoryAddress`).
+  2. `web/lib/contracts.ts`: Dimurnikan menjadi file produksi murni tanpa hardcoded address tiruan maupun string kosong (`""`); mengimplementasikan fungsi resolver type-safe (`getOmenFactoryAddress`, `getPredictionMarketAddress`) yang melempar `Error` secara eksplisit jika environment variables belum terkonfigurasi.
+  3. Web3 Hooks (`useClaim.ts`, `usePosition.ts`, `useCreateMarket.ts`, `useClaimPayout.ts`, `usePlaceBet.ts`, `useAdminCreateMarket.ts`, `useAdminResolveMarket.ts`, `useCreatorConfirm.ts`): Dimigrasikan dari method deprecated `writeContractAsync` & `signTypedDataAsync` ke standar TanStack Mutation `mutateAsync` dari Wagmi v3 (`^3.7.7`).
+  4. Foundry Scripts (`DeploySepolia.s.sol`, `DeployRobinhood.s.sol`): Memperbarui pragma dari fixed `pragma solidity 0.8.24;` ke floating `pragma solidity ^0.8.20;` untuk kompatibilitas language server IDE tanpa mengubah konfigurasi kompilasi deterministik `solc_version = "0.8.24"` di `foundry.toml`.
+  5. Pengujian & Kualitas: 73/73 test files (379/379 tests) di Vitest dan 4 suites (25/25 tests) di Foundry lulus 100%, 0 type error di `tsc`, 0 ESLint error, dan 100% kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/lib/contracts.ts`, `omen/web/lib/mock-contracts.ts`, `omen/web/hooks/`, `omen/web/tests/`, `omen/contracts/script/DeploySepolia.s.sol`, `omen/contracts/script/DeployRobinhood.s.sol`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-17 10:14:00] - Refactor: TICKET-71 Setup Mock Smart Contract & Pembuatan TICKET-101 Deployment On-Chain
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/rakafebriansy/omen-ai-orchestrator.git`
 - **Konteks:** Menyesuaikan TICKET-71 menjadi *Mock Smart Contract Environment & ABI Export* agar pengembangan frontend/client dapat berjalan instan tanpa ketergantungan faucet publik, serta memindahkan *Live On-Chain Deployment ke Ethereum Sepolia* ke tiket penutup akhir: TICKET-101.
