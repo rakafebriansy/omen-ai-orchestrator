@@ -1,13 +1,15 @@
 ---
 id: TICKET-100
-title: Konfigurasi Environment Variables Lengkap & Verifikasi Trust Checklist Peluncuran Publik
+title: (MANUAL) Penyediaan Kredensial Environment Variables & Verifikasi Trust Checklist Peluncuran Publik
 status: Todo
 priority: High
-labels: [DevOps, Security, Documentation, Configuration]
+labels: [DevOps, Security, Documentation, Configuration, ManualAction]
 ---
 
 # Deskripsi
-Tiket penutup arsitektur OMEN V1 ini bertujuan mendokumentasikan seluruh konfigurasi environment variables yang dibutuhkan untuk deployment produksi / live staging serta melakukan audit verifikasi kepatuhan terhadap **Trust Checklist** sebelum peluncuran publik.
+Tiket penutup arsitektur OMEN V1 ini bertujuan mendokumentasikan seluruh konfigurasi environment variables yang dibutuhkan untuk deployment live / public testnet serta melakukan verifikasi kepatuhan terhadap **Trust Checklist** sebelum peluncuran publik.
+
+Tiket ini mencakup penyusunan template `.env.example` dan dokumentasi arsitektur di `README.md` oleh AI, pengisian kredensial API keys dan private key oleh Developer di `.env.local`, serta audit verifikasi menyeluruh.
 
 Cakupan Variabel Lingkungan:
 ```env
@@ -33,8 +35,9 @@ Item Trust Checklist yang diverifikasi:
 5. README proyek memuat instruksi instalasi, arsitektur, dan panduan kontribusi yang komprehensif.
 
 ## Acceptance Criteria (Kriteria Penerimaan)
-- [ ] Memperbarui `omen/web/.env.example` dan `omen/contracts/.env.example` dengan seluruh variabel lingkungan V1.
-- [ ] Menyusun dokumentasi arsitektur dan panduan menjalankan proyek pada `omen/web/README.md`.
+- [ ] AI Agent memperbarui `omen/web/.env.example` dan `omen/contracts/.env.example` dengan seluruh variabel lingkungan V1.
+- [ ] AI Agent menyusun dokumentasi arsitektur dan panduan menjalankan proyek pada `omen/web/README.md`.
+- [ ] **(Manual Developer)** Developer mengisi kredensial nyata (`AI_API_KEY` OpenRouter, `ADMIN_PRIVATE_KEY`, RPC URLs) pada `omen/web/.env.local`.
 - [ ] Memastikan tidak ada secret/API key yang terekspos ke bundle browser client (`NEXT_PUBLIC_`).
 - [ ] Memverifikasi kelulusan 100% build Next.js (`npm run build`), TypeScript typecheck (`tsc --noEmit`), dan seluruh test suite Vitest.
 - [ ] Mematuhi Zero-Comment Policy pada seluruh codebase.
@@ -42,6 +45,7 @@ Item Trust Checklist yang diverifikasi:
 ## Target Lingkup File (Affected Files)
 - `omen/web/.env.example`
 - `omen/contracts/.env.example`
+- `omen/web/.env.local`
 - `omen/web/README.md`
 
 ---

@@ -166,7 +166,7 @@ Menyesuaikan konfigurasi provider, skema basis data 11 tabel, dan kerangka navig
 | No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
 |:---:|---|---|:---:|---|
 | 64 | **[TICKET-64](../tickets/TICKET-64-refactor-wagmi-config-multi-chain.md)** | Refactor Wagmi Config & Web3 Providers untuk Ethereum Sepolia dan Robinhood Chain Testnet | High | `omen/web/lib/wagmi.ts`, `providers.tsx`, `NetworkSwitcherModal.tsx` |
-| 65 | **[TICKET-65](../tickets/TICKET-65-database-schema-v1-beliefs-migration.md)** | Migrasi Skema Basis Data Supabase V1 (11 Tabel Arsitektur Social Beliefs) | High | `omen/web/db/migrations/02_v1_belief_schema.sql`, `types/database.ts` |
+| 65 | **[TICKET-65](../tickets/TICKET-65-manual-database-schema-v1-beliefs-migration.md)** *(MANUAL)* | (MANUAL) Migrasi Skema Basis Data Supabase V1 (11 Tabel Arsitektur Social Beliefs) | High | `omen/web/db/migrations/02_v1_belief_schema.sql`, `types/database.ts` |
 | 66 | **[TICKET-66](../tickets/TICKET-66-refactor-navbar-layout-shell-v1.md)** | Refactor Navbar, Footer & Layout Shell Navigasi V1 | High | `omen/web/components/Navbar.tsx`, `Footer.tsx`, `app/layout.tsx` |
 
 #### 2. Phase P01 — Smart Contract Core (Foundry)
@@ -178,7 +178,7 @@ Membangun dan menguji `OmenFactory.sol` dan `OmenMarket.sol` menggunakan Foundry
 | 68 | **[TICKET-68](../tickets/TICKET-68-omen-factory-contract-implementation.md)** | Implementasi Smart Contract OmenFactory.sol | High | `omen/contracts/src/OmenFactory.sol`, `IOmenFactory.sol` |
 | 69 | **[TICKET-69](../tickets/TICKET-69-omen-market-contract-implementation.md)** | Implementasi Smart Contract OmenMarket.sol | High | `omen/contracts/src/OmenMarket.sol`, `IOmenMarket.sol` |
 | 70 | **[TICKET-70](../tickets/TICKET-70-foundry-unit-testing-suite.md)** | Foundry Unit & Invariant Testing Suite untuk OmenFactory dan OmenMarket | High | `omen/contracts/test/OmenFactory.t.sol`, `OmenMarket.t.sol` |
-| 71 | **[TICKET-71](../tickets/TICKET-71-foundry-deployment-script-sepolia-abi-export.md)** | Script Deployment Foundry Ethereum Sepolia & Ekspor Artefak ABI ke Web | High | `omen/contracts/script/DeploySepolia.s.sol`, `web/lib/contracts.ts` |
+| 71 | **[TICKET-71](../tickets/TICKET-71-manual-foundry-deployment-sepolia-abi-export.md)** *(MANUAL)* | (MANUAL) Deployment Smart Contract ke Ethereum Sepolia & Ekspor Artefak ABI ke Web | High | `omen/contracts/script/DeploySepolia.s.sol`, `web/lib/contracts.ts` |
 
 #### 3. Phase P02 — Frontend Core (Belief-Centric UI)
 Membangun antarmuka pasar keyakinan sosial (Landing, Markets Feed, Market Detail, Position Panel, Beliefs, Creators, Activity, Submit Wizard).
@@ -241,9 +241,9 @@ Deployment smart contract ke Robinhood Chain Testnet (46630), pengujian E2E sikl
 
 | No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
 |:---:|---|---|:---:|---|
-| 98 | **[TICKET-98](../tickets/TICKET-98-deploy-contracts-robinhood-chain-testnet.md)** | Deployment Smart Contract ke Robinhood Chain Testnet (Chain ID 46630) | High | `omen/contracts/script/DeployRobinhood.s.sol`, `web/lib/contracts.ts` |
+| 98 | **[TICKET-98](../tickets/TICKET-98-manual-deploy-contracts-robinhood-chain-testnet.md)** *(MANUAL)* | (MANUAL) Deployment Smart Contract ke Robinhood Chain Testnet (Chain ID 46630) | High | `omen/contracts/script/DeployRobinhood.s.sol`, `web/lib/contracts.ts` |
 | 99 | **[TICKET-99](../tickets/TICKET-99-dual-testnet-e2e-validation.md)** | Validasi Siklus Hidup Penuh End-to-End pada Dual Testnet (Sepolia & Robinhood Chain) | High | `omen/web/tests/e2e/belief-market-cycle.test.tsx`, `dual-chain-workflow.test.ts` |
-| 100 | **[TICKET-100](../tickets/TICKET-100-environment-variables-and-trust-checklist.md)** | Konfigurasi Environment Variables Lengkap & Verifikasi Trust Checklist Peluncuran Publik | High | `omen/web/.env.example`, `omen/contracts/.env.example`, `omen/web/README.md` |
+| 100 | **[TICKET-100](../tickets/TICKET-100-manual-environment-variables-and-trust-checklist.md)** *(MANUAL)* | (MANUAL) Penyediaan Kredensial Environment Variables & Verifikasi Trust Checklist Peluncuran Publik | High | `omen/web/.env.example`, `omen/contracts/.env.example`, `omen/web/README.md` |
 
 ---
 

@@ -17,6 +17,17 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 07:09:00] - Development Planning: Penyelarasan Prefix & Label Tiket Manual V1 (TICKET-65, 71, 98, 100)
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Penyelarasan konvensi penamaan tiket yang memerlukan intervensi/setup langsung dari Developer (eksekusi DDL Supabase, deployment on-chain testnet dengan saldo faucet, penyediaan API keys) sesuai standar `(MANUAL)` dan label `ManualAction`.
+- **Perubahan:** `[Changed/Renamed]`
+  1. `TICKET-65`: Mengubah file menjadi `TICKET-65-manual-database-schema-v1-beliefs-migration.md` dengan judul `(MANUAL) Migrasi Skema Basis Data Supabase V1 (11 Tabel Arsitektur Social Beliefs)` dan label `ManualAction`.
+  2. `TICKET-71`: Mengubah file menjadi `TICKET-71-manual-foundry-deployment-sepolia-abi-export.md` dengan judul `(MANUAL) Deployment Smart Contract ke Ethereum Sepolia & Ekspor Artefak ABI ke Web` dan label `ManualAction`.
+  3. `TICKET-98`: Mengubah file menjadi `TICKET-98-manual-deploy-contracts-robinhood-chain-testnet.md` dengan judul `(MANUAL) Deployment Smart Contract ke Robinhood Chain Testnet (Chain ID 46630)` dan label `ManualAction`.
+  4. `TICKET-100`: Mengubah file menjadi `TICKET-100-manual-environment-variables-and-trust-checklist.md` dengan judul `(MANUAL) Penyediaan Kredensial Environment Variables & Verifikasi Trust Checklist Peluncuran Publik` dan label `ManualAction`.
+  5. Memperbarui tautan dan label `(MANUAL)` pada tabel backlog `nodes/omen/docs/development-planning.md`.
+- **Path File:** `nodes/omen/tickets/TICKET-65-manual-*.md`, `nodes/omen/tickets/TICKET-71-manual-*.md`, `nodes/omen/tickets/TICKET-98-manual-*.md`, `nodes/omen/tickets/TICKET-100-manual-*.md`, `nodes/omen/docs/development-planning.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-17 06:55:00] - Development Planning: OMEN V1 Social Belief Market Transformation (TICKET-64 s/d TICKET-100)
 > **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Transformasi fundamental produk dari *Points/Quest Farming Dashboard* menjadi *Social Belief Market Protocol* multi-chain (Ethereum Sepolia & Robinhood Chain Testnet 46630) berbasis `update-brief-1.md` dan `implementation_plan.md`.
