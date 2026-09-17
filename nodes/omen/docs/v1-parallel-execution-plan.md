@@ -1,328 +1,216 @@
-# OMEN V1: Multi-Agent Parallel Execution Plan & Dependency Matrix
+# OMEN V1: 2-Agent Zero-Clash Parallel Execution Plan
 
 > **Node:** Omen | **Arsitektur:** V1 Social Belief Market Protocol  
-> **Cakupan:** TICKET-64 s/d TICKET-100 (37 Tiket) | **Metode:** Multi-Agent Parallel Workstreams
+> **Cakupan:** TICKET-64 s/d TICKET-100 (37 Tiket) | **Metode:** 2-Agent Domain Separation (Zero Git Conflict)
 
 ---
 
-## 1. Ringkasan Eksekutif & Potensi Paralelisasi
+## 1. Filosofi & Strategi Zero-Clash (2 AI Agents)
 
-Seluruh 37 tiket pengembangan V1 dirancang dengan prinsip **Single Responsibility** dan pemisahan lapisan arsitektur (*Separation of Concerns*). Hal ini memungkinkan eksekusi dibagi menjadi **4 Jalur Kerja Paralel (Workstream Tracks)** yang dapat dikerjakan secara serentak oleh **4 AI Agent berbeda**:
+Untuk mengeksekusi 37 tiket V1 secara maksimal dengan **2 AI Agent** berjalan bersamaan tanpa risiko konflik file (*git merge conflicts / race conditions*), repositori dipisahkan secara tegas berdasarkan **Domain Batas Fisik (*Physical Directory Isolation*)**:
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                       WAVE 1: INITIALIZATION                                    │
-├──────────────────────┬──────────────────────┬──────────────────────┬────────────────────────────┤
-│   AGENT 1 (SC)       │   AGENT 2 (BE)       │   AGENT 3 (FE-UI)    │   AGENT 4 (INTEGRATION)    │
-│   Smart Contract     │   Backend & DB       │   Frontend UI/UX     │   Web3 & Engine            │
-├──────────────────────┼──────────────────────┼──────────────────────┼────────────────────────────┤
-│ • TICKET-67          │ • TICKET-65 (MANUAL) │ • TICKET-64          │ [Menyiapkan Test Bed &     │
-│   (Foundry Setup)    │   (DB Schema 11 Tab) │   (Wagmi Multi-Chain)│  Mock Oracle Configs]      │
-│                      │ • TICKET-84          │ • TICKET-66          │                            │
-│                      │   (AI Extract Zod)   │   (Navbar & Layout)  │                            │
-│                      │                      │ • TICKET-73, 76, 78  │                            │
-│                      │                      │   (Isolated Cards)   │                            │
-└──────────────────────┴──────────────────────┴──────────────────────┴────────────────────────────┘
-                                              ▼
-┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                    WAVE 2: CORE DEVELOPMENT                                     │
-├──────────────────────┬──────────────────────┬──────────────────────┬────────────────────────────┤
-│ • TICKET-68          │ • TICKET-83 (Beliefs)│ • TICKET-72 (Landing)│ • TICKET-95                │
-│   (OmenFactory.sol)  │ • TICKET-86 (Markets)│ • TICKET-74 (Markets)│   (Chainlink Feed Reader)  │
-│ • TICKET-69          │ • TICKET-87 (Pos)    │ • TICKET-77 (Beliefs)│                            │
-│   (OmenMarket.sol)   │ • TICKET-88 (EIP712) │ • TICKET-80 (Creators│                            │
-│                      │ • TICKET-89 (Creator)│ • TICKET-81 (Activity│                            │
-│                      │ • TICKET-90 (Actvt)  │                      │                            │
-│                      │ • TICKET-91 (Oracle) │                      │                            │
-└──────────────────────┴──────────────────────┴──────────────────────┴────────────────────────────┘
-                                              ▼
-┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                WAVE 3: CONTRACT TEST & WIRING                                   │
-├──────────────────────┬──────────────────────┬──────────────────────┬────────────────────────────┤
-│ • TICKET-70          │ • TICKET-92 (Resolve)│ • TICKET-79          │ • TICKET-93 (Wagmi Hooks)  │
-│   (Foundry Tests)    │                      │   (Creator Profile)  │ • TICKET-94 (Factory Hook) │
-│ • TICKET-71 (MANUAL) │                      │                      │ • TICKET-97 (Confirm Flow) │
-│   (Deploy Sepolia)   │                      │                      │                            │
-└──────────────────────┴──────────────────────┴──────────────────────┴────────────────────────────┘
-                                              ▼
-┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                WAVE 4: ASSEMBLE & AUTOMATION                                    │
-├──────────────────────┬──────────────────────┬──────────────────────┬────────────────────────────┤
-│ • TICKET-98 (MANUAL) │ • TICKET-85          │ • TICKET-75          │ • TICKET-96                │
-│   (Deploy Robinhood) │   (Submit Belief API)│   (Market Detail Pg) │   (Resolution Engine)      │
-│                      │                      │ • TICKET-82          │                            │
-│                      │                      │   (Submit Wizard Pg) │                            │
-└──────────────────────┴──────────────────────┴──────────────────────┴────────────────────────────┘
-                                              ▼
-┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                              WAVE 5: E2E VALIDATION & LAUNCH                                    │
-├─────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ • TICKET-99 (Dual-Testnet Full Cycle E2E: Sepolia + Robinhood Chain 46630)                      │
-│ • TICKET-100 (MANUAL) (Environment Variables & Final Trust Checklist)                           │
-└─────────────────────────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                    PEMISAHAN DOMAIN KERJA                                        │
+├──────────────────────────────────────────────────┬───────────────────────────────────────────────┤
+│ 🅰️ AGENT 1: BACKEND & ON-CHAIN SPECIALIST        │ 🅱️ AGENT 2: FRONTEND & WEB3 CLIENT SPECIALIST │
+│ (Smart Contract + Database + API Handlers)       │ (UI Components + Pages + Hooks + E2E Tests)   │
+├──────────────────────────────────────────────────┼───────────────────────────────────────────────┤
+│ 📁 omen/contracts/ (Solidity, Foundry, Tests)    │ 📁 omen/web/components/ (Semua UI Components) │
+│ 📁 omen/web/db/migrations/ (SQL DDL 11 Tabel)    │ 📁 omen/web/app/ (Semua Halaman KECUALI api/) │
+│ 📁 omen/web/app/api/ (Seluruh Serverless Route)  │ 📁 omen/web/hooks/ (Seluruh Wagmi Web3 Hooks) │
+│ 📁 omen/web/types/database.ts & Server Helpers   │ 📁 omen/web/lib/wagmi.ts & Client Helpers     │
+│ 📁 omen/web/tests/api-*.test.ts                  │ 📁 omen/web/tests/*.test.tsx & tests/e2e/     │
+└──────────────────────────────────────────────────┴───────────────────────────────────────────────┘
 ```
+
+> 🛡️ **Aturan Mutlak Zero-Clash:**
+> - **Agent 1 DILARANG** memodifikasi file di dalam `components/`, `hooks/`, dan `app/` (selain folder `app/api/`).
+> - **Agent 2 DILARANG** memodifikasi file di dalam `contracts/`, `db/migrations/`, dan `app/api/`.
+> - Kedua Agent dapat bekerja **100% paralel** sejak detik pertama tanpa saling mengunci (*zero lock*).
 
 ---
 
-## 2. Diagram Ketergantungan Antar Tiket (DAG Dependency Graph)
+## 2. Alur Eksekusi Visual 2 Agent (Continuous Parallel Flow)
 
 ```mermaid
-graph TD
+flowchart TD
     %% Styling
-    classDef manual fill:#f59e0b,stroke:#b45309,stroke-width:2px,color:#000;
-    classDef sc fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:#fff;
-    classDef be fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff;
-    classDef fe fill:#8b5cf6,stroke:#6d28d9,stroke-width:2px,color:#fff;
-    classDef int fill:#ec4899,stroke:#be185d,stroke-width:2px,color:#fff;
+    classDef a1 fill:#1e40af,stroke:#60a5fa,stroke-width:2px,color:#fff;
+    classDef a2 fill:#7c2d12,stroke:#f97316,stroke-width:2px,color:#fff;
+    classDef manual fill:#b45309,stroke:#fde047,stroke-width:2px,color:#fff;
+    classDef gate fill:#065f46,stroke:#34d399,stroke-width:3px,color:#fff;
 
-    %% Node Definitions
-    subgraph Phase_P00 [P00: Foundation]
-        T64["TICKET-64: Wagmi Multi-Chain"]:::fe
-        T65["TICKET-65: DB Schema V1"]:::manual
-        T66["TICKET-66: Navbar & Shell"]:::fe
+    subgraph LANE_1 ["🅰️ AGENT 1: Backend & Smart Contract (18 Tiket)"]
+        A1_1["T67: Foundry Setup"]:::a1
+        A1_2["T68 & T69: OmenFactory & OmenMarket.sol"]:::a1
+        A1_3["T70: Forge Tests & Invariants"]:::a1
+        A1_4["T71 (MANUAL): Deploy Sepolia & Export ABI"]:::manual
+        A1_5["T65 (MANUAL): DB Schema 11 Tabel"]:::manual
+        A1_6["T84: AI Extract API (POST /extract)"]:::a1
+        A1_7["Paralel API: T83, T86, T87, T88, T89, T90, T91"]:::a1
+        A1_8["T92: Resolution API (POST /resolve)"]:::a1
+        A1_9["T85: Submit Belief API (POST /submit)"]:::a1
+        A1_10["T96: Market Resolution Engine"]:::a1
+        A1_11["T98 (MANUAL): Deploy Robinhood 46630"]:::manual
     end
 
-    subgraph Phase_P01 [P01: Smart Contracts]
-        T67["TICKET-67: Foundry Setup"]:::sc
-        T68["TICKET-68: OmenFactory.sol"]:::sc
-        T69["TICKET-69: OmenMarket.sol"]:::sc
-        T70["TICKET-70: Foundry Tests"]:::sc
-        T71["TICKET-71: Deploy Sepolia & ABI"]:::manual
+    subgraph LANE_2 ["🅱️ AGENT 2: Frontend & Web3 Client (19 Tiket)"]
+        A2_1["T64: Wagmi Config Multi-Chain"]:::a2
+        A2_2["T66: Navbar, Footer & Layout Shell"]:::a2
+        A2_3["Isolated UI: T73, T76, T78 (Cards & Panel)"]:::a2
+        A2_4["Pages: T72 (Landing), T77 (Beliefs), T80, T81"]:::a2
+        A2_5["T74: Discovery Feed (/markets)"]:::a2
+        A2_6["T79: Creator Profile (/creator/[addr])"]:::a2
+        A2_7["T82: Submit Wizard (/create)"]:::a2
+        A2_8["T95: Chainlink Price Feed Reader"]:::a2
+        A2_9["Web3 Hooks: T93, T94, T97 (Position/Claim/Confirm)"]:::a2
+        A2_10["T75: Market Detail Multi-Panel (/market/[id])"]:::a2
+        A2_11["T99: Dual-Testnet Full Cycle E2E"]:::a2
+        A2_12["T100 (MANUAL): Env Vars & Trust Checklist"]:::manual
     end
 
-    subgraph Phase_P02_UI [P02: Frontend UI Components & Pages]
-        T73["TICKET-73: BeliefMarketCard"]:::fe
-        T76["TICKET-76: PositionPanel"]:::fe
-        T78["TICKET-78: BeliefCard"]:::fe
-        T72["TICKET-72: Landing Page"]:::fe
-        T74["TICKET-74: /markets Feed"]:::fe
-        T75["TICKET-75: /market/[id] Detail"]:::fe
-        T77["TICKET-77: /beliefs Feed"]:::fe
-        T79["TICKET-79: /creator/[address]"]:::fe
-        T80["TICKET-80: /creators Directory"]:::fe
-        T81["TICKET-81: /activity Feed"]:::fe
-        T82["TICKET-82: /create Submit Wizard"]:::fe
-    end
+    %% Internal Agent 1 Progression
+    A1_1 --> A1_2 --> A1_3 --> A1_4 --> A1_11
+    A1_5 --> A1_7 --> A1_8 --> A1_10
+    A1_6 --> A1_9
+    A1_4 --> A1_9
 
-    subgraph Phase_P03_BE [P03: Backend API Handlers]
-        T84["TICKET-84: AI Extract POST"]:::be
-        T83["TICKET-83: Beliefs GET"]:::be
-        T86["TICKET-86: Markets GET"]:::be
-        T87["TICKET-87: Positions POST/GET"]:::be
-        T88["TICKET-88: Creator Confirm POST"]:::be
-        T89["TICKET-89: Creators GET"]:::be
-        T90["TICKET-90: Activity GET"]:::be
-        T91["TICKET-91: Oracle Snapshot POST"]:::be
-        T92["TICKET-92: Market Resolve POST"]:::be
-        T85["TICKET-85: Submit Belief POST"]:::be
-    end
+    %% Internal Agent 2 Progression
+    A2_1 --> A2_2 --> A2_4
+    A2_3 --> A2_4 --> A2_5
+    A2_3 --> A2_6
+    A2_3 --> A2_10
+    A2_1 --> A2_8
+    A2_8 --> A2_9 --> A2_10
+    A2_7 --> A2_10
+    A2_10 --> A2_11 --> A2_12
 
-    subgraph Phase_P035_Hooks [P03.5: Web3 Hooks]
-        T93["TICKET-93: Hooks Position/Claim"]:::int
-        T94["TICKET-94: Hook CreateMarket"]:::int
-    end
+    %% Cross-Agent Hand-off Gates
+    GATE1{{"🚪 GATE 1: ABI Exported (T71)"}}:::gate
+    A1_4 -.-> GATE1
+    GATE1 -.-> A2_9
+    GATE1 -.-> A1_9
 
-    subgraph Phase_P04_Oracle [P04: Oracle]
-        T95["TICKET-95: Chainlink Feed Reader"]:::int
-        T96["TICKET-96: Resolution Engine"]:::int
-    end
-
-    subgraph Phase_P05_Creator [P05: Creator EIP-712]
-        T97["TICKET-97: Creator Confirm UI"]:::int
-    end
-
-    subgraph Phase_P06_Release [P06: Multi-Chain & E2E]
-        T98["TICKET-98: Deploy Robinhood 46630"]:::manual
-        T99["TICKET-99: Dual Testnet E2E"]:::int
-        T100["TICKET-100: Launch Checklist"]:::manual
-    end
-
-    %% Dependencies
-    %% Smart Contract Line
-    T67 --> T68
-    T67 --> T69
-    T68 --> T70
-    T69 --> T70
-    T70 --> T71
-    T70 --> T98
-
-    %% Backend Line
-    T65 --> T83
-    T65 --> T86
-    T65 --> T87
-    T65 --> T88
-    T65 --> T89
-    T65 --> T90
-    T65 --> T91
-    T91 --> T92
-    T65 --> T85
-    T71 --> T85
-
-    %% Frontend Components to Pages
-    T73 --> T72
-    T66 --> T72
-    T73 --> T74
-    T86 --> T74
-    T78 --> T77
-    T83 --> T77
-    T78 --> T79
-    T89 --> T79
-    T89 --> T80
-    T90 --> T81
-    T84 --> T82
-    T85 --> T82
-
-    %% Web3 Hooks Wiring
-    T64 --> T93
-    T71 --> T93
-    T87 --> T93
-    T64 --> T94
-    T71 --> T94
-
-    %% Page Market Detail Wiring
-    T76 --> T75
-    T86 --> T75
-    T93 --> T75
-
-    %% Oracle Wiring
-    T64 --> T95
-    T95 --> T96
-    T71 --> T96
-    T92 --> T96
-
-    %% Creator Confirm Wiring
-    T64 --> T97
-    T71 --> T97
-    T88 --> T97
-
-    %% Final E2E and Checklist
-    T71 --> T99
-    T98 --> T99
-    T75 --> T99
-    T96 --> T99
-    T97 --> T99
-    T99 --> T100
+    GATE2{{"🚪 GATE 2: All Systems Assembled"}}:::gate
+    A1_10 -.-> GATE2
+    A1_11 -.-> GATE2
+    A2_10 -.-> GATE2
+    GATE2 -.-> A2_11
 ```
 
 ---
 
-## 3. Matriks Ketergantungan Lengkap (37 Tiket V1)
+## 3. Pembagian Tiket & Urutan Eksekusi Detail
 
-| Tiket ID | Judul Tugas | Jalur Kerja (Track) | Prasyarat Langsung (Depends On) | Membuka Tiket Lain (Blocks / Unblocks) | Status Mulai |
-|:---:|---|:---:|---|---|:---:|
-| **TICKET-64** | Refactor Wagmi Config (Sepolia + Robinhood) | **FE-Core / Web3** | *Tidak ada* | T93, T94, T95, T97 | **Bisa Langsung Mulai** |
-| **TICKET-65** *(MANUAL)* | Migrasi Skema Basis Data V1 (11 Tabel) | **BE & DB** | *Tidak ada* | T83, T85, T86, T87, T88, T89, T90, T91 | **Bisa Langsung Mulai** |
-| **TICKET-66** | Refactor Navbar & Layout Shell V1 | **FE-Core** | *Tidak ada* | T72 | **Bisa Langsung Mulai** |
-| **TICKET-67** | Inisialisasi Foundry & Multi-Chain Config | **Smart Contract** | *Tidak ada* | T68, T69 | **Bisa Langsung Mulai** |
-| **TICKET-68** | Implementasi `OmenFactory.sol` | **Smart Contract** | T67 | T70 | Menunggu T67 |
-| **TICKET-69** | Implementasi `OmenMarket.sol` | **Smart Contract** | T67 | T70 | Menunggu T67 |
-| **TICKET-70** | Foundry Test Suite (Factory + Market) | **Smart Contract** | T68, T69 | T71, T98 | Menunggu T68, T69 |
-| **TICKET-71** *(MANUAL)* | Deploy Sepolia & Ekspor ABI Web | **Smart Contract** | T70 | T85, T93, T94, T96, T97, T99 | Menunggu T70 |
-| **TICKET-72** | Redesign Landing Page Social Belief | **FE-UI** | T66, T73 | - | Menunggu T66, T73 |
-| **TICKET-73** | Komponen `BeliefMarketCard` | **FE-UI** | *Tidak ada* (UI Props) | T72, T74 | **Bisa Langsung Mulai** |
-| **TICKET-74** | Halaman Discovery Feed `/markets` | **FE-UI** | T73, T86 | - | Menunggu T73, T86 |
-| **TICKET-75** | Halaman Market Detail `/market/[id]` | **FE-UI / Int** | T76, T86, T93 | T99 | Menunggu T76, T86, T93 |
-| **TICKET-76** | Komponen `PositionPanel` (AGREE/DISAGREE) | **FE-UI** | *Tidak ada* (UI Props) | T75 | **Bisa Langsung Mulai** |
-| **TICKET-77** | Halaman Katalog Beliefs `/beliefs` | **FE-UI** | T78, T83 | - | Menunggu T78, T83 |
-| **TICKET-78** | Komponen `BeliefCard` | **FE-UI** | *Tidak ada* (UI Props) | T77, T79 | **Bisa Langsung Mulai** |
-| **TICKET-79** | Halaman Profil Kreator `/creator/[address]` | **FE-UI** | T78, T89 | - | Menunggu T78, T89 |
-| **TICKET-80** | Halaman Direktori Kreator `/creators` | **FE-UI** | T89 | - | Menunggu T89 |
-| **TICKET-81** | Halaman Activity Feed `/activity` | **FE-UI** | T90 | - | Menunggu T90 |
-| **TICKET-82** | Halaman Submit Belief Wizard `/create` | **FE-UI** | T84, T85 | - | Menunggu T84, T85 |
-| **TICKET-83** | API Route Beliefs (`GET /api/beliefs`) | **BE-API** | T65 | T77 | Menunggu T65 |
-| **TICKET-84** | API Route AI Extract (`POST /extract`) | **BE-AI** | *Tidak ada* (OpenRouter) | T82 | **Bisa Langsung Mulai** |
-| **TICKET-85** | API Route Submit Belief (`POST /submit`) | **BE-API** | T65, T71 | T82 | Menunggu T65, T71 |
-| **TICKET-86** | API Route Markets V1 (`GET /api/markets`) | **BE-API** | T65 | T74, T75 | Menunggu T65 |
-| **TICKET-87** | API Route Positions (`POST/GET /positions`) | **BE-API** | T65 | T93 | Menunggu T65 |
-| **TICKET-88** | API Route Creator Confirm (`POST /confirm` EIP-712)| **BE-API** | T65 | T97 | Menunggu T65 |
-| **TICKET-89** | API Route Creators (`GET /api/creators`) | **BE-API** | T65 | T79, T80 | Menunggu T65 |
-| **TICKET-90** | API Route Activity (`GET /api/activity`) | **BE-API** | T65 | T81 | Menunggu T65 |
-| **TICKET-91** | API Route Oracle Snapshot (`POST /snapshot`)| **BE-API** | T65 | T92 | Menunggu T65 |
-| **TICKET-92** | API Route Market Resolution (`POST /resolve`) | **BE-API** | T65, T91 | T96 | Menunggu T65, T91 |
-| **TICKET-93** | Web3 Hooks (`usePosition`, `useClaim`, `useMarket`) | **Web3 / Int** | T64, T71, T87 | T75 | Menunggu T64, T71, T87 |
-| **TICKET-94** | Web3 Hook (`useCreateMarket`) | **Web3 / Int** | T64, T71 | - | Menunggu T64, T71 |
-| **TICKET-95** | Chainlink Price Feed Reader | **Oracle / Int** | T64 | T96 | Menunggu T64 |
-| **TICKET-96** | Market Resolution Engine | **Oracle / Int** | T71, T92, T95 | T99 | Menunggu T71, T92, T95 |
-| **TICKET-97** | Creator Confirmation Flow & Hook (EIP-712) | **FE / Web3** | T64, T71, T88 | T99 | Menunggu T64, T71, T88 |
-| **TICKET-98** *(MANUAL)* | Deploy Contracts ke Robinhood Chain (46630) | **Smart Contract** | T70 | T99 | Menunggu T70 |
-| **TICKET-99** | Dual-Testnet Full Cycle E2E Validation | **QA / E2E** | T71, T98, T75, T96, T97 | T100 | Menunggu Seluruh Core |
-| **TICKET-100** *(MANUAL)* | Environment Variables & Trust Checklist | **DevOps / Release**| T99 | - | Menunggu T99 |
+### 🅰️ AGENT 1: Smart Contract & Core Backend (18 Tiket)
+> **Mandat:** Bangun fondasi smart contract, skema database, serverless route handlers, dan mesin resolusi on-chain.
+
+| Tahap | Tiket ID | Judul Tugas | Target File Utama | Status Blokir |
+|:---:|:---:|---|---|:---:|
+| **1** | **[TICKET-67](../tickets/TICKET-67-foundry-initialization-and-multichain-config.md)** | Inisialisasi Foundry & Multi-Chain Config | `contracts/foundry.toml`, `remappings.txt` | **Bisa Langsung Mulai** |
+| **1** | **[TICKET-65](../tickets/TICKET-65-manual-database-schema-v1-beliefs-migration.md)** *(MANUAL)* | Migrasi Skema DB Supabase V1 (11 Tabel) | `web/db/migrations/02_v1_belief_schema.sql`, `types/database.ts` | **Bisa Langsung Mulai** |
+| **2** | **[TICKET-68](../tickets/TICKET-68-omen-factory-contract-implementation.md)** | Implementasi `OmenFactory.sol` | `contracts/src/OmenFactory.sol`, interfaces | Butuh T67 |
+| **2** | **[TICKET-69](../tickets/TICKET-69-omen-market-contract-implementation.md)** | Implementasi `OmenMarket.sol` | `contracts/src/OmenMarket.sol`, interfaces | Butuh T67 |
+| **2** | **[TICKET-84](../tickets/TICKET-84-api-beliefs-ai-extract.md)** | AI Extraction API (`POST /api/beliefs/extract`) | `web/app/api/beliefs/extract/route.ts`, `openrouter.ts` | **Bisa Langsung Mulai** |
+| **3** | **[TICKET-70](../tickets/TICKET-70-foundry-unit-testing-suite.md)** | Foundry Unit & Invariant Tests (100% Pass) | `contracts/test/OmenFactory.t.sol`, `OmenMarket.t.sol` | Butuh T68, T69 |
+| **3** | **[TICKET-83](../tickets/TICKET-83-api-beliefs-get-list-and-detail.md)** | Beliefs Feed & Detail API (`GET /api/beliefs`) | `web/app/api/beliefs/route.ts`, `[id]/route.ts` | Butuh T65 |
+| **3** | **[TICKET-86](../tickets/TICKET-86-api-markets-v1-get-feed-and-detail.md)** | Markets Feed API (`GET /api/markets`) | `web/app/api/markets/route.ts`, `[id]/route.ts` | Butuh T65 |
+| **3** | **[TICKET-87](../tickets/TICKET-87-api-markets-positions-indexer-and-history.md)** | Positions Indexer API (`POST/GET /positions`) | `web/app/api/markets/[id]/position/route.ts` | Butuh T65 |
+| **3** | **[TICKET-88](../tickets/TICKET-88-api-creator-confirmation-eip712.md)** | Creator EIP-712 Verify API (`POST /confirm`)| `web/app/api/beliefs/[id]/confirm/route.ts` | Butuh T65 |
+| **3** | **[TICKET-89](../tickets/TICKET-89-api-creator-profiles-and-directory.md)** | Creators Directory API (`GET /api/creators`)| `web/app/api/creators/route.ts`, `[address]/route.ts` | Butuh T65 |
+| **3** | **[TICKET-90](../tickets/TICKET-90-api-activity-feed-public.md)** | Activity Feed API (`GET /api/activity`) | `web/app/api/activity/route.ts` | Butuh T65 |
+| **3** | **[TICKET-91](../tickets/TICKET-91-api-oracle-price-snapshots.md)** | Oracle Snapshot API (`POST /api/oracle/snapshot`)| `web/app/api/oracle/snapshot/route.ts` | Butuh T65 |
+| **4** | **[TICKET-71](../tickets/TICKET-71-manual-foundry-deployment-sepolia-abi-export.md)** *(MANUAL)* | Deploy Sepolia & Ekspor Artefak ABI Web | `contracts/script/DeploySepolia.s.sol`, `web/contracts/` | Butuh T70 |
+| **4** | **[TICKET-92](../tickets/TICKET-92-api-market-resolution-v1.md)** | Market Resolution API (`POST /resolve`) | `web/app/api/markets/[id]/resolve/route.ts` | Butuh T65, T91 |
+| **5** | **[TICKET-85](../tickets/TICKET-85-api-beliefs-submit-and-market-creation.md)** | Submit Belief & On-Chain Trigger API | `web/app/api/beliefs/submit/route.ts`, `factory-client.ts`| Butuh T65, T71 |
+| **5** | **[TICKET-96](../tickets/TICKET-96-market-resolution-engine-oracle.md)** | Market Resolution Engine Otomatis | `web/lib/market/resolution-engine.ts` | Butuh T71, T92 |
+| **6** | **[TICKET-98](../tickets/TICKET-98-manual-deploy-contracts-robinhood-chain-testnet.md)** *(MANUAL)* | Deploy ke Robinhood Chain Testnet (46630) | `contracts/script/DeployRobinhood.s.sol` | Butuh T70 |
 
 ---
 
-## 4. Pembagian Tugas per AI Agent (Workstream Lanes)
+### 🅱️ AGENT 2: Frontend UI/UX & Web3 Client (19 Tiket)
+> **Mandat:** Bangun design system, layout shell, kartu komponen terisolasi, seluruh halaman feed/wizard, Wagmi hooks, dan validasi E2E.  
+> 🎨 **Prinsip:** Seluruh styling OpenZeppelin dark mode, palet warna, tipografi, dan glassmorphism **WAJIB DIPERTAHANKAN**.
 
-### 🤖 Agent A: Smart Contract & Blockchain Specialist
-*Target Fokus: `omen/contracts/` & ABI Exports*
-- **Langkah 1 (Wave 1):** Eksekusi `TICKET-67` (Inisialisasi Foundry + Config).
-- **Langkah 2 (Wave 2):** Eksekusi `TICKET-68` (`OmenFactory.sol`) dan `TICKET-69` (`OmenMarket.sol`).
-- **Langkah 3 (Wave 3):** Eksekusi `TICKET-70` (Forge Tests & Fuzzing).
-- **Langkah 4 (Wave 3 - Manual):** Kolaborasi dengan Developer untuk `TICKET-71` (Deploy Sepolia & Export ABI ke `omen/web`).
-- **Langkah 5 (Wave 4 - Manual):** Kolaborasi dengan Developer untuk `TICKET-98` (Deploy ke Robinhood Chain 46630).
-
----
-
-### 🤖 Agent B: Backend & Database Specialist
-*Target Fokus: `omen/web/db/` & `omen/web/app/api/`*
-- **Langkah 1 (Wave 1):** Eksekusi `TICKET-65` (Migrasi DDL 11 Tabel Supabase + Types) & `TICKET-84` (AI Extract Route).
-- **Langkah 2 (Wave 2 - Paralel API Handlers):**
-  - Sub-task B1: `TICKET-83` (Beliefs API) & `TICKET-86` (Markets API).
-  - Sub-task B2: `TICKET-87` (Positions API) & `TICKET-88` (Creator Confirm EIP-712 API).
-  - Sub-task B3: `TICKET-89` (Creators API) & `TICKET-90` (Activity Feed API).
-  - Sub-task B4: `TICKET-91` (Oracle Snapshot API) ➔ `TICKET-92` (Market Resolution API).
-- **Langkah 3 (Wave 4):** Eksekusi `TICKET-85` (Submit Belief API dengan pemanggilan factory viem, setelah ABI dari Agent A siap).
-
----
-
-### 🤖 Agent C: Frontend UI/UX & Component Specialist
-*Target Fokus: `omen/web/components/` & `omen/web/app/` (Visual & Layout)*
-> 🎨 **Wajib Mempertahankan:** Tema OpenZeppelin dark mode, palet warna emerald/rose, dan styling komponen existing.
-- **Langkah 1 (Wave 1 - Isolated Components & Foundation):**
-  - `TICKET-64` (Wagmi Multi-Chain Setup).
-  - `TICKET-66` (Navbar & Shell Navigasi V1).
-  - `TICKET-73` (`BeliefMarketCard`), `TICKET-76` (`PositionPanel`), `TICKET-78` (`BeliefCard`).
-- **Langkah 2 (Wave 2 - Halaman Publik & Feed):**
-  - `TICKET-72` (Landing Page Social Belief).
-  - `TICKET-74` (Discovery Feed `/markets` — consume API T86).
-  - `TICKET-77` (Beliefs Feed `/beliefs` — consume API T83).
-  - `TICKET-80` (Creators Directory `/creators` — consume API T89).
-  - `TICKET-81` (Activity Feed `/activity` — consume API T90).
-- **Langkah 3 (Wave 3/4 - Profil & Wizard):**
-  - `TICKET-79` (Creator Profile `/creator/[address]` — consume API T89).
-  - `TICKET-82` (Submit Wizard `/create` — consume API T84 & T85).
+| Tahap | Tiket ID | Judul Tugas | Target File Utama | Status Blokir |
+|:---:|:---:|---|---|:---:|
+| **1** | **[TICKET-64](../tickets/TICKET-64-refactor-wagmi-config-multi-chain.md)** | Refactor Wagmi Config (Sepolia + Robinhood) | `web/lib/wagmi.ts`, `web/app/providers.tsx` | **Bisa Langsung Mulai** |
+| **1** | **[TICKET-66](../tickets/TICKET-66-refactor-navbar-layout-shell-v1.md)** | Refactor Navbar, Footer & Layout Shell | `web/components/Navbar.tsx`, `Footer.tsx`, `layout.tsx` | **Bisa Langsung Mulai** |
+| **1** | **[TICKET-73](../tickets/TICKET-73-belief-market-card-component.md)** | Komponen `BeliefMarketCard` (WHO/WHAT/WHEN/CONSENSUS/MONEY) | `web/components/BeliefMarketCard.tsx`, test | **Bisa Langsung Mulai** |
+| **1** | **[TICKET-76](../tickets/TICKET-76-position-panel-component.md)** | Komponen `PositionPanel` (AGREE / DISAGREE Flow) | `web/components/PositionPanel.tsx`, test | **Bisa Langsung Mulai** |
+| **1** | **[TICKET-78](../tickets/TICKET-78-belief-card-component.md)** | Komponen `BeliefCard` (Compact Belief & Badges) | `web/components/BeliefCard.tsx`, test | **Bisa Langsung Mulai** |
+| **2** | **[TICKET-72](../tickets/TICKET-72-redesign-landing-page-social-belief-hero.md)** | Redesign Landing Page Hero Social Belief | `web/app/page.tsx`, `HeroSection.tsx`, `StatsOverview.tsx`| Butuh T66, T73 |
+| **2** | **[TICKET-77](../tickets/TICKET-77-beliefs-feed-page.md)** | Halaman Katalog Beliefs (`/beliefs`) | `web/app/beliefs/page.tsx` | Butuh T78 |
+| **2** | **[TICKET-80](../tickets/TICKET-80-creators-directory-page.md)** | Halaman Direktori Kreator (`/creators`) | `web/app/creators/page.tsx`, `CreatorCard.tsx` | Butuh T66 |
+| **2** | **[TICKET-81](../tickets/TICKET-81-activity-feed-page.md)** | Halaman Activity Feed (`/activity`) | `web/app/activity/page.tsx`, `ActivityFeed.tsx` | Butuh T66 |
+| **2** | **[TICKET-95](../tickets/TICKET-95-chainlink-oracle-price-feed-reader.md)** | Chainlink Price Feed Reader Client Helper | `web/lib/oracle/chainlink.ts` | Butuh T64 |
+| **3** | **[TICKET-74](../tickets/TICKET-74-discovery-feed-markets-page.md)** | Halaman Discovery Feed (`/markets`) & Filter | `web/app/markets/page.tsx`, `DiscoveryFilter.tsx` | Butuh T73 |
+| **3** | **[TICKET-79](../tickets/TICKET-79-creator-profile-page.md)** | Halaman Profil Kreator (`/creator/[address]`)| `web/app/creator/[address]/page.tsx` | Butuh T78 |
+| **3** | **[TICKET-82](../tickets/TICKET-82-submit-belief-page-and-form.md)** | Halaman Submit Belief 3-Step Wizard (`/create`)| `web/app/create/page.tsx`, `BeliefSubmitForm.tsx` | Butuh T66 |
+| **4** | **[TICKET-93](../tickets/TICKET-93-web3-hooks-position-claim-market.md)** | Wagmi Hooks (`usePosition`, `useClaim`, `useMarket`)| `web/hooks/usePosition.ts`, `useClaim.ts`, `useMarket.ts` | Butuh T64, **Gate 1 (T71 ABI)** |
+| **4** | **[TICKET-94](../tickets/TICKET-94-web3-hook-admin-create-market.md)** | Web3 Hook (`useCreateMarket`) | `web/hooks/useCreateMarket.ts` | Butuh T64, **Gate 1 (T71 ABI)** |
+| **4** | **[TICKET-97](../tickets/TICKET-97-creator-confirmation-flow-ui-and-hook.md)** | `CreatorConfirmation` UI & EIP-712 Hook | `web/components/CreatorConfirmation.tsx`, `hooks/` | Butuh T64, **Gate 1 (T71 ABI)** |
+| **5** | **[TICKET-75](../tickets/TICKET-75-market-detail-multi-panel-page.md)** | Halaman Market Detail Multi-Panel (`/market/[id]`)| `web/app/market/[id]/page.tsx`, `MarketDetailPanels.tsx`| Butuh T76, T93 |
+| **6** | **[TICKET-99](../tickets/TICKET-99-dual-testnet-e2e-validation.md)** | Dual-Testnet Full Cycle E2E Test Suite | `web/tests/e2e/belief-market-cycle.test.tsx` | Butuh **Gate 2 (All Assembled)** |
+| **6** | **[TICKET-100](../tickets/TICKET-100-manual-environment-variables-and-trust-checklist.md)** *(MANUAL)* | Environment Variables & Final Trust Checklist | `web/.env.example`, `contracts/.env.example`, `README.md`| Butuh T99 |
 
 ---
 
-### 🤖 Agent D: Web3 Integration, Oracle & E2E Specialist
-*Target Fokus: `omen/web/hooks/`, `omen/web/lib/`, `omen/web/tests/e2e/` (Integrator)*
-- **Langkah 1 (Wave 2):** Eksekusi `TICKET-95` (Chainlink Price Feed Reader).
-- **Langkah 2 (Wave 3):**
-  - `TICKET-93` (`usePosition`, `useClaim`, `useMarket` Wagmi Hooks).
-  - `TICKET-94` (`useCreateMarket` Hook).
-  - `TICKET-97` (`CreatorConfirmation` UI & `useCreatorConfirm` EIP-712 Hook).
-- **Langkah 3 (Wave 4):**
-  - `TICKET-75` (Market Detail Multi-Panel Wiring `/market/[id]` menghubungkan UI T76 + API T86 + Hook T93).
-  - `TICKET-96` (Market Resolution Engine otomatis).
-- **Langkah 4 (Wave 5):**
-  - `TICKET-99` (Full Cycle E2E Test Suite pada dual-testnet Sepolia & Robinhood).
-  - `TICKET-100` (Review Final Environment Variables & Trust Checklist).
+## 4. Dua Titik Jabat Tangan (Hand-off Sync Protocol)
+
+Hanya ada **2 momen komunikasi** yang dibutuhkan antara kedua agent:
+
+### 🤝 Sync Point 1: Penyerahan ABI Kontrak Sepolia (Setelah Agent 1 selesai T71)
+1. **Pemicu:** Agent 1 selesai mengeksekusi `TICKET-71` dan file ABI `omen/web/contracts/OmenFactory.json` serta `omen/web/contracts/OmenMarket.json` telah terbentuk.
+2. **Dampak ke Agent 2:** Agent 2 sekarang dapat melanjutkan pengerjaan Web3 Hooks (`TICKET-93`, `TICKET-94`, `TICKET-97`) dan halaman Market Detail (`TICKET-75`).
+
+### 🤝 Sync Point 2: Konvergensi Pengujian E2E (Setelah Semua Komponen Terpasang)
+1. **Pemicu:** Agent 1 telah menyelesaikan seluruh API & kontrak Robinhood (`TICKET-98`), dan Agent 2 telah menyelesaikan seluruh UI & Hooks (`TICKET-75, 97`).
+2. **Dampak:** Agent 2 mengeksekusi `TICKET-99` (E2E Test Suite) untuk memvalidasi siklus penuh di browser/simulator pada kedua chain.
+3. **Penyelesaian:** Developer dan Agent 2 menyelesaikan `TICKET-100` (Review Final).
 
 ---
 
-## 5. Critical Path (Jalur Kritis)
+## 5. Panduan Prompt Eksekusi untuk Developer
 
-Jalur kritis adalah rantai pengerjaan berurutan terpanjang yang menentukan durasi total penyelesaian proyek:
+Jalankan 2 sesi / window terpisah untuk masing-masing agent dengan menyalin prompt instruksi berikut:
 
-$$\text{T67} \longrightarrow \text{T68/T69} \longrightarrow \text{T70} \longrightarrow \text{T71} \longrightarrow \text{T93} \longrightarrow \text{T75} \longrightarrow \text{T99} \longrightarrow \text{T100}$$
+### 📝 Prompt untuk Window Sesi AGENT 1 (Backend & Blockchain):
+```text
+Kamu bertindak sebagai AGENT 1 (Backend & Smart Contract Specialist) sesuai panduan di @omen-ai-orchestrator/nodes/omen/docs/v1-parallel-execution-plan.md.
 
-> **Strategi Percepatan:**
-> Dengan memprioritaskan penyelesaian smart contract (Agent A) dan migrasi database Supabase (Agent B) di awal, seluruh jalur frontend (Agent C) dan integrasi Web3 (Agent D) dapat bergerak tanpa *idle time*.
+Lingkup kerjamu DIBATASI HANYA pada direktori:
+- omen/contracts/ (Solidity, Foundry, Tests, Deploy scripts)
+- omen/web/db/ (SQL migrations)
+- omen/web/app/api/ (Serverless Route Handlers)
+- omen/web/types/database.ts & server helpers
+- omen/web/tests/api-*.test.ts
 
----
+DILARANG KERAS mengedit file di components/, hooks/, atau app/ selain folder api/.
 
-## 6. Titik Sinkronisasi Antar-Agent (Sync Gates)
+Misi tugasmu adalah mengeksekusi 18 tiket berikut secara berurutan:
+TICKET-67 -> TICKET-65 (MANUAL) -> TICKET-68 -> TICKET-69 -> TICKET-84 -> TICKET-70 -> TICKET-83 -> TICKET-86 -> TICKET-87 -> TICKET-88 -> TICKET-89 -> TICKET-90 -> TICKET-91 -> TICKET-71 (MANUAL) -> TICKET-92 -> TICKET-85 -> TICKET-96 -> TICKET-98 (MANUAL).
 
-1. **Gate 1 (Database Ready):** `TICKET-65 (MANUAL)` selesai ➔ Membuka seluruh endpoint API `TICKET-83, 86, 87, 88, 89, 90, 91`.
-2. **Gate 2 (Sepolia ABI Ready):** `TICKET-71 (MANUAL)` selesai ➔ Membuka `TICKET-85` (Submit API), `TICKET-93/94` (Wagmi Hooks), `TICKET-96` (Resolution Engine), dan `TICKET-97` (Creator Confirmation).
-3. **Gate 3 (Core Assembled):** `TICKET-75, 96, 97, 98` selesai ➔ Membuka pengujian E2E final `TICKET-99`.
-4. **Gate 4 (Launch Ready):** `TICKET-99` lulus 100% ➔ Membuka `TICKET-100 (MANUAL)` untuk checklist peluncuran publik.
+Mulai sekarang dari TICKET-67 dan TICKET-65.
+```
+
+### 📝 Prompt untuk Window Sesi AGENT 2 (Frontend & Web3 Client):
+```text
+Kamu bertindak sebagai AGENT 2 (Frontend UI/UX & Web3 Client Specialist) sesuai panduan di @omen-ai-orchestrator/nodes/omen/docs/v1-parallel-execution-plan.md.
+
+Lingkup kerjamu DIBATASI HANYA pada direktori:
+- omen/web/components/ (Semua komponen UI)
+- omen/web/app/ (Halaman web KECUALI folder api/)
+- omen/web/hooks/ (Seluruh Wagmi Web3 hooks)
+- omen/web/lib/wagmi.ts & client helpers
+- omen/web/tests/*.test.tsx & web/tests/e2e/
+
+DILARANG KERAS mengedit file di contracts/, db/migrations/, atau app/api/.
+WAJIB MEMPERTAHANKAN seluruh tema OpenZeppelin dark mode, palet warna, tipografi, dan style existing (jangan rebuild dari nol).
+
+Misi tugasmu adalah mengeksekusi 19 tiket berikut secara berurutan:
+TICKET-64 -> TICKET-66 -> TICKET-73 -> TICKET-76 -> TICKET-78 -> TICKET-72 -> TICKET-77 -> TICKET-80 -> TICKET-81 -> TICKET-95 -> TICKET-74 -> TICKET-79 -> TICKET-82 -> (Tunggu ABI Kontrak T71) -> TICKET-93 -> TICKET-94 -> TICKET-97 -> TICKET-75 -> TICKET-99 -> TICKET-100 (MANUAL).
+
+Mulai sekarang dari TICKET-64 dan TICKET-66.
+```

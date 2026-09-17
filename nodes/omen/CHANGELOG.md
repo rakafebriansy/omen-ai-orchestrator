@@ -17,6 +17,18 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 07:20:00] - Development Planning: Optimalisasi Rencana Eksekusi Paralel 2-Agent Zero-Clash V1
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Restrukturisasi rencana eksekusi paralel multi-agent menjadi format optimal 2-Agent dengan pemisahan batas direktori fisik (*Physical Directory Isolation*) untuk menjamin 0% konflik file (*zero git clash*) dan efisiensi throughput maksimal.
+- **Perubahan:** `[Changed/Updated]`
+  1. `nodes/omen/docs/v1-parallel-execution-plan.md`:
+     - Membagi 37 tiket V1 secara eksklusif ke dalam 2 Agent:
+       - **Agent 1 (Backend & Blockchain Specialist - 18 Tiket):** Memegang penuh `contracts/`, `db/migrations/`, `app/api/`, dan backend helpers.
+       - **Agent 2 (Frontend UI/UX & Web3 Client Specialist - 19 Tiket):** Memegang penuh `components/`, `app/` (non-api), `hooks/`, dan client UI/E2E tests.
+     - Menyederhanakan titik jabat tangan menjadi hanya **2 Sync Points** (Sync Point 1: ABI Hand-off; Sync Point 2: E2E Convergence).
+     - Menambahkan templat prompt siap pakai (*ready-to-use prompts*) untuk sesi window Agent 1 dan Agent 2.
+- **Path File:** `nodes/omen/docs/v1-parallel-execution-plan.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-17 07:13:00] - Development Planning: Penyusunan Multi-Agent Parallel Execution Plan & Matriks Dependensi V1
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Perancangan peta alur kerja paralel untuk multi-agent dan matriks dependensi antar-tiket 37 backlog V1 (TICKET-64 s/d TICKET-100) berdasarkan pemisahan layer Smart Contract, Backend API, Frontend UI, dan Web3 Integrator.
