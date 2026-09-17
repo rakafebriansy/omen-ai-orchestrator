@@ -17,6 +17,30 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 16:40:00] - Ticket: TICKET-110 Frontend Animation System Implementation (Pure CSS Keyframes, Fade & Slide)
+> **Trigger:** Prompt Driven | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "buatlah animasi dari frontend@app . rincikan semua page dan berikan ide animasi lengkap untuk setiap element di page tersebut. untuk sederhana pakai animasi fade atau slide saja. buatlah yang cocok dan sesuai" (TICKET-110)
+- **Perubahan:** `[Added/Changed]`
+  1. `web/app/globals.css`: Menambahkan keyframes GPU-accelerated (`@keyframes fadeIn`, `slideUp`, `slideDown`, `slideLeft`, `slideRight`, `scaleIn`) dan utility classes (`.animate-fade-in`, `.animate-slide-up`, `.animate-slide-down`, `.animate-slide-left`, `.animate-slide-right`, `.animate-scale-in`, `.stagger-1` s/d `.stagger-6`, `.hover-lift`).
+  2. `web/app/` (13 Halaman): Mengintegrasikan kelas animasi pada seluruh halaman:
+     - `app/layout.tsx` & `components/Navbar.tsx` (slide-down sticky navbar, backdrop blur)
+     - `app/page.tsx` & `components/landing/*` (hero slide-up, stats overview hover-lift & stagger, trending teaser)
+     - `app/predictions/page.tsx` & `components/MarketCard.tsx` (header slide-down, filter stagger, cards grid stagger & hover-lift)
+     - `app/markets/page.tsx` & `components/BeliefMarketCard.tsx` (header slide-down, discovery filter stagger, cards grid stagger & hover-lift)
+     - `app/market/[id]/page.tsx` & `components/MarketDetailPanels.tsx` (breadcrumb slide-right, left panels slide-up, right trade panel slide-left)
+     - `app/create/page.tsx` (wizard title slide-down, form slide-up stagger)
+     - `app/beliefs/page.tsx` & `components/BeliefCard.tsx` (header slide-down, filter pills stagger, belief cards grid stagger & hover-lift)
+     - `app/creators/page.tsx` & `components/CreatorCard.tsx` (header slide-down, sort bar stagger, creator cards grid stagger & hover-lift)
+     - `app/creator/[address]/page.tsx` & `components/CreatorProfileHeader.tsx` (back link slide-right, profile header slide-up, tabs fade-in, belief history cards stagger)
+     - `app/my-bets/page.tsx` & `components/UserBetsTable.tsx` (header slide-down, 3 metric cards slide-up & hover-lift, table slide-up)
+     - `app/leaderboard/page.tsx` (header slide-down, 3 rank/points cards slide-up & hover-lift, table slide-up)
+     - `app/quests/page.tsx` & `components/QuestCard.tsx` (header slide-down, balance card slide-up, checkin widget slide-up, quest cards stagger & hover-lift)
+     - `app/activity/page.tsx` & `components/ActivityFeed.tsx` (header slide-down, filter stagger, activity stream slide-up & hover-lift)
+     - `app/admin/page.tsx` (governance header slide-down, metric cards slide-up & hover-lift, tabs fade-in, main content slide-up)
+  3. `web/tests/`: Memverifikasi seluruh 74 test suite (383 unit tests lulus 100%).
+  4. Mematuhi 100% Zero-Comment Policy pada semua file `.ts` dan `.tsx`.
+- **Path File:** `omen/web/app/globals.css`, `omen/web/app/`, `omen/web/components/`, `nodes/omen/tickets/TICKET-110-frontend-animation-system-implementation.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-17 16:25:00] - Ticket: TICKET-109 Eliminate API Fallback Operators and Enforce Strict Deterministic Contracts
 > **Trigger:** Prompt Driven | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** "saya tidak mau ada fallback || di @app/api hapus semua fallback pastikan yang diterima dan dikirim oleh backend pasti 1000%" (TICKET-109)
