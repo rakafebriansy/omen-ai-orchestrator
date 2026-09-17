@@ -17,6 +17,57 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-17 16:25:00] - Ticket: TICKET-109 Eliminate API Fallback Operators and Enforce Strict Deterministic Contracts
+> **Trigger:** Prompt Driven | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "saya tidak mau ada fallback || di @app/api hapus semua fallback pastikan yang diterima dan dikirim oleh backend pasti 1000%" (TICKET-109)
+- **Perubahan:** `[Changed/Fixed/Purified]`
+  1. `web/app/api/bets/index/route.ts`: Menghapus fallback chaining (`||`, `??`), menegakkan parsing kanonikal `{ tx_hash, contract_market_id, wallet_address, side, amount }`, menolak parameter invalid dengan HTTP 400.
+  2. `web/app/api/markets/[id]/position/route.ts`: Menghapus fallback aliases, menegakkan format ketat `{ wallet_address, side, amount, tx_hash, block_number }`.
+  3. `web/app/api/markets/[id]/claim/route.ts`: Menghapus fallback aliases, menegakkan format `{ wallet_address, tx_hash }`.
+  4. `web/app/api/beliefs/submit/route.ts`: Menghapus fallback chaining, memisahkan rute on-chain link update (`belief_id`, `contract_address`, `tx_hash`) dan belief creation (`statement`, `raw_text`, `author`, `source_url`, `ai_confidence`).
+  5. `web/app/api/beliefs/[id]/confirm/route.ts`: Menghapus fallback aliases, menegakkan validasi ketat `{ creator_address, signature, timestamp, chain_id, tx_hash }`.
+  6. `web/app/api/stats/overview/route.ts`: Menghapus seluruh hardcoded fake statistics (`148.5`, `1420000`, dll.) dan catch fallback; menegakkan komputasi murni dari database Supabase dengan error status HTTP 500 jika query gagal.
+  7. `web/app/api/positions/route.ts`: Menegakkan query parameter ketat `wallet_address`.
+  8. `web/app/api/markets/route.ts`, `web/app/api/markets/[id]/resolve/route.ts`, `web/app/api/oracle/snapshot/route.ts`: Menghapus parameter fallbacks.
+  9. `web/hooks/` & `web/components/`: Menyelaraskan seluruh hook (`usePlaceBet`, `usePosition`, `useClaim`, `useCreatorConfirm`) dan `BeliefSubmitForm` untuk mengirimkan payload kanonikal 100% deterministik.
+  10. `web/tests/`: Memperbarui seluruh test suite untuk memvalidasi kontrak ketat (74 test suites, 383 unit tests lulus 100%).
+- **Path File:** `omen/web/app/api/`, `omen/web/hooks/`, `omen/web/components/`, `omen/web/tests/`, `nodes/omen/tickets/TICKET-109-eliminate-api-fallbacks-enforce-strict-contracts.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 16:15:00] - Ticket: TICKET-108 Harmonize Backend-For-Frontend Payload Contracts for Belief Submission & Creator Confirmation
+> **Trigger:** Prompt Driven | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "mismatch antara fe dan be next app?", "yasudah berarti tugasmu menyamakan, backend for frontend!" (TICKET-108)
+- **Perubahan:** `[Changed/Added]`
+  1. `web/app/api/beliefs/submit/route.ts`: Menambahkan dukungan multi-payload parsing baik untuk flow ekstraksi AI (`extracted.statement`, `rawText`, `authorHandle`, `sourceUrl`) maupun flow on-chain link update dari `useCreateMarket` (`beliefId`, `marketAddress`, `txHash`). Mengembalikan `marketId` di root response dan data envelope.
+  2. `web/components/BeliefSubmitForm.tsx`: Menyelaraskan submission form agar mengirimkan explicit top-level fields dan membaca `marketId` langsung dari response API.
+  3. `web/app/api/beliefs/[id]/confirm/route.ts`: Mendukung `creator_address` dan `creator`, memberikan fallback timestamp ISO saat ini jika tidak dikirim, dan memperbaiki mapping `tx_hash`.
+  4. `web/hooks/useCreatorConfirm.ts`: Menyelaraskan pengiriman payload EIP-712 creator confirmation (`creator_address`, `creator`, `signature`, `timestamp`, `chain_id`) serta memeriksa `res.ok`.
+- **Path File:** `omen/web/app/api/beliefs/submit/route.ts`, `omen/web/components/BeliefSubmitForm.tsx`, `omen/web/app/api/beliefs/[id]/confirm/route.ts`, `omen/web/hooks/useCreatorConfirm.ts`, `nodes/omen/tickets/TICKET-108-bff-payload-harmonization-beliefs-creator-confirm.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-17 16:10:00] - Ticket: TICKET-107 Harmonize Backend-For-Frontend Payload Contracts for Bets & Positions
+> **Trigger:** Prompt Driven | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** "mismatch antara fe dan be next app?", "yasudah berarti tugasmu menyamakan, backend for frontend!" (TICKET-107)
+- **Perubahan:** `[Changed/Added]`
+  1. `web/app/api/bets/index/route.ts`: Menambahkan dukungan parameter ganda `contract_market_id`, `market_id`, `marketId`, `userAddress`, dan normalisasi nilai `side` (`AGREE`/`DISAGREE`/`YES`/`NO`).
+  2. `web/hooks/usePlaceBet.ts`: Menyelaraskan pengiriman payload (`contract_market_id`) dan menambahkan validasi status respon `res.ok`.
+  3. `web/app/api/markets/[id]/position/route.ts`: Memperluas fleksibilitas parser body untuk mengenali `wallet_address`/`userAddress`, `amount_eth`/`amount`, `tx_hash`/`txHash`, dan memperbaiki reference variabel `normalizedSide`.
+  4. `web/hooks/usePosition.ts`: Menyelaraskan payload pengiriman posisi taruhan dan memeriksa `res.ok`.
+  5. `web/app/api/markets/[id]/claim/route.ts`: Membuat endpoint route handler baru untuk memproses sinkronisasi klaim payout on-chain ke tabel `market_positions` (`claimed = true`) serta mencatat `market_events`.
+  6. `web/hooks/useClaim.ts`: Menyelaraskan hook klaim agar memanggil `POST /api/markets/[id]/claim` dengan payload yang sesuai dan memvalidasi `res.ok`.
+  7. `web/tests/api-markets-claim.test.ts`: Menambahkan unit test suite baru untuk pengujian rute klaim posisi pasar.
+- **Path File:** `omen/web/app/api/bets/index/route.ts`, `omen/web/hooks/usePlaceBet.ts`, `omen/web/app/api/markets/[id]/position/route.ts`, `omen/web/hooks/usePosition.ts`, `omen/web/app/api/markets/[id]/claim/route.ts`, `omen/web/hooks/useClaim.ts`, `omen/web/tests/api-markets-claim.test.ts`, `nodes/omen/tickets/TICKET-107-bff-payload-harmonization-bets-positions.md`, `nodes/omen/CHANGELOG.md`
+
+> **Trigger:** User Request | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Memperbaiki persistensi database pada dashboard admin Omen (`/admin`) untuk alur Create Quest, Toggle Quest, Delete Quest, Create Market, dan Resolve Market. Merujuk pada TICKET-104, TICKET-105, dan TICKET-106.
+- **Perubahan:** `[Fixed/Purified]`
+  1. `web/components/AdminQuestManagementForm.tsx`: Menghilangkan conditional branching `if (onCreateQuest) / else` dan `if (onToggleQuestStatus) / else`. Memastikan seluruh aksi CRUD quest mengeksekusi request HTTP ke `/api/admin/quests` secara langsung dan menggunakan UUID Supabase. Menambahkan sinkronisasi `useEffect` untuk `initialQuests`.
+  2. `web/app/admin/page.tsx`: Menghapus alamat wallet dummy hardcoded dari `AUTHORIZED_ADMIN_ADDRESSES`.
+  3. `web/hooks/useAdminCreateMarket.ts`: Menambahkan injeksi header autentikasi `x-admin-wallet` pada pemanggilan `POST /api/markets` dan memvalidasi respon status `201`.
+  4. `web/app/api/markets/route.ts`: Menghapus hardcoded string fallback `"omen-admin-2026"` dan `"0xadmin999..."` dari fungsi `isAuthorizedAdmin`.
+  5. `web/hooks/useAdminResolveMarket.ts`: Menambahkan injeksi header `x-admin-wallet` pada pemanggilan `POST /api/markets/[id]/resolve` dan memvalidasi respon status `200`.
+  6. `web/app/api/markets/[id]/resolve/route.ts`: Menghapus hardcoded string fallback `"omen-admin-2026"` dan `"0xadmin999..."` dari fungsi `isAuthorizedAdmin`.
+  7. `web/tests/setup.ts` & test suites: Memperbarui mock environment dan assertions untuk memverifikasi 100% test suite kelulusan (381 tests).
+- **Path File:** `omen/web/components/AdminQuestManagementForm.tsx`, `omen/web/app/admin/page.tsx`, `omen/web/hooks/useAdminCreateMarket.ts`, `omen/web/app/api/markets/route.ts`, `omen/web/hooks/useAdminResolveMarket.ts`, `omen/web/app/api/markets/[id]/resolve/route.ts`, `nodes/omen/tickets/TICKET-104-admin-quest-crud-persistence-fix.md`, `nodes/omen/tickets/TICKET-105-admin-market-create-auth-header-fix.md`, `nodes/omen/tickets/TICKET-106-admin-market-resolve-auth-header-fix.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-17 14:00:00] - Refactor: Eliminasi Fallback Values & Penegakan Explicit Error Throwing di openrouter.ts
 > **Trigger:** User Request | **Branch:** `feat/v1-backend` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menghilangkan seluruh nilai fallback/dummy bawaan pada modul produksi `web/lib/ai/openrouter.ts`. Jika variabel `AI_API_KEY`/`OPENROUTER_API_KEY` atau `AI_MODEL`/`OPENROUTER_MODEL` tidak tersedia/kosong, sistem secara ketat melempar `Error` eksplisit.
