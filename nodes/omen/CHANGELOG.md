@@ -17,6 +17,19 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-18 10:10:00] - Ticket: TICKET-118 Live Oracle Feeds Integration and Light Mode Modal Backdrop Fix
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menghubungkan modul Oracle Pipeline & Live Feeds Monitor ke Smart Contract Chainlink on-chain secara langsung via Viem RPC (`GET /api/oracle/feeds` dan `GET /api/oracle/snapshot`), menghapus seluruh nilai dummy statis/simulasi random, serta memperbaiki overlay dialog modal pada Light Mode agar menggunakan backdrop transparan `bg-black/40` alih-alih hitam pekat.
+- **Perubahan:** `[Added/Fixed/Connected]`
+  1. `web/app/api/oracle/feeds/route.ts` (NEW): Endpoint live feed membaca `latestRoundData()` dari smart contract Chainlink AggregatorV3 resmi di Ethereum Sepolia (ETH $2,454.54, BTC $76,935.85).
+  2. `web/app/api/oracle/snapshot/route.ts`: Menambahkan handler `GET` untuk mengambil riwayat snapshot langsung dari Supabase `oracle_snapshots`.
+  3. `web/components/AdminOracleMonitor.tsx`: Menyambungkan `useEffect` auto-fetch live feeds on-chain dan snapshots history, serta menyematkan tombol refresh on-chain tanpa random simulation.
+  4. `web/components/` (`BettingModal.tsx`, `AdminMarketCreateForm.tsx`, `AdminMarketResolutionTable.tsx`, `AdminQuestManagementForm.tsx`, `NetworkSwitcherModal.tsx`, `AdminEmergencyControls.tsx`): Menstandarkan backdrop modal menjadi `bg-black/40 dark:bg-black/75 backdrop-blur-sm`.
+  5. `web/types/api.ts`: Menambahkan interface `OracleFeedState`, `OracleSnapshotRecord`, `OracleFeedsApiResponse`, `OracleSnapshotsApiResponse`.
+  6. `web/tests/`: Memperbarui dan menambahkan test suite (`admin-oracle-monitor.test.tsx`, `api-oracle-snapshot.test.ts`), memvalidasi 77 test suites lulus 100% (398 tests) dengan 100% kepatuhan Zero-Comment Policy.
+  7. `graphify update`: Menyelaraskan Knowledge Graph node Omen (753 nodes, 2320 edges).
+- **Path File:** `omen/web/app/api/oracle/feeds/route.ts`, `omen/web/app/api/oracle/snapshot/route.ts`, `omen/web/components/`, `omen/web/types/api.ts`, `omen/web/tests/`, `nodes/omen/tickets/TICKET-118-live-oracle-feeds-integration-and-light-mode-modal-fix.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-18 09:00:00] - Ticket: TICKET-117 Add Empty State Notification for Trending Belief Markets on Landing Page
 > **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menambahkan antarmuka pemberitahuan *empty state* pada section "Trending Belief Markets" di homepage (`/`) ketika belum ada pasar belief yang aktif atau saat kategori filter yang dipilih tidak memiliki data.
