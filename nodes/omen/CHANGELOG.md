@@ -17,6 +17,34 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-18 08:48:00] - Ticket: TICKET-116 Fix Market Consensus & Pool Metrics Zero-State and Eliminate Aliased Duplicate Payload Properties
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Memperbaiki rendering persentase metrik Consensus (People) dan Money (Pool) pada pasar dengan 0 partisipan / 0 ETH. Menghilangkan nilai dummy fallback `10` dan `5` pada discovery page, menyematkan agregasi partisipan real-time dari `market_positions` di API, dan membersihkan duplikasi properti camelCase/snake_case pada JSON responses.
+- **Perubahan:** `[Fixed/Cleaned/Refactored]`
+  1. `web/components/BeliefMarketCard.tsx`: Menampilkan `0% AGREE / 0% DISAGREE` dan lebar progress bar `0%` saat `totalPool === 0` dan `totalParticipants === 0`.
+  2. `web/app/api/markets/route.ts` & `web/app/api/markets/[id]/route.ts`: Menyertakan relasi `market_positions` untuk menghitung partisipan `agree_participants` dan `disagree_participants` secara akurat, serta menghapus duplikasi field `agreeParticipants` dan `disagreeParticipants`.
+  3. `web/app/markets/page.tsx` & `web/components/landing/TrendingMarketsTeaser.tsx`: Mengganti fallback dummy `10`/`5` menjadi `0`.
+  4. `web/components/MarketDetailPanels.tsx` & `web/app/market/[id]/page.tsx`: Mengatur fallback persentase konsensus ke `0`.
+  5. `web/types/api.ts`: Menyelaraskan interface `FormattedMarketDetail` dengan `agree_participants` dan `disagree_participants`.
+- **Path File:** `omen/web/components/BeliefMarketCard.tsx`, `omen/web/app/api/markets/`, `omen/web/app/markets/page.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/types/api.ts`, `nodes/omen/tickets/TICKET-116-fix-market-consensus-and-pool-metrics-zero-state.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-18 08:40:00] - Ticket: TICKET-115 Strict API Contracts, Types Separation, and Zero-Fallback Enforcement
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Memindahkan seluruh interface dan tipe data API dari direktori `web/app/api/` ke folder khusus `web/types/api.ts` dan `web/types/index.ts`, serta menegakkan *zero-fallback error handling* (menghilangkan operator `?? ""` dan melempar status error HTTP 500 saat record invalid).
+- **Perubahan:** `[Separated/Refactored/Enforced]`
+  1. `web/types/api.ts`: Mendefinisikan seluruh kontrak data kanonikal: `BeliefRecord`, `MarketRecord`, `FormattedMarketDetail`, `MarketResolutionRecord`, dsb.
+  2. `web/app/api/markets/[id]/route.ts`: Menegakkan validasi ketat pada `statement` tanpa fallback dummy empty string, melempar HTTP 500 jika statement hilang.
+  3. `web/types/index.ts`: Re-export seluruh tipe API tersentralisasi.
+- **Path File:** `omen/web/types/api.ts`, `omen/web/types/index.ts`, `omen/web/app/api/markets/[id]/route.ts`, `nodes/omen/tickets/TICKET-115-strict-api-contracts-type-migration-and-zero-fallback-enforcement.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-18 08:30:00] - Ticket: TICKET-114 AI Provider API Key Cleanup and OpenRouter Migration
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Pembersihan total terhadap environment variable legacy `AI_API_KEY` dari seluruh codebase dan standarisasi inisialisasi AI helper hanya menggunakan `OPENROUTER_API_KEY`.
+- **Perubahan:** `[Removed/Cleaned/Secured]`
+  1. `web/lib/ai/openrouter.ts`: Menghapus dependensi `process.env.AI_API_KEY` dan hanya mengandalkan `OPENROUTER_API_KEY`.
+  2. Menghilangkan seluruh referensi `AI_API_KEY` dari route handlers, test suites, dan scripts.
+- **Path File:** `omen/web/lib/ai/openrouter.ts`, `nodes/omen/tickets/TICKET-114-ai-provider-api-key-cleanup-and-openrouter-migration.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-18 07:46:00] - Refactor: Consolidate Database Schema into V1 Canonical Migrations & Codebase Modernization (update-brief-1.md)
 > **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menyatukan dan membersihkan seluruh migrasi database Supabase menjadi skema V1 kanonikal murni (`web/db/migrations/01_init_schema.sql` dan `01_rollback_schema.sql`) yang mendefinisikan seluruh 11 tabel inti V1 (`beliefs`, `belief_sources`, `markets`, `market_positions`, `market_events`, `market_resolutions`, `market_settlements`, `creator_profiles`, `creator_confirmations`, `oracle_snapshots`, `users`) sesuai `global-docs/update-brief-1.md` §2.4. Menghapus migrasi terfragmentasi usang dan menyelaraskan seluruh route API serta test suite.
