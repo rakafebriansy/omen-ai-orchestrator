@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-18 09:00:00] - Ticket: TICKET-117 Add Empty State Notification for Trending Belief Markets on Landing Page
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menambahkan antarmuka pemberitahuan *empty state* pada section "Trending Belief Markets" di homepage (`/`) ketika belum ada pasar belief yang aktif atau saat kategori filter yang dipilih tidak memiliki data.
+- **Perubahan:** `[Added/Enhanced]`
+  1. `web/components/landing/TrendingMarketsTeaser.tsx`: Menambahkan tampilan *empty state card* bertema visual Omen V1 dengan pesan informatif dan tombol CTA *"Submit New Belief ↗"*.
+  2. `web/tests/landing.test.tsx`: Menambahkan unit test untuk memverifikasi munculnya notifikasi empty state saat data pasar kosong.
+  3. `graphify update`: Menyelaraskan Knowledge Graph node Omen (741 nodes, 2277 edges).
+- **Path File:** `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/tests/landing.test.tsx`, `nodes/omen/tickets/TICKET-117-trending-belief-markets-empty-state-notification.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-18 08:48:00] - Ticket: TICKET-116 Fix Market Consensus & Pool Metrics Zero-State and Eliminate Aliased Duplicate Payload Properties
 > **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Memperbaiki rendering persentase metrik Consensus (People) dan Money (Pool) pada pasar dengan 0 partisipan / 0 ETH. Menghilangkan nilai dummy fallback `10` dan `5` pada discovery page, menyematkan agregasi partisipan real-time dari `market_positions` di API, dan membersihkan duplikasi properti camelCase/snake_case pada JSON responses.
