@@ -17,6 +17,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-18 22:50:00] - Implementation: Update Favicon, Apple Touch Icon, and Social Metaicons
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menyelaraskan seluruh aset favicon, icon Next.js App Router (`favicon.ico`, `icon.png`, `apple-icon.png`, `public/favicon.ico`), dan metaicon OpenGraph / Twitter ke aset resmi `logo-omen 1.png`.
+- **Perubahan:** `[Added/Updated]`
+  1. `web/app/favicon.ico`, `web/app/icon.png`, `web/app/apple-icon.png`, `web/public/favicon.ico`: Mengonfigurasi icon kanonikal resolusi tinggi dari `logo-omen 1.png`.
+  2. `web/app/layout.tsx`: Memperluas konfigurasi metadata mencakup multi-format `icons`, `openGraph.images`, dan `twitter.images`.
+  3. `graphify update`: Menyelaraskan Knowledge Graph node Omen (764 nodes, 2380 edges, 34 communities).
+- **Path File:** `omen/web/app/favicon.ico`, `omen/web/app/icon.png`, `omen/web/app/apple-icon.png`, `omen/web/public/favicon.ico`, `omen/web/app/layout.tsx`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-18 21:05:00] - Ticket: TICKET-121 Update Omen Brand Logo and Integrate Category Tab Icons on Landing Page
 > **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Memperbarui logo resmi Omen secara global ke file `logo-omen 1.png` pada Navbar, Footer, Favicon, dan `images/logo.png`, serta menyematkan ikon visual kategori (`hot.webp`, `eth.webp`, `btc.webp`, `arb.webp`, `macro.webp`) pada komponen tabbing *Trending Belief Markets* di Landing Page.
