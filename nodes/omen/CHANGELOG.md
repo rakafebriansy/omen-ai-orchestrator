@@ -17,6 +17,19 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-18 21:05:00] - Ticket: TICKET-121 Update Omen Brand Logo and Integrate Category Tab Icons on Landing Page
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Memperbarui logo resmi Omen secara global ke file `logo-omen 1.png` pada Navbar, Footer, Favicon, dan `images/logo.png`, serta menyematkan ikon visual kategori (`hot.webp`, `eth.webp`, `btc.webp`, `arb.webp`, `macro.webp`) pada komponen tabbing *Trending Belief Markets* di Landing Page.
+- **Perubahan:** `[Added/Updated/Integrated]`
+  1. `web/public/images/logo.png`: Menyalin aset logo baru dari `web/public/logo-omen 1.png` untuk menjaga backward-compatibility.
+  2. `web/components/Navbar.tsx`: Mengarahkan logo ke `/logo-omen 1.png` dengan optimasi `Image` Next.js.
+  3. `web/components/Footer.tsx`: Mengarahkan logo footer ke `/logo-omen 1.png`.
+  4. `web/app/layout.tsx`: Memperbarui favicon metadata `icons.icon`, `icons.shortcut`, dan `icons.apple` ke `/logo-omen 1.png`.
+  5. `web/components/landing/TrendingMarketsTeaser.tsx`: Mengonfigurasi `CATEGORY_TABS` dengan ikon webp (`hot.webp`, `eth.webp`, `btc.webp`, `arb.webp`, `macro.webp`), mempercantik UI tab pills dengan thumbnail grafis, dan menyempurnakan filtering kategori serta keyword aset.
+  6. `web/tests/landing.test.tsx`: Memperbarui unit test untuk memvalidasi rendering icon tab categories. Seluruh 77 test suites (401 unit tests) lulus 100% dan TypeScript lolos uji tanpa galat.
+  7. `graphify update`: Menyelaraskan Knowledge Graph node Omen.
+- **Path File:** `omen/web/public/images/logo.png`, `omen/web/components/Navbar.tsx`, `omen/web/components/Footer.tsx`, `omen/web/app/layout.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/tests/landing.test.tsx`, `nodes/omen/tickets/TICKET-121-update-omen-logo-and-category-tabs-icons.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-18 14:48:00] - Ticket: TICKET-120 Fix Creator Confirmation Wallet Visibility and Card Layout Integration
 > **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Memperbaiki logika autentikasi dompet pada komponen `CreatorConfirmation.tsx` agar pengguna/dompet yang belum terhubung (*disconnected*) tidak melihat tombol tanda tangan aktif, melainkan status informatif (*read-only pill*), serta merelokasi komponen ke dalam Statement Card di `MarketDetailPanels.tsx` di bawah baris profil kreator dan tautan sumber.

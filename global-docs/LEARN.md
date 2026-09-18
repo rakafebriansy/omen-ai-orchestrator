@@ -115,11 +115,13 @@ AI Agent **WAJIB** menyalin struktur *markdown* berikut saat menambahkan rekaman
 - **Database & Data Modeling**
   - [[QA-20260915-01] Fungsi & Peran total_pool_yes dan total_pool_no pada Tabel markets](#qa-20260915-01-fungsi--peran-total_pool_yes-dan-total_pool_no-pada-tabel-markets)
 - **API & Network Integration**
+  - [[QA-20260918-09] Status Integrasi Smart Contract dengan Jaringan Testnet (Live On-Chain vs Mock Environment)](#qa-20260918-09-status-integrasi-smart-contract-dengan-jaringan-testnet-live-on-chain-vs-mock-environment)
   - [[QA-20260918-05] Status Integrasi Nyata vs Mock pada AI Social Ingestion Pipeline](#qa-20260918-05-status-integrasi-nyata-vs-mock-pada-ai-social-ingestion-pipeline)
   - [[QA-20260918-03] Detail Teknis Endpoint & Mekanisme Tanda Tangan Konfirmasi Belief (Hit API vs On-Chain)](#qa-20260918-03-detail-teknis-endpoint--mekanisme-tanda-tangan-konfirmasi-belief-hit-api-vs-on-chain)
 - **UI/UX & Design System**
   - [[QA-20260918-07] Fungsi & Peran Komponen Banner Creator Verification (CreatorConfirmation.tsx)](#qa-20260918-07-fungsi--peran-komponen-banner-creator-verification-creatorconfirmationtsx)
 - **Security & Authentication**
+  - [[QA-20260918-10] Analisis Mekanisme Autentikasi Admin Saat Ini (Form & Header Based) vs True Web3 Wallet Signature](#qa-20260918-10-analisis-mekanisme-autentikasi-admin-saat-ini-form--header-based-vs-true-web3-wallet-signature)
   - [[QA-20260918-08] Logika Otorisasi Alamat Dompet & Pencegahan Impersonasi pada Konfirmasi Kreator](#qa-20260918-08-logika-otorisasi-alamat-dompet--pencegahan-impersonasi-pada-konfirmasi-kreator)
   - [[QA-20260918-02] Verifikasi Identitas Influencer/Kreator & Rujukan UI Inspirasi (ui-example.md)](#qa-20260918-02-verifikasi-identitas-influencerkreator--rujukan-ui-inspirasi-ui-examplemd)
 - **Testing & Quality Assurance**
@@ -136,6 +138,96 @@ AI Agent **WAJIB** menyalin struktur *markdown* berikut saat menambahkan rekaman
 ---
 
 ## 📚 Arsip Log Tanya-Jawab
+
+### [QA-20260918-10] Analisis Mekanisme Autentikasi Admin Saat Ini (Form & Header Based) vs True Web3 Wallet Signature
+- **Tanggal**: 2026-09-18 20:45
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `Security & Authentication`
+- **Tags**: `#admin-authentication #web3-wallet #rbac #siwe #security-audit #admin-portal`
+- **File Referensi**:
+  - `omen/web/app/admin/page.tsx` (L28-L56, L175-L184)
+  - `omen/web/components/AdminLoginForm.tsx` (L13-L168)
+  - `omen/web/app/api/markets/route.ts` (L114-L152)
+  - `omen/web/app/api/markets/[id]/resolve/route.ts` (L11-L40)
+
+#### ❓ Pertanyaan Pengguna
+1. **admin belum benar2 pakai wallet**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Bedah Mekanisme Autentikasi Admin Saat Ini (State Saat Ini)
+- **Ringkasan Inti**: **BENAR SEKALI**. Halaman Admin (`/admin`) saat ini masih menggunakan **Form Otentikasi Input Teks & Header HTTP (`x-admin-wallet` / `x-admin-key`)**, belum mewajibkan koneksi dompet Web3 secara native (*Wagmi `useAccount`*) atau tanda tangan kriptografis (*Sign-In with Ethereum / SIWE*).
+- **Detail Implementasi & Logika**:
+  1. **Dual-Mode Login di UI ([`AdminLoginForm.tsx`](file:///Users/raka/Developer/repositories/projects/wealthy-people-org/omen-dir/omen/web/components/AdminLoginForm.tsx)):**
+     - Mode 1: Mengetik alamat wallet secara manual ke dalam `<input>` teks (misal `0x1234...`).
+     - Mode 2: Memasukkan passphrase master key (`omen-admin-2026`).
+     - Tombol "Use Demo Admin" langsung mengisi string tanpa mengecek apakah browser pengguna benar-benar memiliki ekstensi Web3 wallet aktif atau memegang *private key* dari alamat tersebut.
+  2. **Validasi Otorisasi di Antarmuka ([`app/admin/page.tsx`](file:///Users/raka/Developer/repositories/projects/wealthy-people-org/omen-dir/omen/web/app/admin/page.tsx)):**
+     - Otorisasi hanya memeriksa apakah string `connectedAddress` ada di dalam array whitelist:
+       ```typescript
+       const isAuthorized =
+         Boolean(connectedAddress) &&
+         AUTHORIZED_ADMIN_ADDRESSES.includes(connectedAddress?.toLowerCase() || "");
+       ```
+  3. **Validasi Otorisasi di API Backend ([`route.ts`](file:///Users/raka/Developer/repositories/projects/wealthy-people-org/omen-dir/omen/web/app/api/markets/route.ts)):**
+     - Endpoint `POST /api/markets` dan `POST /api/markets/[id]/resolve` hanya memeriksa header `x-admin-wallet` atau `x-admin-key`.
+- **Rasional Desain MVP / Testing:**
+  Pendekatan ini sengaja diterapkan pada tahap pengujian awal (MVP/Testing Phase) untuk memudahkan pengembang dan otomatisasi test suite (Vitest) menguji alur pembuatan & resolusi pasar tanpa harus selalu membuka *extension pop-up* MetaMask/Phantom pada setiap klik.
+
+##### 2. Standar Produksi: Roadmap Menuju "True Web3 Admin"
+- **Ringkasan Inti**: Untuk beralih ke *Production Web3 Native Admin*, sistem dapat ditingkatkan dengan 3 pilar:
+  1. **Direct Wagmi Binding:** Menghapus form input teks manual dan langsung mengunci halaman ke `const { address, isConnected } = useAccount()`. Jika wallet tidak terhubung atau address bukan admin, halaman terkunci secara otomatis.
+  2. **EIP-4361 (SIWE) / EIP-712 Admin Session:** Admin wajib menandatangani pesan tantangan (*cryptographic challenge nonce*) untuk menghasilkan JWT Admin Session yang aman dan terverifikasi secara matematis.
+  3. **Smart Contract Owner Role Enforcement:** Verifikasi on-chain bahwa signer adalah `owner()` dari smart contract `PredictionMarket.sol` atau `OmenFactory.sol`.
+
+---
+
+### [QA-20260918-09] Status Integrasi Smart Contract dengan Jaringan Testnet (Live On-Chain vs Mock Environment)
+- **Tanggal**: 2026-09-18 20:42
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `API & Network Integration`
+- **Tags**: `#smart-contract #testnet-integration #chainlink-oracle #foundry #ethereum-sepolia #robinhood-testnet #mock-contracts`
+- **File Referensi**:
+  - `omen/web/lib/contracts.ts` (L1-L50)
+  - `omen/web/lib/mockContracts.ts` (L1-L19)
+  - `omen/web/lib/oracle/chainlink.ts` (L1-L55)
+  - `omen/web/app/api/oracle/feeds/route.ts` (L1-L88)
+  - `omen/web/hooks/usePlaceBet.ts` (L1-L79)
+  - `omen/web/hooks/useCreateMarket.ts` (L48-L135)
+  - `omen/contracts/script/DeploySepolia.s.sol` (L1-L18)
+  - `omen/contracts/script/DeployRobinhood.s.sol` (L1-L18)
+  - `nodes/omen/tickets/TICKET-101-manual-foundry-deployment-sepolia.md`
+  - `nodes/omen/tickets/TICKET-102-manual-deploy-contracts-robinhood-chain-testnet.md`
+
+#### ❓ Pertanyaan Pengguna
+1. **apakah semua smart contract sudah terintegrasi dengan testnet?**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Status Integrasi Smart Contract dengan Testnet (Pemisahan Live Oracle vs Standby Deployment)
+- **Ringkasan Inti**:
+  - **Smart Contract Oracle Chainlink:** **SUDAH 100% TERINTEGRASI LIVE ON-CHAIN** di Ethereum Sepolia Testnet (`11155111`).
+  - **Smart Contract Custom Omen (`OmenFactory`, `OmenMarket`, `PredictionMarket`):** **SUDAH TERINTEGRASI SECARA ARSITEKTUR & CODE WIRING (100% SIAP BROADCAST)**, namun saat ini pada environment lokal/default masih diarahkan ke **Mock/Simulator (`NEXT_PUBLIC_USE_MOCK_CONTRACT=true`)** menunggu eksekusi broadcast manual Foundry oleh developer dengan private key ber-saldo faucet (sesuai TICKET-101 & TICKET-102).
+- **Detail Implementasi & Logika**:
+  1. **Yang SUDAH Live On-Chain Nyata di Testnet (Chainlink Oracle Feeds):**
+     - Alamat kontrak Chainlink `AggregatorV3Interface` publik resmi di Ethereum Sepolia (`11155111`):
+       - ETH/USD: `0x694AA1769357215DE4FAC081bf1f309aDC325306`
+       - BTC/USD: `0x1b44F3514812d835EB1BDB0acB33d3fA3351Ee43`
+       - SOL/USD: `0x0c9973e7a27d00e656B9f153348dA46CaD70d03d`
+     - Endpoint Next.js `/api/oracle/feeds` membaca `latestRoundData()` secara real-time dari RPC publik (`https://rpc.sepolia.org`) menggunakan client `viem` tanpa nilai dummy.
+  2. **Yang Telah Terintegrasi Penuh di Kode (Ready-to-Deploy & Wired):**
+     - Source code Solidity (`OmenFactory.sol`, `OmenMarket.sol`, `PredictionMarket.sol`) telah selesai, lolos unit testing Foundry 100%, dan ABI-nya telah diekspor ke `web/contracts/`.
+     - Seluruh hooks frontend Web3 (`usePlaceBet.ts`, `useClaim.ts`, `useCreateMarket.ts`, `useAdminCreateMarket.ts`, `useAdminResolveMarket.ts`) telah menggunakan Wagmi v3 TanStack mutation (`mutateAsync`) dan siap berinteraksi langsung dengan kontrak pintar.
+     - Script deployment Foundry telah dibuat lengkap:
+       - `contracts/script/DeploySepolia.s.sol` (untuk Ethereum Sepolia)
+       - `contracts/script/DeployRobinhood.s.sol` (untuk Robinhood Chain Testnet ID `46630`)
+  3. **Mengapa Masih Menggunakan Mock di Development (.env.local)?**
+     - Sesuai tiket arsitektur **TICKET-101** dan **TICKET-102**, alamat kontrak kustom pada konfigurasi lokal menggunakan mock fallback address (`0x1111...` dan `0x2222...`) agar seluruh developer & automated test suite (Vitest 77 suites / 401 tests) dapat berjalan offline tanpa perlu menguras kuota faucet gas testnet.
+     - **Cara Mengaktifkan Live On-Chain:** Cukup jalankan script Foundry (`forge script ... --broadcast`), lalu pasang alamat hasil deploy ke `NEXT_PUBLIC_OMEN_FACTORY_ADDRESS_SEPOLIA` dan set `NEXT_PUBLIC_USE_MOCK_CONTRACT=false` di `.env.local`.
+- **Rasional & Keputusan Teknis**:
+  Pemisahan fisik antara modul produksi (`contracts.ts`) dan mock simulator (`mockContracts.ts`) memastikan frontend siap bertransisi instan dari mode simulasi ke live testnet on-chain hanya dengan mengganti variabel lingkungan (*environment configuration-driven*).
+
+---
 
 ### [QA-20260918-08] Logika Otorisasi Alamat Dompet & Pencegahan Impersonasi pada Konfirmasi Kreator
 - **Tanggal**: 2026-09-18 14:44
