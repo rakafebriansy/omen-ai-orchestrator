@@ -17,6 +17,26 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-18 14:48:00] - Ticket: TICKET-120 Fix Creator Confirmation Wallet Visibility and Card Layout Integration
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Memperbaiki logika autentikasi dompet pada komponen `CreatorConfirmation.tsx` agar pengguna/dompet yang belum terhubung (*disconnected*) tidak melihat tombol tanda tangan aktif, melainkan status informatif (*read-only pill*), serta merelokasi komponen ke dalam Statement Card di `MarketDetailPanels.tsx` di bawah baris profil kreator dan tautan sumber.
+- **Perubahan:** `[Fixed/Refactored]`
+  1. `web/components/CreatorConfirmation.tsx`: Memperbaiki logika `isCreatorMatch` agar mewajibkan dompet terhubung (`isConnected && address`), serta memisahkan status antarmuka: Terverifikasi EIP-712, Dompet Disconnected (*pill info*), Dompet Mismatched (*read-only pill*), dan Dompet Kreator Sah (*tombol EIP-712 aktif*).
+  2. `web/components/MarketDetailPanels.tsx`: Memindahkan komponen `CreatorConfirmation` dari floating card terpisah menjadi bagian terpadu di dalam Statement Card tepat di bawah flex bar profil pembuat dan tautan sumber dengan divider rapi (`mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-800/80`).
+  3. `web/tests/creator-confirmation.test.tsx`: Menambahkan dan memperbarui unit test untuk memvalidasi kondisi dompet disconnected, mismatched, dan authenticated. Seluruh 77 test suites (401 unit tests) lulus 100% dan TypeScript lolos uji tanpa galat.
+  4. `graphify update`: Menyelaraskan Knowledge Graph node Omen.
+- **Path File:** `omen/web/components/CreatorConfirmation.tsx`, `omen/web/components/MarketDetailPanels.tsx`, `omen/web/tests/creator-confirmation.test.tsx`, `nodes/omen/tickets/TICKET-120-fix-creator-confirmation-wallet-visibility-and-layout.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-18 14:27:00] - Ticket: TICKET-119 Optimize Light Mode on Market Detail Page and Creator Confirmation
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menghilangkan latar belakang hitam (`min-h-screen bg-zinc-950 text-white`) pada halaman detail pasar prediksi (`/market/[id]`), mengoptimalkan kontainer responsif dan skeleton loader di mode terang/gelap, serta memperbaiki kontras banner verifikasi kreator (`CreatorConfirmation.tsx`) pada Light Mode.
+- **Perubahan:** `[Fixed/Optimized]`
+  1. `web/app/market/[id]/page.tsx`: Mengganti kontainer hardcoded `min-h-screen bg-zinc-950 text-white` dengan kontainer kanonikal `w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in` pada state loading, not found error, market detail root, dan suspense fallback. Memperbaiki styling skeleton loader (`bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800`), error card, dan breadcrumb agar kontras tajam di Light Mode.
+  2. `web/components/CreatorConfirmation.tsx`: Menstandarkan banner `confirmedLocally` menggunakan `bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-500/30` dan teks `text-zinc-900 dark:text-zinc-200` agar terbaca jelas di Light Mode.
+  3. `web/tests/market-detail-page.test.tsx`: Menambahkan test case untuk memverifikasi rendering state Market Not Found (404) dan link eksplorasi pasar. Memvalidasi 77 test suites (399 unit tests) lulus 100% dengan kepatuhan mutlak Zero-Comment Policy.
+  4. `graphify update`: Menyelaraskan Knowledge Graph node Omen.
+- **Path File:** `omen/web/app/market/[id]/page.tsx`, `omen/web/components/CreatorConfirmation.tsx`, `omen/web/tests/market-detail-page.test.tsx`, `nodes/omen/tickets/TICKET-119-optimize-market-detail-light-mode-and-creator-confirmation.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-18 10:10:00] - Ticket: TICKET-118 Live Oracle Feeds Integration and Light Mode Modal Backdrop Fix
 > **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menghubungkan modul Oracle Pipeline & Live Feeds Monitor ke Smart Contract Chainlink on-chain secara langsung via Viem RPC (`GET /api/oracle/feeds` dan `GET /api/oracle/snapshot`), menghapus seluruh nilai dummy statis/simulasi random, serta memperbaiki overlay dialog modal pada Light Mode agar menggunakan backdrop transparan `bg-black/40` alih-alih hitam pekat.

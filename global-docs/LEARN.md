@@ -109,22 +109,26 @@ AI Agent **WAJIB** menyalin struktur *markdown* berikut saat menambahkan rekaman
 *AI Agent WAJIB memperbarui tautan indeks di bawah ini setiap kali menambahkan entri baru (urutkan dari yang terbaru / descending).*
 
 - **Architecture & Pattern**
-  - *(Belum ada entri)*
+  - [[QA-20260918-04] Mekanisme Penghubung Media Sosial & Pemetaan Identitas Dompet (Social Integration vs Wallet Mapping)](#qa-20260918-04-mekanisme-penghubung-media-sosial--pemetaan-identitas-dompet-social-integration-vs-wallet-mapping)
 - **State Management & Data Flow**
   - *(Belum ada entri)*
 - **Database & Data Modeling**
   - [[QA-20260915-01] Fungsi & Peran total_pool_yes dan total_pool_no pada Tabel markets](#qa-20260915-01-fungsi--peran-total_pool_yes-dan-total_pool_no-pada-tabel-markets)
 - **API & Network Integration**
-  - *(Belum ada entri)*
+  - [[QA-20260918-05] Status Integrasi Nyata vs Mock pada AI Social Ingestion Pipeline](#qa-20260918-05-status-integrasi-nyata-vs-mock-pada-ai-social-ingestion-pipeline)
+  - [[QA-20260918-03] Detail Teknis Endpoint & Mekanisme Tanda Tangan Konfirmasi Belief (Hit API vs On-Chain)](#qa-20260918-03-detail-teknis-endpoint--mekanisme-tanda-tangan-konfirmasi-belief-hit-api-vs-on-chain)
 - **UI/UX & Design System**
-  - *(Belum ada entri)*
+  - [[QA-20260918-07] Fungsi & Peran Komponen Banner Creator Verification (CreatorConfirmation.tsx)](#qa-20260918-07-fungsi--peran-komponen-banner-creator-verification-creatorconfirmationtsx)
 - **Security & Authentication**
-  - *(Belum ada entri)*
+  - [[QA-20260918-08] Logika Otorisasi Alamat Dompet & Pencegahan Impersonasi pada Konfirmasi Kreator](#qa-20260918-08-logika-otorisasi-alamat-dompet--pencegahan-impersonasi-pada-konfirmasi-kreator)
+  - [[QA-20260918-02] Verifikasi Identitas Influencer/Kreator & Rujukan UI Inspirasi (ui-example.md)](#qa-20260918-02-verifikasi-identitas-influencerkreator--rujukan-ui-inspirasi-ui-examplemd)
 - **Testing & Quality Assurance**
   - *(Belum ada entri)*
 - **Build, Tooling & DevOps**
   - *(Belum ada entri)*
 - **Business Logic & Domain Rules**
+  - [[QA-20260918-06] Titik Pemicu Pemanggilan OpenRouter AI pada Alur Pembuatan Belief](#qa-20260918-06-titik-pemicu-pemanggilan-openrouter-ai-pada-alur-pembuatan-belief)
+  - [[QA-20260918-01] Mekanisme Gasless EIP-712 Creator/Influencer Belief Confirmation](#qa-20260918-01-mekanisme-gasless-eip-712-creatorinfluencer-belief-confirmation)
   - [[QA-20260915-02] Penjelasan Rumus Kalkulasi Payout Model Pari-Mutuel](#qa-20260915-02-penjelasan-rumus-kalkulasi-payout-model-pari-mutuel)
 - **Orchestrator & Workflow**
   - *(Belum ada entri)*
@@ -132,6 +136,349 @@ AI Agent **WAJIB** menyalin struktur *markdown* berikut saat menambahkan rekaman
 ---
 
 ## 📚 Arsip Log Tanya-Jawab
+
+### [QA-20260918-08] Logika Otorisasi Alamat Dompet & Pencegahan Impersonasi pada Konfirmasi Kreator
+- **Tanggal**: 2026-09-18 14:44
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `Security & Authentication`
+- **Tags**: `#anti-impersonation #wallet-authorization #eip-712-security #creator-verification #audit-trail`
+- **File Referensi**:
+  - `omen/web/components/CreatorConfirmation.tsx` (L31-L35)
+  - `omen/web/app/api/beliefs/[id]/confirm/route.ts` (L39-L98)
+  - `omen/web/db/migrations/01_init_schema.sql` (Tabel `creator_profiles`, `creator_confirmations`)
+
+#### ❓ Pertanyaan Pengguna
+1. **bagaimana cara memastikan ia kreator atau bukan hanya dengan klik button?**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Mekanisme Keamanan Otorisasi Dompet & Pencegahan Klaim Palsu
+- **Ringkasan Inti**: Tombol tersebut **BUKAN tombol klik bebas tanpa otentikasi**. Tombol terikat pada **Pengecekan Alamat Dompet (`isCreatorMatch`)** dan **Tanda Tangan Kriptografis Kunci Privat (EIP-712 Private Key Proof)** yang terekspos secara publik.
+- **Detail Implementasi & Logika**:
+  1. **Pengecekan Otorisasi di Frontend (`CreatorConfirmation.tsx`):**
+     ```typescript
+     const isCreatorMatch =
+       !creatorAddress ||
+       !address ||
+       creatorAddress.toLowerCase() === address.toLowerCase();
+     ```
+     Jika pasar sudah memiliki `creatorAddress` yang terdaftar (misal wallet resmi `@rajgokal`), maka dompet lain yang mencoba mengklik tombol akan ditolak (`disabled={!isCreatorMatch}`).
+  2. **Validasi Kriptografis Tanpa Password di Backend (`route.ts`):**
+     Saat tombol diklik, dompet harus membuktikan kepemilikan *private key* dengan menandatangani hash pesan EIP-712. Backend memvalidasi signature tersebut via `viem.verifyTypedData`. Tanpa kunci privat dompet asli, pihak lain tidak bisa memalsukan signature.
+  3. **Transparansi Jejak Audit Publik (*Public Audit Trail*):**
+     Alamat `creator_wallet` yang menandatangani dicatat secara permanen di database `creator_confirmations` dan ditampilkan secara terang-terangan di kartu profil kreator ([`/creator/[address]`](file:///Users/raka/Developer/repositories/projects/wealthy-people-org/omen-dir/omen/web/app/creator/%5Baddress%5D/page.tsx)) serta on-chain explorer. Jika seorang penipu mencoba mengklaim handle tokoh terkenal, alamat dompet penipu tersebut langsung terekspos dan dapat dilaporkan/dianulir.
+- **Rasional & Keputusan Teknis**:
+  Dengan menggabungkan *Wallet Whitelisting*, *EIP-712 Mathematical Proof*, dan *Public Transparency*, sistem menjamin bahwa hanya pemilik sah kunci privat dompet yang dapat memberikan konfirmasi resmi.
+
+### [QA-20260918-07] Fungsi & Peran Komponen Banner Creator Verification (CreatorConfirmation.tsx)
+- **Tanggal**: 2026-09-18 14:43
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `UI/UX & Design System`
+- **Tags**: `#creator-confirmation #ui-banner #gasless-eip712 #social-reputation #market-detail`
+- **File Referensi**:
+  - `omen/web/components/CreatorConfirmation.tsx` (L1-L137)
+  - `omen/web/components/MarketDetailPanels.tsx` (L147-L155)
+  - `global-docs/update-brief-1.md` (§07, §24)
+
+#### ❓ Pertanyaan Pengguna
+1. **lalu ini buat apa? (Banner ungu Creator Verification: "Are you @handle? Sign typed data to officially authenticate this belief statement...")**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Tujuan & Perilaku Komponen Banner Creator Verification
+- **Ringkasan Inti**: Elemen ini adalah **Banner Verifikasi Kreator Resmi** ([`CreatorConfirmation.tsx`](file:///Users/raka/Developer/repositories/projects/wealthy-people-org/omen-dir/omen/web/components/CreatorConfirmation.tsx)) yang berfungsi sebagai pintu bagi influencer pemilik opini (contoh: `@rajgokal`) untuk mengonfirmasi bahwa pernyataan tersebut benar-benar adalah keyakinannya.
+- **Detail Implementasi & Logika**:
+  1. **Kondisi Tampil:**
+     - Ditampilkan pada halaman detail pasar prediksi (`/market/[id]`) ketika status pasar masih `OPEN / AI DETECTED` (belum dikonfirmasi oleh kreator).
+     - Menampilkan panggilan interaktif ke handle pembuat opini (*"Are you @rajgokal? Sign typed data to officially authenticate this belief statement."*).
+  2. **Interaksi Saat Tombol Diklik:**
+     - Influencer mengklik tombol *"Confirm Belief (EIP-712)"*.
+     - Dompet Web3 memunculkan pop-up tanda tangan gasless (0 biaya ETH).
+     - Backend memvalidasi signature dan mengubah status pasar di database menjadi `CONFIRMED`.
+  3. **Perubahan Visual Pasca-Konfirmasi:**
+     - Banner ungu ini otomatis berganti menjadi **Banner Hijau Emerald**:
+       `✓ EIP-712 Authenticated — Confirmed by @rajgokal (Official Signature)`.
+     - Badge centang hijau (`✓`) otomatis disematkan di sebelah handle kreator pada seluruh kartu pasar.
+- **Rasional & Keputusan Teknis**:
+  Fitur ini menciptakan diferensiasi utama Omen dari prediction market tradisional (*Social Belief Market*), di mana konfirmasi resmi dari tokoh aslinya akan meningkatkan volume likuiditas pasar dan mencatat rekam jejak akurasi opini sang kreator di halaman profil publiknya (`/creator/[address]`).
+
+### [QA-20260918-06] Titik Pemicu Pemanggilan OpenRouter AI pada Alur Pembuatan Belief
+- **Tanggal**: 2026-09-18 14:41
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `Business Logic & Domain Rules`
+- **Tags**: `#openrouter #trigger-flow #belief-submission #ai-extraction #market-creation`
+- **File Referensi**:
+  - `omen/web/components/BeliefSubmitForm.tsx` (L48-L109)
+  - `omen/web/app/api/beliefs/extract/route.ts` (L6-L65)
+  - `omen/web/app/api/beliefs/submit/route.ts` (L40-L105)
+
+#### ❓ Pertanyaan Pengguna
+1. **otomatis saat beliefs dibuat, akan hit openrouter?**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Alur & Titik Pemicu (*Trigger Points*) Panggilan OpenRouter AI
+- **Ringkasan Inti**: **YA, otomatis terpicu pada Langkah 1 saat pengguna/admin mengklik tombol analisis teks**, sistem langsung meng-hit OpenRouter untuk membedah teks bebas menjadi parameter pasar terstruktur sebelum pasar dideploy ke database dan smart contract.
+- **Detail Implementasi & Logika**:
+  Alur pembuatan belief terdiri dari 3 tahap:
+  1. **Tahap 1 — Pemicu OpenRouter (`POST /api/beliefs/extract`):**
+     Saat pembuat pasar menginput `raw_text` (misal tweet *"Solana will hit 100k TPS by end of year"*) dan mengklik tombol *"Analyze with AI"*, frontend mengeksekusi `fetch('/api/beliefs/extract')`. Endpoint ini memanggil OpenRouter API untuk menghasilkan:
+     - Target Aset (`SOL`)
+     - Arah Prediksi (`OUTPERFORM` / `ABOVE_PRICE`)
+     - Target Nilai & Waktu Resolusi (`timeframe_days`)
+     - Rekomendasi Oracle (`chainlink`)
+  2. **Tahap 2 — Review & Penyesuaian (UI Preview):**
+     Parameter hasil analisis AI ditampilkan kepada user untuk ditinjau atau diedit jika diperlukan.
+  3. **Tahap 3 — Penyimpanan & Deploy (`POST /api/beliefs/submit`):**
+     Setelah disetujui, pasar disimpan ke Supabase dengan status `DETECTED` / `OPEN` dan hash metadata-nya dicatat ke smart contract on-chain.
+- **Rujukan Kode Sumber**:
+  ```typescript
+  // BeliefSubmitForm.tsx (L63)
+  const res = await fetch("/api/beliefs/extract", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ raw_text: rawText, author_handle: authorHandle, source_url: sourceUrl }),
+  });
+  ```
+- **Rasional & Keputusan Teknis**:
+  Memanggil AI di awal proses ekstraksi memastikan bahwa seluruh pasar prediksi memiliki format parameter yang baku dan objektif (sesuai standar Chainlink Price Oracle) sebelum menerima likuiditas taruhan pengguna.
+
+### [QA-20260918-05] Status Integrasi Nyata vs Mock pada AI Social Ingestion Pipeline
+- **Tanggal**: 2026-09-18 14:40
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `API & Network Integration`
+- **Tags**: `#openrouter #llm-structuring #social-scraping #ai-pipeline #real-vs-mock #belief-extraction`
+- **File Referensi**:
+  - `omen/web/app/api/beliefs/extract/route.ts` (L1-L73)
+  - `omen/web/lib/ai/openrouter.ts` (L38-L135)
+  - `omen/web/lib/ai/mockOpenRouter.ts` (L1-L50)
+  - `global-docs/update-brief-1.md` (§06, §22)
+
+#### ❓ Pertanyaan Pengguna
+1. **"Omen terhubung ke media sosial melalui AI Ingestion & Provenance Pipeline" apakah benar benar terintegrasi untuk saat ini atau masih dummy/mock?**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Status Nyata Saat Ini (Real LLM Structuring vs Input Teks/URL)
+- **Ringkasan Inti**:
+  - **AI Structuring:** **100% REAL** terintegrasi ke OpenRouter LLM API (`https://openrouter.ai/api/v1/chat/completions`).
+  - **Social Scraper / Auto-Crawler:** **BELUM** ada crawler otonom Twitter 24/7; teks/link tweet dimasukkan secara langsung (*human/curator input*).
+- **Detail Implementasi & Logika**:
+  1. **Yang SUDAH Bekerja Nyata (Real Production AI):**
+     - Endpoint `/api/beliefs/extract` memanggil client `openrouter.ts`.
+     - Mengirimkan raw text tweet/postingan ke model LLM (OpenRouter) dengan system prompt ketat untuk menghasilkan JSON terstruktur (`subject`, `direction`, `target_value`, `timeframe_days`, `oracle_recommendation`, `confidence_score`).
+     - Jika `OPENROUTER_API_KEY` terkonfigurasi, AI bekerja secara live dan nyata, bukan simulasi statis.
+  2. **Yang Saat Ini Masih Input Manual/Kurasi (Belum Bot Scraper Otomatis):**
+     - Sistem belum memiliki daemon crawler yang secara otomatis men-scrape feed X/Twitter secara background tanpa input.
+     - Input teks/URL postingan saat ini disubmit melalui form kurasi pengguna atau admin di halaman `/submit` / `/admin`.
+  3. **Mekanisme Mock Fallback (Khusus Testing):**
+     - File `mockOpenRouter.ts` hanya aktif jika `ENABLE_MOCK_AI="true"` atau dalam mode `NODE_ENV === "test"` agar CI/CD testing dapat berjalan tanpa menghabiskan kuota token API.
+- **Rasional & Keputusan Teknis**:
+  Sesuai spesifikasi `update-brief-1.md` §06 & §27, membangun web-scraper background untuk platform sosial Web2 seperti X/Twitter memerlukan enterprise API berbayar tinggi dan rentan banned, sehingga pada V1 parsing AI difokuskan pada pemrosesan semantik teks/URL yang disetorkan pengguna (*curator-driven belief creation*).
+
+### [QA-20260918-04] Mekanisme Penghubung Media Sosial & Pemetaan Identitas Dompet (Social Integration vs Wallet Mapping)
+- **Tanggal**: 2026-09-18 14:38
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `Architecture & Pattern`
+- **Tags**: `#social-media-provenance #wallet-binding #ai-pipeline #creator-profiles #farcaster #web3-identity`
+- **File Referensi**:
+  - `omen/web/app/api/beliefs/extract/route.ts` (L1-L73)
+  - `omen/web/app/api/beliefs/submit/route.ts` (L40-L95)
+  - `omen/web/db/migrations/01_init_schema.sql` (Tabel `beliefs`, `belief_sources`, `creator_profiles`, `creator_confirmations`)
+  - `global-docs/update-brief-1.md` (§06, §23)
+
+#### ❓ Pertanyaan Pengguna
+1. **bagaimana terhubung dengan sosmednya? ambil data dari wallet tsb apakah integrasi social atau tidak?**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Cara Data Terhubung dengan Media Sosial (AI Provenance Ingestion)
+- **Ringkasan Inti**: Omen terhubung ke media sosial melalui **AI Ingestion Pipeline** (`/api/beliefs/extract`), bukan via OAuth login Web2 (tanpa "Sign in with Twitter").
+- **Detail Implementasi & Logika**:
+  1. **Ekstraksi Metadata Postingan Asli:**
+     AI menerima tautan/teks opini dari platform sosial (X/Twitter, Farcaster, dsb.) dan membedahnya menjadi field kanonikal:
+     - `raw_text`: Kalimat asli yang diposting oleh influencer.
+     - `author`: Handle sosial resmi (contoh: `@vitalik`, `@aeyakovenko`).
+     - `source_url`: URL permalink menuju postingan asli (contoh: `https://x.com/user/status/123`).
+     - `source_platform`: Platform asal (`twitter`, `farcaster`, `manual`).
+     - `source_timestamp`: Waktu tweet/post diterbitkan.
+  2. **Tautan Sumber Terbuka (*View Source Link*):**
+     Data ini disimpan di tabel `beliefs` dan `belief_sources`. Di antarmuka, tautan `source_url` dipasang pada tombol *"View Source ↗"* sehingga siapa pun dapat memverifikasi konteks asli langsung di platform asal.
+
+##### 2. Pemetaan Dompet: Apakah Mengambil Data dari Wallet atau Integrasi Sosial?
+- **Ringkasan Inti**: Pada arsitektur V1, sistem menggunakan **Web3-Native Identity Mapping (First-Claim & Profile Binding)** alih-alih login OAuth sosial terpusat.
+- **Detail Implementasi & Logika**:
+  1. **Non-Custodial / Tanpa OAuth Terpusat:**
+     Sistem sengaja tidak menggunakan OAuth Web2 Twitter/X agar tidak terikat batasan API berbayar, risiko sensor, atau sentralisasi data.
+  2. **Wallet-to-Handle Binding (`creator_profiles`):**
+     - Saat pasar dibuat, jika kreator adalah tokoh Web3 yang memiliki wallet publik (atau ENS terdaftar seperti `vitalik.eth`), alamat tersebut didaftarkan sebagai `creator_wallet`.
+     - Saat influencer pertama kali menghubungkan wallet dan mengonfirmasi via EIP-712 di `/market/[id]`, backend mencocokkan atau membuat record di tabel `creator_profiles` yang mengikat `wallet_address` dengan `handle` (@author).
+     - Di masa depan (Roadmap Social Graph): Omen mendukung **Sign In with Farcaster (SIWF)** / **Lens Protocol** di mana relasi antara akun media sosial dan wallet address telah terverifikasi secara on-chain secara otomatis.
+- **Rasional & Keputusan Teknis**:
+  Pendekatan ini memisahkan secara tegas antara **data pasar (opini publik yang bebas dipertaruhkan)** dan **verifikasi identitas (kriptografis berbasis dompet)**, sehingga pasar dapat langsung berjalan tanpa harus menunggu izin atau login dari pemilik sosmed.
+
+### [QA-20260918-03] Detail Teknis Endpoint & Mekanisme Tanda Tangan Konfirmasi Belief (Hit API vs On-Chain)
+- **Tanggal**: 2026-09-18 14:33
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `API & Network Integration`
+- **Tags**: `#api-route #eip-712 #wagmi #viem #rest-api #gasless-signature`
+- **File Referensi**:
+  - `omen/web/hooks/useCreatorConfirm.ts` (L42-L115)
+  - `omen/web/app/api/beliefs/[id]/confirm/route.ts` (L7-L150)
+  - `omen/web/lib/eip712/confirmation.ts` (L20-L44)
+
+#### ❓ Pertanyaan Pengguna
+1. **tidak paham, bagaimana caranya? hit api apa atau ke blockchain?**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Jalur Eksekusi: Tanda Tangan Klien + Hit REST API (Bukan Transaksi On-Chain)
+- **Ringkasan Inti**: Proses ini **TIDAK mengirim transaksi on-chain ke blockchain** (sehingga 0 gas fee), melainkan **menghasilkan tanda tangan digital lokal di dompet**, lalu **meng-hit REST API** backend di endpoint `POST /api/beliefs/[id]/confirm`.
+- **Detail Implementasi & Logika**:
+  Tahapan teknis konkret dari awal hingga selesai:
+  1. **Langkah 1 (Di Browser / Dompet):**
+     Influencer mengklik tombol di halaman detail pasar. Hook `useCreatorConfirm.ts` meminta dompet (MetaMask/Phantom) menandatangani pesan EIP-712.
+     - *Status:* Ini bukan transaksi broadcast (tidak butuh gas fee / no ETH spent).
+     - *Output:* Menghasilkan string tanda tangan heksadesimal (`0x7f8a...`).
+  2. **Langkah 2 (Frontend Hit REST API):**
+     Frontend melakukan panggilan HTTP `fetch`:
+     - **Metode:** `POST`
+     - **URL Endpoint:** `/api/beliefs/[belief_id]/confirm`
+     - **Headers:** `{ "Content-Type": "application/json" }`
+     - **Payload JSON Body:**
+       ```json
+       {
+         "creator_address": "0x1234567890abcdef1234567890abcdef12345678",
+         "signature": "0x7f8a3b...c9e1",
+         "timestamp": 1773820000,
+         "chain_id": 11155111
+       }
+       ```
+  3. **Langkah 3 (Backend Memvalidasi via Viem & Database Supabase):**
+     Server API Next.js menerima payload tersebut dan menjalankan:
+     - `verifyTypedData()` dari pustaka `viem` untuk memastikan secara matematis signature dibuat oleh private key dari `creator_address`.
+     - `supabase.from("beliefs").update({ status: "CONFIRMED" })` untuk menandai belief telah sah.
+     - `supabase.from("creator_confirmations").insert(...)` untuk menyimpan riwayat audit trail bukti tanda tangan.
+- **Rujukan Kode Sumber**:
+  ```typescript
+  const res = await fetch(`/api/beliefs/${payload.beliefId}/confirm`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      creator_address: creatorAddress,
+      signature: signedSig,
+      timestamp: timestampSec,
+      chain_id: chainId || 11155111,
+    }),
+  });
+  ```
+- **Rasional & Keputusan Teknis**:
+  Pendekatan *Off-chain Gasless Signature + REST API Confirmation* dipilih agar influencer Web2/Web3 dapat memvalidasi pernyataan mereka secara instan dalam 2 detik tanpa harus memiliki saldo ETH untuk gas fee blockchain, namun tetap memiliki derajat kepastian hukum kriptografis yang setara dengan transaksi on-chain.
+
+### [QA-20260918-02] Verifikasi Identitas Influencer/Kreator & Rujukan UI Inspirasi (ui-example.md)
+- **Tanggal**: 2026-09-18 14:32
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `Security & Authentication`
+- **Tags**: `#creator-identity #wallet-binding #eip-712 #social-proof #ui-example #openzeppelin-style`
+- **File Referensi**:
+  - `global-docs/update-brief-1.md` (§06-§07, §24)
+  - `global-docs/ui-example.md` (L1-L4)
+  - `omen/web/components/CreatorConfirmation.tsx` (L30-L50)
+  - `omen/web/app/api/beliefs/[id]/confirm/route.ts` (L70-L145)
+  - `omen/web/lib/eip712/confirmation.ts` (L20-L44)
+
+#### ❓ Pertanyaan Pengguna
+1. **bagaimana cara sistem tau ia benar-benar influencer atau tidal? bagaimana menurut ui-example.md ?**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Mekanisme Verifikasi Identitas Asli Influencer (Tri-Layer Proofing)
+- **Ringkasan Inti**: Sistem memvalidasi identitas influencer melalui tiga lapis verifikasi: **Provenance Media Sosial Asli (Source Extraction)**, **Kriptografi Dompet Web3 Terikat (EIP-712 Binding)**, dan **Sifat Non-Blocking Pasar (Social Verification Layer)**.
+- **Detail Implementasi & Logika**:
+  1. **Lapis 1 — Provenance & Canonical Source Link:**
+     Setiap belief yang diekstrak oleh AI (`/api/beliefs/extract`) memuat tautan kanonikal langsung ke postingan media sosial asli (`source_url`, `authorHandle`, `source_platform`). Komponen UI menyematkan tombol *"View Source ↗"* sehingga publik dapat memverifikasi konteks pernyataan secara langsung ke akun resmi kreator.
+  2. **Lapis 2 — Alamat Dompet Terikat & Kriptografi EIP-712:**
+     - Saat kreator mengklaim/memvalidasi, backend mencocokkan `creator_wallet` yang terdaftar di profil kreator (`creator_profiles`) dengan signer dompet.
+     - Signature diverifikasi menggunakan `viem.verifyTypedData` terhadap payload terstruktur. Jika dompet bukan milik kreator yang sah atau mismatch address terjadi, backend melempar status HTTP 401 (*Invalid signature or creator address mismatch*).
+     - Di roadmap Web3 Social (Farcaster / ENS / Social Proof), wallet influencer terikat dengan identitas on-chain publik (misal ENS atau Farcaster FID).
+  3. **Lapis 3 — Social Verification vs Market Permission:**
+     Sesuai `update-brief-1.md` §07, konfirmasi kreator **BUKAN** syarat mutlak untuk membuka pasar (pasar langsung berjalan di status `OPEN` sebagai `AI DETECTED`). Konfirmasi influencer hanyalah stempel reputasi sosial (*social reputation badge*) yang mengubah status menjadi `CONFIRMED BY @handle`.
+
+##### 2. Korelasi dengan Standar Desain pada ui-example.md
+- **Ringkasan Inti**: Dokumen `global-docs/ui-example.md` mengarahkan sistem Omen agar mengadopsi estetika **OpenZeppelin Institutional**, **Aura UI Components**, dan **Landingfolio Crypto Design**, yang menitikberatkan pada kredibilitas, transparansi verifikasi, dan antarmuka *high-trust*.
+- **Detail Implementasi & Logika**:
+  Berdasarkan referensi tersebut:
+  1. **OpenZeppelin Institutional Trust ([openzeppelin.com](https://www.openzeppelin.com/solidity-contracts)):**
+     Menampilkan bukti verifikasi secara presisi (Monospace Address, EIP-712 badge, Smart Contract hash link ke Blockscout/Etherscan) alih-alih klaim sepihak.
+  2. **Aura Components & Landingfolio ([aura.build](https://www.aura.build/browse/components) / [landingfolio.com](https://www.landingfolio.com)):**
+     Menggunakan hierarki kartu bersih (*clean surface cards*), indikator badge interaktif (status `AI DETECTED` abu-abu vs `CONFIRMED` hijau emerald), dan transisi *gasless signature* yang mulus.
+  3. **Dribbble Curated Collection:**
+     Menghadirkan micro-animation (smooth fade-in, responsive theme adaptiveness, card hover elevation) yang memberikan impresi modern dan meyakinkan bagi pengguna maupun influencer saat berinteraksi dengan platform.
+
+### [QA-20260918-01] Mekanisme Gasless EIP-712 Creator/Influencer Belief Confirmation
+- **Tanggal**: 2026-09-18 14:30
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `Business Logic & Domain Rules`
+- **Tags**: `#eip-712 #creator-confirmation #gasless-signature #social-belief #creator-economy #web3-auth`
+- **File Referensi**:
+  - `omen/web/components/CreatorConfirmation.tsx` (L1-L137)
+  - `omen/web/hooks/useCreatorConfirm.ts` (L23-L122)
+  - `omen/web/app/api/beliefs/[id]/confirm/route.ts` (L7-L150)
+  - `omen/web/lib/eip712/confirmation.ts` (L3-L44)
+  - `omen/web/db/migrations/01_init_schema.sql` (Tabel `creator_confirmations`, `creator_profiles`, `beliefs`)
+
+#### ❓ Pertanyaan Pengguna
+1. **bagaimana cara influencer confirm beliefs?**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Alur Interaksi UI & Otentikasi Gasless EIP-712
+- **Ringkasan Inti**: Influencer/kreator mengonfirmasi belief secara *gasless* (tanpa biaya gas blockchain) melalui penandatanganan pesan kriptografis terstruktur standar **EIP-712** menggunakan dompet Web3 mereka langsung di antarmuka halaman detail pasar (`/market/[id]`).
+- **Detail Implementasi & Logika**:
+  Alur kerja konfirmasi belief oleh influencer terbagi dalam 4 tahapan berurutan:
+  1. **Deteksi Kepemilikan Akun / Wallet Match (`CreatorConfirmation.tsx`):**
+     Saat pengguna membuka halaman pasar, komponen memeriksa apakah alamat dompet pengguna yang sedang terkoneksi (`address` dari wagmi) cocok dengan `creatorAddress` atau `creator_wallet` pemilik *statement* belief. Jika cocok, banner CTA *"Confirm Belief (EIP-712)"* akan aktif.
+  2. **Pembuatan & Penandatanganan Payload EIP-712 (`useCreatorConfirm.ts`):**
+     Saat tombol ditekan, hook memanggil fungsi `signTypedDataAsync` dari wagmi untuk memunculkan pop-up tanda tangan di dompet Web3 pengguna (tanpa gas fee). Struktur data yang ditandatangani:
+     ```typescript
+     const types = {
+       ConfirmBelief: [
+         { name: "beliefId", type: "string" },
+         { name: "creator", type: "address" },
+         { name: "statement", type: "string" },
+         { name: "timestamp", type: "uint256" },
+       ],
+     };
+     ```
+  3. **Verifikasi Kriptografis & Persistensi Backend (`/api/beliefs/[id]/confirm`):**
+     Frontend mengirimkan payload `{ creator_address, signature, timestamp, chain_id }` ke backend API. Endpoint memverifikasi keaslian signature menggunakan fungsi `verifyBeliefConfirmationSignature()` (`viem.verifyTypedData`). Jika valid:
+     - Status belief di tabel `beliefs` diubah menjadi `CONFIRMED`.
+     - Data tanda tangan dicatat ke tabel `creator_confirmations`.
+     - Statistik profil kreator di tabel `creator_profiles` di-upsert (menaikkan `confirmed_beliefs_count`).
+  4. **Pembaruan Visual Instan:**
+     Komponen menampilkan badge hijau bertuliskan *"EIP-712 Authenticated — Confirmed by @handle"* dengan tanda centang resmi terverifikasi.
+- **Rujukan Kode Sumber**:
+  ```typescript
+  signedSig = await signTypedDataAsync({
+    domain: {
+      name: "Omen Belief Protocol",
+      version: "1",
+      chainId: chainId || 11155111,
+      verifyingContract,
+    },
+    types,
+    primaryType: "ConfirmBelief",
+    message: {
+      beliefId: payload.beliefId,
+      creator: creatorAddress,
+      statement: payload.statement,
+      timestamp,
+    },
+  });
+  ```
+- **Rasional & Keputusan Teknis**:
+  1. **Gasless Friction-Free Onboarding:** Kreator tidak perlu memiliki saldo ETH untuk membayar gas transaksi saat memvalidasi opini/statement mereka.
+  2. **Non-Repudiation (Anti-Penyangkalan Kriptografis):** Tanda tangan EIP-712 membuktikan secara matematis bahwa pemilik kunci privat dompet resmi telah menyetujui pernyataan tersebut pada waktu tertentu, mencegah bot atau pihak ketiga memalsukan konfirmasi.
 
 ### [QA-20260915-02] Penjelasan Rumus Kalkulasi Payout Model Pari-Mutuel
 - **Tanggal**: 2026-09-15 19:32
