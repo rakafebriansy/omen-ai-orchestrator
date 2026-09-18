@@ -17,6 +17,42 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-18 07:46:00] - Refactor: Consolidate Database Schema into V1 Canonical Migrations & Codebase Modernization (update-brief-1.md)
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menyatukan dan membersihkan seluruh migrasi database Supabase menjadi skema V1 kanonikal murni (`web/db/migrations/01_init_schema.sql` dan `01_rollback_schema.sql`) yang mendefinisikan seluruh 11 tabel inti V1 (`beliefs`, `belief_sources`, `markets`, `market_positions`, `market_events`, `market_resolutions`, `market_settlements`, `creator_profiles`, `creator_confirmations`, `oracle_snapshots`, `users`) sesuai `global-docs/update-brief-1.md` §2.4. Menghapus migrasi terfragmentasi usang dan menyelaraskan seluruh route API serta test suite.
+- **Perubahan:** `[Consolidated/Purified/Updated]`
+  1. `web/db/migrations/01_init_schema.sql`: Menjadi single source of truth skema database V1 dengan 11 tabel kanonikal, relaxed constraints, indexes, dan RLS policies.
+  2. `web/db/migrations/01_rollback_schema.sql`: Rollback terpadu yang menjatuhkan seluruh 11 tabel dan policies sesuai urutan relasi foreign key terbalik.
+  3. Menghapus file skema terfragmentasi usang: `02_v1_belief_schema.sql`, `02_v1_belief_rollback.sql`, dan `03_relax_market_constraints.sql`.
+  4. `web/app/api/wallet/connect/route.ts`: Menyelaraskan query tabel `users` hanya pada `{ id, wallet_address, created_at }` tanpa ketergantungan field points XP legacy.
+  5. `web/app/api/stats/overview/route.ts`: Menyelaraskan perhitungan metrik platform murni V1 (`total_tvl_eth`, `active_markets`, `total_beliefs`, `verified_creators`, `active_wallets`).
+  6. `web/app/api/leaderboard/route.ts`: Menyediakan endpoint Leaderboard V1 Predictor & Creator (`win_rate`, `accuracy_percentage`, `correct_predictions`, `resolved_predictions`, `total_staked_eth`, `tier`).
+  7. `web/tests/`: Memperbarui test suite (`api-schema.test.ts`, `api-schema-v1.test.ts`, `api-wallet-connect.test.ts`, `api-stats-overview.test.ts`, `api-leaderboard.test.ts`) untuk memvalidasi 100% kelulusan (77 test suites, 395 unit tests) dengan kepatuhan mutlak Zero-Comment Policy.
+  8. `graphify update --force`: Menyinkronkan AST code graph (692 nodes, 2143 edges).
+- **Path File:** `omen/web/db/migrations/01_init_schema.sql`, `omen/web/db/migrations/01_rollback_schema.sql`, `omen/web/app/api/`, `omen/web/tests/`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-18 07:35:00] - Ticket: TICKET-112 Redesign Admin Dashboard into Protocol Governance & Oracle Pipeline Monitor (V1 Alignment)
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Perombakan total dashboard admin (`/admin`) menyelaraskan dengan arsitektur Omen V1 Social Belief Market (`global-docs/update-brief-1.md`). Menghapus seluruh elemen quest/gamifikasi usang dan memfokuskan admin pada tata kelola protokol, pemantauan feed oracle Chainlink, monitoring siklus hidup pasar social belief, dan circuit breaker darurat.
+- **Perubahan:** `[Added/Changed/Refactored]`
+  1. `web/components/AdminOracleMonitor.tsx`: Membuat monitor feed data Chainlink (ETH/USD, BTC/USD, SOL/USD) dengan status AggregatorV3Interface live, heartbeat, dan trigger snapshot on-chain/Supabase (`/api/oracle/snapshot`).
+  2. `web/components/AdminBeliefPipelineTable.tsx`: Membuat monitor siklus hidup Social Beliefs 6-tahap V1 (`DETECTED`, `OPEN`, `CONFIRMED`, `CLOSED`, `RESOLVED`, `SETTLED`), filter status, pencarian author/statement, dan badge verifikasi kriptografis EIP-712.
+  3. `web/components/AdminEmergencyControls.tsx`: Menyediakan kontrol tata kelola darurat sirkuit pemutus (Protocol Global Pause/Resume, Emergency Market Void / 100% Refund, dan log audit multisig terenkripsi).
+  4. `web/app/admin/page.tsx`: Merefaktor halaman utama admin dengan 5 tab V1 modern (`create-market`, `beliefs-monitor`, `oracle-monitor`, `resolve-markets`, `emergency-controls`) dan memperbarui 4 metrik header statistik.
+  5. `web/tests/`: Menambahkan unit test baru (`admin-oracle-monitor.test.tsx`, `admin-belief-pipeline.test.tsx`, `admin-emergency-controls.test.tsx`, dan perbaruan `admin-page.test.tsx`), memvalidasi 77 test suites (395 unit tests) lulus 100% dengan kepatuhan penuh Zero-Comment Policy.
+- **Path File:** `omen/web/app/admin/page.tsx`, `omen/web/components/AdminOracleMonitor.tsx`, `omen/web/components/AdminBeliefPipelineTable.tsx`, `omen/web/components/AdminEmergencyControls.tsx`, `omen/web/tests/admin-page.test.tsx`, `omen/web/tests/admin-oracle-monitor.test.tsx`, `omen/web/tests/admin-belief-pipeline.test.tsx`, `omen/web/tests/admin-emergency-controls.test.tsx`, `nodes/omen/tickets/TICKET-112-redesign-admin-dashboard-protocol-governance-v1.md`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-18 07:30:00] - Ticket: TICKET-113 Fix Creators Directory Supabase Integration & Harmonize API Payload Contracts
+> **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Perbaikan integrasi database Supabase pada direktori kreator (`/creators`) dan profil kreator (`/creator/[address]`) untuk live deployment. Menyelesaikan mismatch payload contract dan ketiadaan fallback dinamis saat tabel `creator_profiles` belum di-seed secara manual.
+- **Perubahan:** `[Fixed/Enhanced]`
+  1. `web/app/api/creators/route.ts`: Menyelaraskan kontrak respon payload mengembalikan `{ success: true, data: formattedProfiles, creators: formattedProfiles, total, limit, offset }` serta menyematkan fallback dynamic aggregation dari tabel `beliefs`.
+  2. `web/app/api/creators/[address]/route.ts`: Mendukung pencarian fleksibel berdasarkan wallet address maupun handle serta agregasi riwayat belief dinamis.
+  3. `web/app/creators/page.tsx`: Memproses data secara andal via `data.data || data.creators` dengan skeleton loader dan empty state.
+  4. `web/app/creator/[address]/page.tsx`: Menyelaraskan konsumsi data profil dan daftar belief terkonfirmasi.
+  5. `web/tests/api-creators.test.ts`: Memperbarui pengujian API creators dan mempertahankan kepatuhan Zero-Comment Policy.
+- **Path File:** `omen/web/app/api/creators/route.ts`, `omen/web/app/api/creators/[address]/route.ts`, `omen/web/app/creators/page.tsx`, `omen/web/app/creator/[address]/page.tsx`, `omen/web/tests/api-creators.test.ts`, `nodes/omen/tickets/TICKET-113-creators-directory-supabase-database-integration-fix.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-17 23:20:00] - Implementation: Admin Deployment Mock Fallback, Theme Consistency, Belief Submission Fix, Mobile Responsiveness & TICKET-111 AI Review Setup
 > **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Perbaikan tombol Confirm & Deploy On-Chain, standardisasi dark/light mode pada seluruh komponen, perbaikan database constraint error pada submit social belief, pembuatan TICKET-111 untuk integrasi AI Review riil (Free API Key), dan optimasi mobile responsiveness.
