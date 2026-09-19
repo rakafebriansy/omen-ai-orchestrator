@@ -17,6 +17,26 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 *(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
 
+### [2026-09-19 07:55:00] - Ticket: TICKET-122 Redesign Landing Page and Full Website UI/UX (Polymarket Standard & Institutional Reference)
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menuntaskan implementasi komprehensif TICKET-122 yang mencakup 7 pilar visual dan fungsional berstandar institusional (Polymarket & Omen HTML reference): Motion UI & Micro-animations, Infinite Tech Stack Marquee, Extended Landing Sections (Featured Interactive Belief Hero, 5-Stage Protocol Lifecycle Flow, Live Activity Stream with @TraderX creator highlight, Interactive FAQ Accordion), Seeding data mock Trending Markets seluruh tab filter (`All`, `ETH`, `BTC`, `ARB`, `Macro`), Redesign kartu metrik platform (`StatsOverview.tsx`) anti-AI slop dengan tabular figures (`tabular-nums font-mono`), Redesign kartu pasar berstandar Polymarket (`BeliefMarketCard.tsx`, `MarketCard.tsx`), dan Unified Single-Page Navigation (`Navbar.tsx`, `Footer.tsx`, `app/page.tsx` via `#markets`, `#creators`, `#activity`, `#how-it-works`, `#faq`).
+- **Perubahan:** `[Added/Modified/Implemented]`
+  1. `web/app/globals.css`: Menambahkan keyframes `@keyframes marquee`, `@keyframes feedSlideIn`, utility classes `.animate-marquee`, `.animate-feed-slide`, `.tnum`, dan `html { scroll-behavior: smooth }`.
+  2. `web/components/landing/InfraMarquee.tsx` (NEW): Komponen infinite scrolling marquee untuk ekosistem teknologi Omen (Ethereum Sepolia, Robinhood Chain, Arbitrum, Chainlink, Viem, Wagmi, OpenRouter, Supabase, Foundry, Farcaster).
+  3. `web/components/landing/FeaturedBeliefHero.tsx` (NEW): Prediction card interaktif dengan dual-track consensus (People vs Capital), signal gap pill, live dynamic payout calculation simulator, dan visual EIP-712 verification.
+  4. `web/components/landing/ProtocolFlow.tsx` (NEW): Komponen visualisasi 5-tahap siklus hidup protokol prediksi belief.
+  5. `web/components/landing/LandingActivityStream.tsx` (NEW): Section split layout menyatukan Creator Reputation highlight (@TraderX) dan simulated live on-chain activity stream.
+  6. `web/components/landing/LandingFAQ.tsx` (NEW): Komponen accordion interaktif 6 pertanyaan seputar arsitektur sosial, EIP-712, pari-mutuel pool, dan resolusi oracle.
+  7. `web/components/landing/StatsOverview.tsx`: Merombak total 4 kartu metrik platform dengan layout institusional berkelas, font mono tabular, dan badge status proporsional tanpa AI slop.
+  8. `web/components/landing/TrendingMarketsTeaser.tsx`: Menambahkan `id="markets"`, rich seed data untuk semua 5 tab filter, dan tombol split odds Agree/Disagree style Polymarket.
+  9. `web/components/landing/HeroSection.tsx`: Menyesuaikan subtitle, pill badge live mainnet metrics, dan tombol CTA anchor `#markets`.
+  10. `web/components/BeliefMarketCard.tsx` & `web/components/MarketCard.tsx`: Menyelaraskan seluruh kartu pasar dengan Polymarket split odds buttons, probability progress bars, dan pill volume yang tajam.
+  11. `web/components/Navbar.tsx` & `web/components/Footer.tsx`: Memperbarui navigasi menjadi single-page seamless anchor scrolling (`/#markets`, `/#creators`, `/#activity`, `/#how-it-works`, `/#faq`).
+  12. `web/app/page.tsx`: Mengintegrasikan seluruh komponen dalam arsitektur satu halaman terpadu.
+  13. `web/tests/landing.test.tsx`, `web/tests/navbar.test.tsx`, `web/tests/footer.test.tsx`: Memperbarui unit test suites; 77 test suites lulus 100% (403 tests), TypeScript 0 error, dan 100% Zero-Comment Policy.
+  14. `graphify update`: Menyelaraskan Knowledge Graph node Omen (766 nodes, 2384 edges, 33 communities).
+- **Path File:** `omen/web/app/globals.css`, `omen/web/components/landing/`, `omen/web/components/`, `omen/web/app/page.tsx`, `omen/web/tests/`, `nodes/omen/tickets/TICKET-122-landing-page-motion-marquee-faq-and-metrics-redesign.md`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-18 22:50:00] - Implementation: Update Favicon, Apple Touch Icon, and Social Metaicons
 > **Trigger:** Prompt Driven | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menyelaraskan seluruh aset favicon, icon Next.js App Router (`favicon.ico`, `icon.png`, `apple-icon.png`, `public/favicon.ico`), dan metaicon OpenGraph / Twitter ke aset resmi `logo-omen 1.png`.
