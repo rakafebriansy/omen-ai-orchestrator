@@ -15,6 +15,48 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
+### [2026-09-19 21:45:00] - Refactor: Centralize and Modularize All TypeScript Interfaces and Types into web/types
+> **Trigger:** User Implementation Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Melakukan refactoring menyeluruh dan sentralisasi semua definisi `interface` dan `type` dari seluruh direktori `web/components`, `web/app`, `web/hooks`, dan `web/lib` ke dalam modul-modul modular di dalam `web/types/`:
+  1. **Sentralisasi & Modularisasi Types (`web/types/`):**
+     - `web/types/activity.ts`: Activity feed, on-chain telemetry, decoded receipts, and landing stream types (`ActivityItem`, `OnChainTx`, `MarketCreationDetails`, `DualPayoutDetails`, `LandingActivityStreamProps`, dll).
+     - `web/types/admin.ts`: Admin dashboard tabs, resolution management, belief pipeline, and quest admin types (`AdminTab`, `AdminDashboardProps`, `ResolvableMarketItem`, `AdminMarketResolutionTableProps`, `AdminQuestItem`, dll).
+     - `web/types/bets.ts`: Betting, position staking, and payout types (`BetStatus`, `BetSide`, `UserBet`, `UserBetsTableProps`, `ClaimPayoutButtonProps`, `PlaceBetParams`, `ClaimPayoutParams`, dll).
+     - `web/types/creator.ts`: Creator profiles, confirmations, leaderboards, and spotlight types (`CreatorProfile`, `CreatorCardProps`, `CreatorConfirmationProps`, `LeaderboardEntry`, `LeaderboardTableProps`, dll).
+     - `web/types/market.ts`: Prediction market core, discovery, filters, and modal types (`MarketStatus`, `MarketOutcome`, `MarketData`, `MarketDetailData`, `MarketDetailPanelsProps`, `BettingModalProps`, `PositionPanelProps`, dll).
+     - `web/types/quest.ts`: Quests, categories, status, and teasers (`QuestCategory`, `QuestStatus`, `QuestItem`, `QuestCardProps`, `QuestsTeaserProps`, dll).
+     - `web/types/hooks.ts`: Custom React hook parameter and return types (`UseMarketResult`, `ConfirmBeliefPayload`, `CreateMarketParams`, `UseCreateMarketResult`, `ResolveMarketParams`, dll).
+     - `web/types/contracts.ts`: Smart contract ABIs, execution, EIP-712 hashing, and oracle resolution types (`ContractResolutionOutcome`, `OracleResolutionOutcome`, `ResolutionExecutionResult`, `BeliefHashes`, `CreateOnChainMarketParams`, dll).
+     - `web/types/ui.ts`: Navigation, modals, banners, check-in widgets, theme context, and hero section types (`Theme`, `ThemeContextType`, `FooterProps`, `NavbarProps`, `DailyCheckinWidgetProps`, `NetworkSwitcherModalProps`, `ConnectWalletButtonProps`, dll).
+     - `web/types/database.ts`: Supabase database schema and row definitions.
+     - `web/types/index.ts`: Central selective re-export hub eliminating namespace collisions.
+  2. **Migrasi Consumer di Seluruh Codebase:** Memperbarui 50+ file komponen, halaman, hook, dan utilitas di `web/components/`, `web/app/`, `web/hooks/`, dan `web/lib/` untuk mengimpor tipe secara terpusat dari `@/types` seraya mempertahankan backward compatibility re-export untuk komponen.
+  3. **Verifikasi & Kebijakan Nol Komentar:** Menghilangkan seluruh duplikasi tipe lokal, mematuhi Zero-Comment Policy secara ketat pada seluruh file TS/TSX, memverifikasi kelulusan 100% build Next.js (`npm run build`), lolos 405 unit/integration test Vitest (`npx vitest run`), dan memperbarui Knowledge Graph (`graphify update`).
+- **Perubahan:** `[Refactored/Modularized/Types/Architecture]`
+  1. `web/types/*`: Created `activity.ts`, `admin.ts`, `bets.ts`, `creator.ts`, `market.ts`, `quest.ts`, `hooks.ts`, `contracts.ts`, `ui.ts`, and updated `database.ts`, `index.ts`.
+  2. `web/components/*`: Updated 30+ components to import from `@/types`.
+  3. `web/app/*`: Updated all page routes to consume centralized types.
+  4. `web/hooks/*` & `web/lib/*`: Updated custom hooks, contracts, and oracle clients to consume centralized types.
+  5. `web/tests/*`: Synchronized test cases.
+  6. `graphify update`: Knowledge Graph context synchronized.
+- **Path File:** `omen/web/types/`, `omen/web/components/`, `omen/web/app/`, `omen/web/hooks/`, `omen/web/lib/`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-19 20:55:00] - Feature: Decoded On-Chain Transaction Receipt Modal, Lucide Icon Migration, and Dual-Chain Testnet Seeder
+> **Trigger:** User Implementation Plan (`a.md`) | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Melengkapi fitur Activity Feed, standarisasi ikon, dan seeder testnet on-chain:
+  1. **Bagian A (Decoded On-Chain Transaction Receipt & Chain Badges):** Mengganti link eksternal langsung pada `ActivityFeed.tsx` dengan badge dual-chain eksplisit (`Ethereum Sepolia (11155111)` dan `Robinhood Chain (46630)`) serta modal interaktif in-app receipt on-chain yang menampilkan status konfirmasi, hash transaksi dengan 1-click copy, decoded calldata EVM berdasar ABI kontrak (`depositAgree`, `depositDisagree`, `createMarket`, `confirmBeliefBySignature`, `claimPayout`, `resolveMarket`), telemetri staking pool, detail blok/gas, dan secondary link ke block explorer.
+  2. **Bagian B (Migrasi Ikon Lucide):** Menginstal `lucide-react` dan mengganti seluruh emoji dekoratif (✨🏆⚖⚡⚠🛡🚀🎉📊🔥🌐🏁🐸🥇🥈🥉) pada 15+ komponen aplikasi (`MarketCard`, `LeaderboardTable`, `BeliefSubmitForm`, `DailyCheckinWidget`, `MarketCategoryFilter`, `UserBetsTable`, `AdminEmergencyControls`, `AdminOracleMonitor`, `AdminLoginForm`, `admin/page`, `QuestsTeaser`, `FeaturePillars`, `SignalGapVisualizer`, `LiveActivityExplorer`, `ActivityFeed`) menjadi ikon SVG modern, clean, dan konsisten ala terminal data institusional.
+  3. **Bagian C (Dual-Chain Testnet Activity Seeder):** Membuat script `web/scripts/seed-testnet-activity.ts` berbasis `viem` untuk mengirim transaksi testnet mikro (`0.001-0.005 ETH`) menggunakan multi-wallet terpisah (`SEED_WALLET_PRIVATE_KEY_1/2/3`) melintasi Ethereum Sepolia dan Robinhood Chain Testnet, serta mencatat hasil `txHash` asli ke basis data.
+  4. **Pembaruan Test Suite:** Memutakhirkan ekspektasi unit test pada `activity-page.test.tsx`, `market-card.test.tsx`, dan `user-bets-table.test.tsx` untuk memvalidasi flow modal receipt dan tampilan ikon tanpa emoji (405 passing tests across 77 files).
+- **Perubahan:** `[Added/Migrated/UI/OnChain]`
+  1. `web/components/ActivityFeed.tsx`: Explicit chain badges and decoded on-chain receipt modal.
+  2. `web/package.json` & `web/package-lock.json`: Added `lucide-react`.
+  3. `web/components/MarketCard.tsx`, `LeaderboardTable.tsx`, `BeliefSubmitForm.tsx`, `DailyCheckinWidget.tsx`, `MarketCategoryFilter.tsx`, `UserBetsTable.tsx`, `AdminEmergencyControls.tsx`, `AdminOracleMonitor.tsx`, `AdminLoginForm.tsx`, `app/admin/page.tsx`, `landing/FeaturePillars.tsx`, `landing/LiveActivityExplorer.tsx`, `landing/QuestsTeaser.tsx`, `landing/SignalGapVisualizer.tsx`: Lucide icon system integration.
+  4. `web/scripts/seed-testnet-activity.ts`: Dual-chain testnet execution & database activity seeder.
+  5. `web/tests/activity-page.test.tsx`, `web/tests/market-card.test.tsx`, `web/tests/user-bets-table.test.tsx`: Test suite synchronization.
+  6. `graphify update`: Knowledge Graph updated (836 nodes, 2601 edges, 44 communities).
+- **Path File:** `omen/web/components/ActivityFeed.tsx`, `omen/web/scripts/seed-testnet-activity.ts`, `omen/web/package.json`, `omen/web/tests/activity-page.test.tsx`, `omen/web/tests/market-card.test.tsx`, `omen/web/tests/user-bets-table.test.tsx`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-19 19:30:00] - Revision: Markets Pagination, Seeder Expansion, Theme Flash Elimination, and Mobile Layout Optimization
 > **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menuntaskan 12 poin revisi UI/UX, mobile responsiveness, dan database seeder:
