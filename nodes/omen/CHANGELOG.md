@@ -15,6 +15,34 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
+### [2026-09-19 19:30:00] - Revision: Markets Pagination, Seeder Expansion, Theme Flash Elimination, and Mobile Layout Optimization
+> **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menuntaskan 12 poin revisi UI/UX, mobile responsiveness, dan database seeder:
+  1. Trending Belief Markets di mobile dibatasi 3 card teratas dengan tombol "Explore All Markets" di bagian bawah.
+  2. Trending Belief Markets di desktop dibatasi 2 baris (6 card) untuk kerapian landing page.
+  3. Mengimplementasikan paginasi 3x3 (9 item per page) di halaman `/markets` dengan kontrol Previous, Page Numbers, Next, dan counter informatif.
+  4. Menambahkan dataset 24+ market sosial realistis di `web/db/seed.sql` melintasi kategori ETH, BTC, Arbitrum, Macro, AI, dan Crypto untuk kebutuhan testing pagination.
+  5. Mengubah layout "From a Take to a Track Record" di mobile menjadi susunan horizontal 2 - 2 - 1 (`grid-cols-2 lg:grid-cols-5` dengan card ke-5 `col-span-2 lg:col-span-1`).
+  6. Mengeliminasi outline hitam default pada tombol Agree/Disagree di hero card dengan focus ring emerald/rose dan ring offset adaptif.
+  7. Memperkuat glow neon tombol "Explore markets" pada tema light mode agar berenergi sama dengan dark mode.
+  8. Menghilangkan blinking/flashing tema saat pertama kali membuka aplikasi via sinkronisasi blocking script `<head>` (localStorage + cookie) & Tailwind utility colors langsung pada root body.
+  9. Memperkecil dan mengoptimalkan tipografi metrik hero di mobile agar tidak terjadi text overflow.
+  10. Mengimplementasikan paginasi dinamis pada Live On-Chain Activity (10 item di desktop, 5 item di mobile) dengan kontrol Page X of Y dan navigasi Prev/Next.
+  11. Mengganti unicode arrow `▼` pada FAQ dengan SVG chevron simetris dan presisi di tengah lingkaran.
+  12. Menata link Platform dan Developers di footer mobile agar sejajar horizontal dalam 1 baris (`grid-cols-2`).
+- **Perubahan:** `[Fixed/Enhanced/UI/Mobile/Aesthetics]`
+  1. `web/components/landing/TrendingMarketsTeaser.tsx`: Batasi 3 card di mobile (+ explore link) dan 6 card di desktop.
+  2. `web/app/markets/page.tsx`: Tambahkan client pagination 3x3 (9 card/page) lengkap dengan page controls.
+  3. `web/db/seed.sql`: Ekspansi 24 market seed records dengan relasi lengkap.
+  4. `web/components/landing/ProtocolFlow.tsx`: Grid 2-2-1 horizontal di mobile.
+  5. `web/components/landing/FeaturedBeliefHero.tsx`: Focus rings halus & ring offset adaptif.
+  6. `web/components/landing/HeroSection.tsx`: Glowing neon CTA light mode & perbaikan font stats mobile.
+  7. `web/app/layout.tsx` & `web/components/ThemeProvider.tsx`: Zero-flash theme hydration & localStorage sync.
+  8. `web/components/landing/LiveActivityExplorer.tsx`: Paginasi 10 desktop / 5 mobile dengan controls.
+  9. `web/components/landing/LandingFAQ.tsx`: Centered SVG chevron arrow icon.
+  10. `web/components/Footer.tsx`: Horizontal side-by-side Platform & Developers di mobile.
+- **Path File:** `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/app/markets/page.tsx`, `omen/web/db/seed.sql`, `omen/web/components/landing/ProtocolFlow.tsx`, `omen/web/components/landing/FeaturedBeliefHero.tsx`, `omen/web/components/landing/HeroSection.tsx`, `omen/web/app/layout.tsx`, `omen/web/components/ThemeProvider.tsx`, `omen/web/components/landing/LiveActivityExplorer.tsx`, `omen/web/components/landing/LandingFAQ.tsx`, `omen/web/components/Footer.tsx`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-19 18:50:00] - Revision: Symmetrical Card Heights, Light Mode Optimization, and Distinct Domain-Specific On-Chain Receipts
 > **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menuntaskan 6 revisi penting:
