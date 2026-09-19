@@ -15,6 +15,41 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
+### [2026-09-19 17:50:00] - Implementation: Dedicated Polygonscan-Style Live Activity Explorer & Creators Combined into Signal Gap
+> **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menuntaskan 2 restrukturisasi besar pada Landing Page Omen:
+  1. Memisahkan "Live On-Chain Activity" menjadi section independen (`LiveActivityExplorer.tsx`) yang kaya detail terinspirasi block explorer (Polygonscan / Etherscan). Menyajikan tabel interaktif dual-testnet (Sepolia 11155111 & Robinhood Chain 46631) dengan filter metode transaksi (`Stakes & Votes`, `EIP-712 Signs`, `Creations`, `Dual Payouts`), hash copy indicator, avatar creator terintegrasi unavatar.io, dan popup modal receipt receipt breakdown lengkap (Tx Hash, Block Confirmations, Gas Price/Usage, Fee, Decoded EVM input data).
+  2. Menggabungkan section Creators ("Top Thinkers" / "Conviction Becomes a Record") ke dalam "The Signal Gap: Words vs. Capital" (`SignalGapVisualizer.tsx`) yang berlokasi tepat sebelum FAQ di dasar halaman, menghadirkan dashboard dual-track dan reputasi kreator terpadu.
+- **Perubahan:** `[Added/Redesigned/UI/Aesthetics]`
+  1. `web/components/landing/LiveActivityExplorer.tsx` (NEW): Komponen ledger blockchain mandiri dengan tabel interaktif, filter tabs, live transaction streamer, dan modal receipt Polygonscan.
+  2. `web/components/landing/SignalGapVisualizer.tsx`: Menggabungkan visualisasi dual-track Signal Gap dengan multi-creator carousel spotlight slider (Top Thinkers).
+  3. `web/app/page.tsx`: Mengintegrasikan `LiveActivityExplorer` dan `SignalGapVisualizer` dalam urutan landing page baru.
+  4. `graphify update`: Menyelaraskan Knowledge Graph node Omen (810 nodes, 2485 edges, 38 communities).
+- **Path File:** `omen/web/components/landing/LiveActivityExplorer.tsx`, `omen/web/components/landing/SignalGapVisualizer.tsx`, `omen/web/app/page.tsx`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-19 17:40:00] - Implementation: Signal Gap Relocation, Clean Category Pills, Twitter Unavatar Integration, and X Profile Redirects
+> **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menuntaskan 7 revisi komprehensif pada landing page dan ekosistem kreator Omen:
+  1. Relokasi "The Signal Gap: Words vs. Capital" ke bagian paling bawah Landing Page persis sebelum FAQ.
+  2. Menghapus seluruh ikon WebP pada kategori Trending Belief Markets (`TrendingMarketsTeaser.tsx`) dan halaman `/markets` (`DiscoveryFilter.tsx`), digantikan oleh modern pill tags bersih berestetika tinggi.
+  3. Menambahkan tombol berlogo X (Twitter) pada section "Conviction Becomes a Record" di Landing Page untuk navigasi instan ke profil X kreator aktif.
+  4. Memperbaiki profile page kreator (`/creator/[address]`) agar memetakan canonical address dengan sempurna dan mendukung graceful profile view tanpa error atau layar kosong.
+  5. Mencegah auto-scrolling ke bawah saat mengakses `/creator/<id>` dengan mematok scroll position ke puncak `(0, 0)` saat mount.
+  6. Menambahkan tombol/logo redirect ke akun X pada halaman direktori kreator (`/creators`) dan halaman profil kreator (`/creator/[address]`).
+  7. Mengintegrasikan avatar dinamis via `https://unavatar.io/twitter/{handle}` pada seluruh komponen kreator (`CreatorCard`, `CreatorProfileHeader`, `LandingActivityStream`, `SignalGapVisualizer`, `FeaturedBeliefHero`, dan `BeliefCard`) dengan fallback halus.
+- **Perubahan:** `[Enhanced/UI/Refactored/Aesthetics]`
+  1. `web/app/page.tsx`: Memindahkan urutan komponen sehingga `SignalGapVisualizer` berada di dasar sebelum `LandingFAQ`.
+  2. `web/components/landing/TrendingMarketsTeaser.tsx`: Menghapus import `Image` dan referensi ikon file image pada tab kategori.
+  3. `web/components/DiscoveryFilter.tsx`: Menghapus icon images dari filter kategori `/markets`.
+  4. `web/components/landing/LandingActivityStream.tsx`: Menambahkan tombol logo X dengan SVG resmi dan canonical wallet addresses untuk setiap featured creator.
+  5. `web/components/CreatorCard.tsx`: Menambahkan tombol logo X dan fetching avatar via unavatar.io.
+  6. `web/components/CreatorProfileHeader.tsx`: Menambahkan tombol "View on X ↗" dan fetching avatar via unavatar.io.
+  7. `web/app/creator/[address]/page.tsx`: Menambahkan `window.scrollTo(0, 0)` dan graceful creator fallback.
+  8. `web/app/api/creators/[address]/route.ts`: Menyempurnakan query normalisasi dengan 404 handler yang tepat untuk database misses.
+  9. `web/components/BeliefCard.tsx`, `web/components/BeliefMarketCard.tsx`, `web/components/landing/FeaturedBeliefHero.tsx`: Menyelaraskan creator avatars dengan unavatar.io.
+  10. `graphify update`: Menyelaraskan Knowledge Graph node Omen (808 nodes, 2483 edges, 38 communities).
+- **Path File:** `omen/web/app/page.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/components/DiscoveryFilter.tsx`, `omen/web/components/landing/LandingActivityStream.tsx`, `omen/web/components/CreatorCard.tsx`, `omen/web/components/CreatorProfileHeader.tsx`, `omen/web/app/creator/[address]/page.tsx`, `omen/web/app/api/creators/[address]/route.ts`, `omen/web/components/BeliefCard.tsx`, `omen/web/components/BeliefMarketCard.tsx`, `omen/web/components/landing/FeaturedBeliefHero.tsx`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-19 15:19:00] - Implementation: Dual-Track Consensus Signal Gap Visualizer on Landing Page
 > **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Mengimplementasikan modul interaktif baru `SignalGapVisualizer.tsx` pada Landing Page (`app/page.tsx`) di antara `TrendingMarketsTeaser` dan `ProtocolFlow`. Memvisualisasikan *core proposition* Omen: perbedaan antara Social Sentiment (People Track) vs Staked Capital (Money Track), indikator kalkulasi *Signal Gap* dinamis, switchable real-world case studies (`SOL/ETH`, `Fed Rates`, `BTC ATH`), dan insight analisis konsensus alpha.
