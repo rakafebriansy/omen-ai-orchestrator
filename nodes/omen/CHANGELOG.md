@@ -15,6 +15,19 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
+### [2026-09-19 08:42:00] - Revision: 3-State Theme with Cookie Persistence, Real DB Trending Markets, Scroll Reset, & /markets Discovery Redesign
+> **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menuntaskan 4 revisi penting: (1) Mengatasi efek blinking tema dengan menerapkan 3-state theme (`system`, `dark`, `light`) berbasis cookie server-side dan inline zero-blink script, (2) Mengeliminasi seluruh mock seed dummy pada `TrendingMarketsTeaser.tsx` sehingga 100% hanya memuat data live dari database Supabase (`/api/markets`), (3) Memperbaiki navigasi ke `/markets` agar selalu mendarat di posisi teratas `(0, 0)` tanpa lonjakan scrolling otomatis, dan (4) Menyelaraskan tata letak halaman `/markets` dengan estetika `TrendingMarketsTeaser` yang dilengkapi 5 tombol urutan (`Trending`, `Newest`, `Ending Soon`, `Most Volume`, `Confirmed`), ikon WebP kategori, dan pencarian instan.
+- **Perubahan:** `[Fixed/Refactored/Enhanced]`
+  1. `web/components/ThemeProvider.tsx`: Mendukung 3 state tema (`system`, `dark`, `light`) dengan persistensi cookie `omen-theme` (`max-age=1year`) dan listener `prefers-color-scheme`.
+  2. `web/app/layout.tsx`: Membaca cookie `omen-theme` di level server layout dan menyuntikkan inline `<script>` di `<head>` untuk mencegah FOUC / flash of unstyled content 100%.
+  3. `web/components/Navbar.tsx`: Memperbarui toggle tema untuk beralih secara dinamis antara `Auto (System)`, `Dark`, dan `Light` dengan ikon dan label visual.
+  4. `web/components/landing/TrendingMarketsTeaser.tsx`: Menghapus array statis `CURATED_SEED_MARKETS` dan hanya mengandalkan data riil dari API/DB Supabase.
+  5. `web/app/markets/page.tsx`: Menambahkan `window.scrollTo(0, 0)` pada saat halaman dimuat, serta mempercantik tata letak sesuai desain kartu pasar institusional.
+  6. `web/components/DiscoveryFilter.tsx`: Mengintegrasikan tab pengurutan (`Trending`, `Newest`, `Ending Soon`, `Most Volume`, `Confirmed`) dan tab kategori dengan ikon WebP beresolusi tinggi.
+  7. `graphify update`: Menyelaraskan Knowledge Graph node Omen (795 nodes, 2447 edges, 34 communities).
+- **Path File:** `omen/web/components/ThemeProvider.tsx`, `omen/web/app/layout.tsx`, `omen/web/components/Navbar.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/app/markets/page.tsx`, `omen/web/components/DiscoveryFilter.tsx`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-19 08:23:00] - Revision: Seamless Anchor Scroll Fix & Minimalist Text-and-Icon Marquee Refactoring
 > **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menyesuaikan posisi anchor scroll pada section "Conviction Becomes a Record" (`#creators` dan `#activity`) agar tidak melewati judul section saat bernavigasi dari navbar, serta merombak komponen Marquee teknologi dari bentuk kartu menjadi aliran minimalis murni teks + ikon WebP beresolusi tinggi yang seragam.
