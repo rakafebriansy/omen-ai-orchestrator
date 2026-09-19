@@ -15,6 +15,22 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
+### [2026-09-19 18:50:00] - Revision: Symmetrical Card Heights, Light Mode Optimization, and Distinct Domain-Specific On-Chain Receipts
+> **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menuntaskan 6 revisi penting:
+  1. Menyelaraskan tinggi kedua kartu pada `SignalGapVisualizer.tsx` (Signal Gap & Top Thinkers) menjadi 100% simetris dengan fixed header control baseline dan flexbox matching.
+  2. Menyelaraskan tinggi total kartu kiri dan kanan pada `/market/[id]` (`MarketDetailPanels.tsx`) sehingga simetris dan rapi tanpa trailing space.
+  3. Memperbaiki link footer "Explore all markets in live consensus →" pada `LiveActivityExplorer.tsx` agar mengarah ke anchor `#markets` di landing page.
+  4. Memperbarui judul representasi gabungan section Signal Gap & Creators menjadi `The Signal Gap: Words vs. Capital & Top Thinkers Record`.
+  5. Mengoptimalkan tema Light Mode pada modal Transaction Details `LiveActivityExplorer.tsx` dengan kontras bersih, background lembut, dan text hierarki tajam.
+  6. Mengeliminasi layout generik pada modal receipt on-chain dengan menyajikan struktur informasi unik sesuai tipe transaksi (Pari-Mutuel Staking Slip, EIP-712 Cryptographic Signature Matrix, Market Factory Init Specs, Dual Payout Settlement Receipt, dan Chainlink Telemetry).
+- **Perubahan:** `[Fixed/Enhanced/UI/LightMode]`
+  1. `web/components/landing/SignalGapVisualizer.tsx`: Mengatur tinggi kontroler header `h-10` dan card container `flex-1 h-full flex flex-col justify-between` untuk simetri sempurna, serta memperbarui judul komprehensif.
+  2. `web/components/MarketDetailPanels.tsx`: Mengonsolidasikan kartu kiri menjadi 2 blok seimbang yang simetris tingginya dengan panel kanan.
+  3. `web/components/landing/LiveActivityExplorer.tsx`: Mengoptimalkan light mode, mengubah link navigasi ke `#markets`, dan menyajikan struktur layout receipt spesifik per method.
+  4. `graphify update`: Menyelaraskan Knowledge Graph node Omen (824 nodes, 2515 edges, 42 communities).
+- **Path File:** `omen/web/components/landing/SignalGapVisualizer.tsx`, `omen/web/components/MarketDetailPanels.tsx`, `omen/web/components/landing/LiveActivityExplorer.tsx`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-19 17:50:00] - Implementation: Dedicated Polygonscan-Style Live Activity Explorer & Creators Combined into Signal Gap
 > **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menuntaskan 2 restrukturisasi besar pada Landing Page Omen:
