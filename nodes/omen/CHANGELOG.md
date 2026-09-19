@@ -15,6 +15,16 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
+### [2026-09-19 15:19:00] - Implementation: Dual-Track Consensus Signal Gap Visualizer on Landing Page
+> **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Mengimplementasikan modul interaktif baru `SignalGapVisualizer.tsx` pada Landing Page (`app/page.tsx`) di antara `TrendingMarketsTeaser` dan `ProtocolFlow`. Memvisualisasikan *core proposition* Omen: perbedaan antara Social Sentiment (People Track) vs Staked Capital (Money Track), indikator kalkulasi *Signal Gap* dinamis, switchable real-world case studies (`SOL/ETH`, `Fed Rates`, `BTC ATH`), dan insight analisis konsensus alpha.
+- **Perubahan:** `[Added/Enhanced/UI]`
+  1. `web/components/landing/SignalGapVisualizer.tsx` (NEW): Komponen visualisasi dual-track consensus dengan tab switchable cases, progress bar dual-track bergradien, badge status gap glow, kartu breakdown insight alpha, dan CTA link ke pasar aktif.
+  2. `web/app/page.tsx`: Mengintegrasikan `SignalGapVisualizer` ke dalam struktur Landing Page.
+  3. `web/tests/landing.test.tsx`: Menambahkan unit test validasi rendering section Signal Gap. Seluruh 77 test suites (404 unit tests) lulus 100%.
+  4. `graphify update`: Menyelaraskan Knowledge Graph node Omen (802 nodes, 2471 edges, 39 communities).
+- **Path File:** `omen/web/components/landing/SignalGapVisualizer.tsx`, `omen/web/app/page.tsx`, `omen/web/tests/landing.test.tsx`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-19 12:33:00] - Implementation: Multi-Creator Spotlight Interactive Slider on Landing Page
 > **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Mengembangkan modul Creator Spotlight di Landing Page (`LandingActivityStream.tsx`) dari kartu statis tunggal menjadi carousel/slider multi-kreator interaktif dengan animasi perpindahan mulus. Menampilkan kurasi kreator terverifikasi (`@TraderX`, `@AlphaMacro`, `@onchainwitch`, `@DeFiWizard`), metrik komputasi on-chain (Confirmed, Resolved, Correct, Volume ETH), breakdown alpha category, timer auto-play dengan pause on hover, navigasi tactile previous/next, dan pagination indicator pills.
