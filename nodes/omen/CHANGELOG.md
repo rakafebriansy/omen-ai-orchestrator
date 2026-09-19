@@ -15,6 +15,14 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
+### [2026-09-19 12:33:00] - Implementation: Multi-Creator Spotlight Interactive Slider on Landing Page
+> **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Mengembangkan modul Creator Spotlight di Landing Page (`LandingActivityStream.tsx`) dari kartu statis tunggal menjadi carousel/slider multi-kreator interaktif dengan animasi perpindahan mulus. Menampilkan kurasi kreator terverifikasi (`@TraderX`, `@AlphaMacro`, `@onchainwitch`, `@DeFiWizard`), metrik komputasi on-chain (Confirmed, Resolved, Correct, Volume ETH), breakdown alpha category, timer auto-play dengan pause on hover, navigasi tactile previous/next, dan pagination indicator pills.
+- **Perubahan:** `[Added/Enhanced/UI]`
+  1. `web/components/landing/LandingActivityStream.tsx`: Mengintegrasikan `CREATOR_SPOTLIGHTS` multi-profil, state auto-slide interval (4.5s), detector `onMouseEnter` / `onMouseLeave` untuk jeda interaktif, tombol navigasi prev/next ber-affordance taktil, dan progress dots dinamis.
+  2. `graphify update`: Menyelaraskan Knowledge Graph node Omen (801 nodes, 2468 edges, 38 communities).
+- **Path File:** `omen/web/components/landing/LandingActivityStream.tsx`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-19 12:28:00] - Revision: Featured Belief Hero Agree/Disagree Button Polymarket Alignment & Protocol Flow Accordion Refinement
 > **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menyelaraskan tombol aksi Agree dan Disagree pada komponen simulasi interaktif `FeaturedBeliefHero.tsx` dengan standar kartu pasar `/markets` (solid tactile action buttons berkontras tinggi dengan multiplier badge dan ring selector), meng-upgrade tombol Trade ↗ menjadi styled action button, serta memastikan fungsionalitas akordion pada `ProtocolFlow.tsx` mempertahankan subtitle/deskripsi persisten di setiap status buka/tutup.
