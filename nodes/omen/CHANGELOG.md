@@ -15,7 +15,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
-### [2026-09-19 09:02:00] - Revision: Belief Market Card UI Polish, Tactile Trading Buttons, Status Badge Relocation, & Creator Handle Deduplication
+### [2026-09-19 12:28:00] - Revision: Featured Belief Hero Agree/Disagree Button Polymarket Alignment & Protocol Flow Accordion Refinement
+> **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menyelaraskan tombol aksi Agree dan Disagree pada komponen simulasi interaktif `FeaturedBeliefHero.tsx` dengan standar kartu pasar `/markets` (solid tactile action buttons berkontras tinggi dengan multiplier badge dan ring selector), meng-upgrade tombol Trade ↗ menjadi styled action button, serta memastikan fungsionalitas akordion pada `ProtocolFlow.tsx` mempertahankan subtitle/deskripsi persisten di setiap status buka/tutup.
+- **Perubahan:** `[Enhanced/Aesthetic/UI]`
+  1. `web/components/landing/FeaturedBeliefHero.tsx`: Mengubah tombol Agree/Disagree dari outline card pasif menjadi solid high-contrast trading action buttons (`bg-emerald-600` dan `bg-rose-600` dengan multiplier badge dan selector ring).
+  2. `web/components/landing/ProtocolFlow.tsx`: Menstandarkan akordion siklus hidup protokol dengan subtitle persisten dan pembukaan grafis visual interaktif.
+  3. `graphify update`: Menyelaraskan Knowledge Graph node Omen (798 nodes, 2462 edges, 37 communities).
+- **Path File:** `omen/web/components/landing/FeaturedBeliefHero.tsx`, `omen/web/components/landing/ProtocolFlow.tsx`, `nodes/omen/CHANGELOG.md`
+
 > **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Merombak antarmuka kartu pasar (`BeliefMarketCard.tsx` dan `MarketCard.tsx`) untuk meningkatkan *affordance* interaktif dan hierarki visual: (1) Mengubah tombol "View Market ↗" menjadi action button yang jelas dapat diklik dengan hover & active feedback, (2) Mengganti tombol Agree dan Disagree dari style outlined kotak pasif menjadi tombol trading taktil berkontras tinggi (solid Emerald dan Rose dengan badge persentase embedded style Polymarket), (3) Merelokasi tag status `✓ CONFIRMED` / `AI DETECTED` dari baris atas yang padat ke area tersendiri di bawah statement dengan desain modern solid pill + glowing indicator dot, dan (4) Mengeliminasi duplikasi nama author (`AlphaMacro AlphaMacro`) pada data mapping dan card rendering sehingga hanya menampilkan satu identitas kreator yang bersih.
 - **Perubahan:** `[Enhanced/Redesigned/Fixed]`
