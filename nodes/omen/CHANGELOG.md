@@ -15,7 +15,15 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
-*(⚠️ PERHATIAN AI AGENT: TAMBAHKAN ENTRI LOG BARU ANDA TEPAT DI BAWAH BARIS INI. JANGAN DI PALING BAWAH DOKUMEN!)*
+### [2026-09-19 08:23:00] - Revision: Seamless Anchor Scroll Fix & Minimalist Text-and-Icon Marquee Refactoring
+> **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menyesuaikan posisi anchor scroll pada section "Conviction Becomes a Record" (`#creators` dan `#activity`) agar tidak melewati judul section saat bernavigasi dari navbar, serta merombak komponen Marquee teknologi dari bentuk kartu menjadi aliran minimalis murni teks + ikon WebP beresolusi tinggi yang seragam.
+- **Perubahan:** `[Fixed/Refactored/Aesthetic]`
+  1. `web/components/landing/LandingActivityStream.tsx`: Memindahkan target ID `#creators` dan anchor `#activity` ke tingkat kontainer `<section>` teratas dengan offset `scroll-mt-28 relative`, menjamin judul "Conviction Becomes a Record" dan seluruh section terlihat utuh di bawah floating navbar.
+  2. `web/public/icons/`: Menambahkan 8 ikon WebP baru (`robinhood.webp`, `chainlink.webp`, `viem.webp`, `wagmi.webp`, `openrouter.webp`, `supabase.webp`, `foundry.webp`, `farcaster.webp`) berstandar resolusi tinggi (256x256 RGBA) dengan warna brand resmi.
+  3. `web/components/landing/InfraMarquee.tsx`: Mengubah tampilan marquee dari kartu berbingkai menjadi format minimalis modern berupa teks + ikon WebP tanpa container card.
+  4. `graphify update`: Menyelaraskan Knowledge Graph node Omen (791 nodes, 2436 edges, 34 communities).
+- **Path File:** `omen/web/components/landing/LandingActivityStream.tsx`, `omen/web/components/landing/InfraMarquee.tsx`, `omen/web/public/icons/`, `nodes/omen/CHANGELOG.md`
 
 ### [2026-09-19 07:55:00] - Ticket: TICKET-122 Redesign Landing Page and Full Website UI/UX (Polymarket Standard & Institutional Reference)
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
