@@ -15,7 +15,17 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
-### [2026-09-19 08:42:00] - Revision: 3-State Theme with Cookie Persistence, Real DB Trending Markets, Scroll Reset, & /markets Discovery Redesign
+### [2026-09-19 09:02:00] - Revision: Belief Market Card UI Polish, Tactile Trading Buttons, Status Badge Relocation, & Creator Handle Deduplication
+> **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Merombak antarmuka kartu pasar (`BeliefMarketCard.tsx` dan `MarketCard.tsx`) untuk meningkatkan *affordance* interaktif dan hierarki visual: (1) Mengubah tombol "View Market ↗" menjadi action button yang jelas dapat diklik dengan hover & active feedback, (2) Mengganti tombol Agree dan Disagree dari style outlined kotak pasif menjadi tombol trading taktil berkontras tinggi (solid Emerald dan Rose dengan badge persentase embedded style Polymarket), (3) Merelokasi tag status `✓ CONFIRMED` / `AI DETECTED` dari baris atas yang padat ke area tersendiri di bawah statement dengan desain modern solid pill + glowing indicator dot, dan (4) Mengeliminasi duplikasi nama author (`AlphaMacro AlphaMacro`) pada data mapping dan card rendering sehingga hanya menampilkan satu identitas kreator yang bersih.
+- **Perubahan:** `[Enhanced/Redesigned/Fixed]`
+  1. `web/components/BeliefMarketCard.tsx`: Mempercantik top header row (Avatar + Creator Name + Countdown), merelokasi status pill badge di bawah statement, merombak tombol Agree/Disagree menjadi solid tactile action button, dan mengubah "View Market ↗" menjadi button ber-affordance jelas.
+  2. `web/components/MarketCard.tsx`: Menyelaraskan tombol aksi Yes/No dengan standar solid tactile trading button.
+  3. `web/app/markets/page.tsx` & `web/components/landing/TrendingMarketsTeaser.tsx`: Memperbaiki mapping `author` dan `authorHandle` untuk mencegah duplikasi fallback author name.
+  4. `web/db/seed.sql`: Memastikan seluruh 81 UUID menggunakan format hex valid Postgres (`0-9`, `a-f`).
+  5. `graphify update`: Menyelaraskan Knowledge Graph node Omen (796 nodes, 2455 edges, 35 communities).
+- **Path File:** `omen/web/components/BeliefMarketCard.tsx`, `omen/web/components/MarketCard.tsx`, `omen/web/app/markets/page.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/db/seed.sql`, `nodes/omen/CHANGELOG.md`
+
 > **Trigger:** User Revision Brief | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Menuntaskan 4 revisi penting: (1) Mengatasi efek blinking tema dengan menerapkan 3-state theme (`system`, `dark`, `light`) berbasis cookie server-side dan inline zero-blink script, (2) Mengeliminasi seluruh mock seed dummy pada `TrendingMarketsTeaser.tsx` sehingga 100% hanya memuat data live dari database Supabase (`/api/markets`), (3) Memperbaiki navigasi ke `/markets` agar selalu mendarat di posisi teratas `(0, 0)` tanpa lonjakan scrolling otomatis, dan (4) Menyelaraskan tata letak halaman `/markets` dengan estetika `TrendingMarketsTeaser` yang dilengkapi 5 tombol urutan (`Trending`, `Newest`, `Ending Soon`, `Most Volume`, `Confirmed`), ikon WebP kategori, dan pencarian instan.
 - **Perubahan:** `[Fixed/Refactored/Enhanced]`
