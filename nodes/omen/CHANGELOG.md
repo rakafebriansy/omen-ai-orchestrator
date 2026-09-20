@@ -15,6 +15,44 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
+### [2026-09-20 12:50:00] - Fix: Dynamic Gas Estimation, Scoping Fix, and Explicit RPC Transports in Factory Client
+> **Trigger:** User Error Prompt & Debugging | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menuntaskan error `The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account` dan `Cannot find name 'gasLimit'` pada proses pembuatan pasar on-chain melalui `OmenFactory`:
+  1. **Dynamic Gas Estimation:** Mengganti batas gas statis `2000000n` dengan kalkulasi estimasi gas on-chain `publicClient.estimateContractGas(...)` ditambah 10% safety buffer (`(estimated * 110n) / 100n`) serta fallback aman 1,750,000 gas limit.
+  2. **Scoping Fix:** Memperbaiki cakupan deklarasi variabel `gasLimit: bigint` ke tingkat fungsi utama agar dapat diakses oleh `walletClient.writeContract`.
+  3. **Explicit RPC Transports:** Mengonfigurasi `createPublicClient` dengan HTTP transport URL eksplisit (`process.env.ETHEREUM_SEPOLIA_RPC_URL` dan `process.env.ROBINHOOD_TESTNET_RPC_URL`) untuk menghindari kegagalan RPC default viem.
+  4. **Target Price Rounding:** Memastikan nilai target price numerik dibulatkan secara aman dengan `BigInt(Math.round(num))` sebelum dikirim ke ABI encoder.
+- **Perubahan:** `[Fixed/Web3/Gas/Factory]`
+- **Path File:** `web/lib/market/factory-client.ts`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-20 12:40:00] - Feature: Centralized Error Sanitization and Complete UI Raw Error Leak Elimination
+> **Trigger:** User Design & UX Guideline Enforcement | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menghilangkan seluruh tampilan error mentah (*raw error stack traces*, calldata hex EVM, dan dump JSON-RPC) dari antarmuka visual pengguna (`<div role="alert">`), serta mengisolasinya secara ketat ke `console.error`:
+  1. **Modul Sanitasi Terpusat (`web/lib/format-error.ts`):** Membangun helper `formatUserErrorMessage()` yang memetakan pola error umum Web3 dan REST API (insufficient funds, user cancelled, execution reverted, rate limits 429, network timeout) ke pesan bahasa manusia yang ramah, bersih, dan *actionable*.
+  2. **Refactoring Alert Komponen:** Mengganti direct binding `error: err.message` pada `BeliefSubmitForm.tsx`, `AdminMarketCreateForm.tsx`, `CreatorConfirmation.tsx`, `MarketDetailPanels.tsx`, dan `api/beliefs/submit/route.ts`.
+  3. **Developer Observability:** Memastikan `console.error("[Omen Client Error]", error)` tetap mencatat full stack trace dan parameter calldata di konsol browser developer untuk penelusuran masalah tanpa merusak tampilan UI.
+- **Perubahan:** `[Added/Changed/UX/Security/ErrorHandling]`
+- **Path File:** `web/lib/format-error.ts`, `web/components/BeliefSubmitForm.tsx`, `web/components/AdminMarketCreateForm.tsx`, `web/components/CreatorConfirmation.tsx`, `web/components/MarketDetailPanels.tsx`, `web/app/api/beliefs/submit/route.ts`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-20 12:30:00] - Feature: Creator Profile Auto-Registration, Live DB Backfill, and X (Twitter) Redirect
+> **Trigger:** User Bug Report & Data Integrity Fix | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Memperbaiki integrasi direktori kreator di mana pembuat keyakinan baru tidak otomatis muncul di `/creators` dan tautan redirect ke profil X tidak bekerja:
+  1. **Auto-Upsert Profil Kreator (`api/beliefs/submit/route.ts`):** Menambahkan verifikasi dan auto-insert ke tabel `creator_profiles` saat pertama kali sebuah belief disubmit, mencakup wallet address, handle X, display name, dan avatar URL default.
+  2. **Database Backfill:** Mendaftarkan seluruh akun kreator yang sebelumnya terlewat (`@rkfbrns`, `@rakaaaa`, `@rk98736`) ke database Supabase aktif beserta mapping wallet masing-masing.
+  3. **X (Twitter) Profile Redirect:** Memastikan tombol dan kartu kreator mengarahkan pengguna secara akurat ke URL resmi `https://x.com/${handle}`.
+  4. **Graceful Avatar Degradation:** Menyediakan fallback visual otomatis ke *Gradient Initial Badges* jika layanan CDN Unavatar.io terkena pembatasan laju (*429 Rate Limit*).
+- **Perubahan:** `[Added/Fixed/Database/Social/Integration]`
+- **Path File:** `web/app/api/beliefs/submit/route.ts`, `web/components/CreatorCard.tsx`, `web/app/creators/page.tsx`, `web/app/creator/[address]/page.tsx`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-20 12:15:00] - Chore: Canonical Database Seed & Schema Synchronization
+> **Trigger:** Maintenance & Architecture Normalization | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menyelaraskan script seed basis data `web/db/seed.sql` dengan skema kanonikal terbaru:
+  1. **Eliminasi Kolom Legacy:** Menghapus kolom deprecated `yes_pool`, `no_pool`, `total_pool_yes`, `total_pool_no` dari seluruh perintah insert.
+  2. **Penyelarasan Pool & Status:** Memastikan data seed menggunakan `agree_pool`, `disagree_pool`, `total_pool`, Chain ID resmi `11155111` dan `46630`, serta status kapital `OPEN`/`RESOLVED`/`VOID`.
+  3. **Inklusi Profil Kreator:** Menyertakan record profil awal pada tabel `creator_profiles`.
+- **Perubahan:** `[Changed/Database/Seed]`
+- **Path File:** `web/db/seed.sql`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-20 10:45:00] - Refactor: Systematic Elimination of Magic Numbers Across Codebase
 > **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Mengganti seluruh *magic numbers* (seperti chain ID `11155111` dan `46630`, konstanta durasi waktu pasar, dan `BASIS_POINTS_DIVISOR = 10000`) dengan konstanta terpusat dari `lib/constants.ts` di seluruh hooks, route handlers, pages, lib helpers, dan test suites.

@@ -247,9 +247,44 @@ Deployment smart contract ke Robinhood Chain Testnet (46630), pengujian E2E sikl
 | 98 | **[TICKET-98](../tickets/TICKET-98-mock-contracts-robinhood-chain-testnet.md)** *(DONE)* | Konfigurasi Mock Smart Contract & Simulasi Dual-Chain Robinhood Testnet (Chain ID 46630) | High | `omen/contracts/script/DeployRobinhood.s.sol`, `web/lib/mockContracts.ts` |
 | 99 | **[TICKET-99](../tickets/TICKET-99-dual-testnet-e2e-validation.md)** *(DONE)* | Validasi Siklus Hidup Penuh End-to-End pada Dual Testnet (Sepolia & Robinhood Chain) | High | `omen/web/tests/e2e/belief-market-cycle.test.tsx`, `dual-chain-workflow.test.ts` |
 | 100 | **[TICKET-100](../tickets/TICKET-100-dummy-environment-variables-and-trust-checklist.md)** *(DONE)* | Konfigurasi Environment Template (Dummy) & Verifikasi Trust Checklist V1 | High | `omen/web/.env.example`, `omen/web/README.md` |
-| 101 | **[TICKET-101](../tickets/TICKET-101-manual-foundry-deployment-sepolia.md)** *(MANUAL)* | (MANUAL) Deployment Smart Contract ke Ethereum Sepolia Testnet & Verifikasi Etherscan | High | `omen/contracts/script/DeploySepolia.s.sol`, `omen/web/.env.local` |
-| 102 | **[TICKET-102](../tickets/TICKET-102-manual-deploy-contracts-robinhood-chain-testnet.md)** *(MANUAL)* | (MANUAL) Deployment Smart Contract ke Robinhood Chain Testnet (Chain ID 46630) | High | `omen/contracts/script/DeployRobinhood.s.sol`, `omen/web/.env.local` |
-| 103 | **[TICKET-103](../tickets/TICKET-103-manual-production-credentials-and-environment-setup.md)** *(MANUAL)* | (MANUAL) Penyediaan Kredensial Nyata & Konfigurasi Environment Production (.env.local) | High | `omen/web/.env.local`, `omen/contracts/.env` |
+| 101 | **[TICKET-101](../tickets/TICKET-101-manual-foundry-deployment-sepolia.md)** *(DONE)* | Deployment Smart Contract ke Ethereum Sepolia Testnet & Verifikasi Etherscan | High | `omen/contracts/script/DeploySepolia.s.sol`, `omen/web/.env.local` |
+| 102 | **[TICKET-102](../tickets/TICKET-102-manual-deploy-contracts-robinhood-chain-testnet.md)** *(DONE)* | Deployment Smart Contract ke Robinhood Chain Testnet (Chain ID 46630) | High | `omen/contracts/script/DeployRobinhood.s.sol`, `omen/web/.env.local` |
+| 103 | **[TICKET-103](../tickets/TICKET-103-manual-production-credentials-and-environment-setup.md)** *(DONE)* | Penyediaan Kredensial Nyata & Konfigurasi Environment Production (.env.local) | High | `omen/web/.env.local`, `omen/contracts/.env` |
+
+#### 9. Phase P07 — Production Readiness, Strict Contracts & UI Redesign
+Penyempurnaan arsitektur produksi, penghapusan data tiruan (*zero dummy*), migrasi OpenRouter AI, pengetatan kontrak API/BFF, dan restrukturisasi antarmuka pengguna.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 104 | **[TICKET-104](../tickets/TICKET-104-admin-quest-crud-persistence-fix.md)** *(DONE)* | Perbaikan Persistensi CRUD Quest Admin Supabase | High | `omen/web/app/api/admin/quests/route.ts` |
+| 105 | **[TICKET-105](../tickets/TICKET-105-admin-market-create-auth-header-fix.md)** *(DONE)* | Standardisasi Header Autentikasi Admin Pembuatan Pasar | High | `omen/web/hooks/useAdminCreateMarket.ts` |
+| 106 | **[TICKET-106](../tickets/TICKET-106-admin-market-resolve-auth-header-fix.md)** *(DONE)* | Standardisasi Header Autentikasi Admin Resolusi Pasar | High | `omen/web/hooks/useAdminResolveMarket.ts` |
+| 107 | **[TICKET-107](../tickets/TICKET-107-bff-payload-harmonization-bets-positions.md)** *(DONE)* | Harmonisasi Payload BFF untuk Taruhan & Posisi Portofolio | High | `omen/web/app/api/bets/route.ts`, `api/positions/route.ts` |
+| 108 | **[TICKET-108](../tickets/TICKET-108-bff-payload-harmonization-beliefs-creator-confirm.md)** *(DONE)* | Harmonisasi Payload BFF untuk Beliefs & Konfirmasi Kreator | High | `omen/web/app/api/beliefs/route.ts`, `confirmation.ts` |
+| 109 | **[TICKET-109](../tickets/TICKET-109-eliminate-api-fallbacks-enforce-strict-contracts.md)** *(DONE)* | Eliminasi Fallback Dummy API & Penegakan Strict Schema | High | `omen/web/app/api/markets/route.ts`, `api/activity/route.ts` |
+| 110 | **[TICKET-110](../tickets/TICKET-110-frontend-animation-system-implementation.md)** *(DONE)* | Implementasi Sistem Animasi & Transisi Visual Frontend | Medium | `omen/web/globals.css`, `tailwind.config.ts` |
+| 111 | **[TICKET-111](../tickets/TICKET-111-live-ai-review-integration-and-free-api-key-setup.md)** *(DONE)* | Integrasi Live AI Review & Konfigurasi Provider OpenRouter | High | `omen/web/lib/ai/openrouter.ts` |
+| 112 | **[TICKET-112](../tickets/TICKET-112-redesign-admin-dashboard-protocol-governance-v1.md)** *(DONE)* | Redesain Antarmuka Admin Dashboard & Tata Kelola Protokol V1 | High | `omen/web/app/admin/page.tsx`, `AdminDashboardProps` |
+| 113 | **[TICKET-113](../tickets/TICKET-113-creators-directory-supabase-database-integration-fix.md)** *(DONE)* | Integrasi Live Supabase Direktori Kreator & Penanganan Profil | High | `omen/web/app/creators/page.tsx`, `creator.ts` |
+| 114 | **[TICKET-114](../tickets/TICKET-114-ai-provider-api-key-cleanup-and-openrouter-migration.md)** *(DONE)* | Pembersihan Kunci AI Provider & Migrasi Terpusat OpenRouter | Medium | `omen/web/.env.local`, `openrouter.ts` |
+| 115 | **[TICKET-115](../tickets/TICKET-115-strict-api-contracts-type-migration-and-zero-fallback-enforcement.md)** *(DONE)* | Migrasi Sentralisasi TypeScript Types & Eliminasi Fallback | High | `omen/web/types/*`, `web/lib/*` |
+| 116 | **[TICKET-116](../tickets/TICKET-116-fix-market-consensus-and-pool-metrics-zero-state.md)** *(DONE)* | Perbaikan Kalkulasi Konsensus & Metrik Pool State Nol | High | `omen/web/lib/market/consensus.ts` |
+| 117 | **[TICKET-117](../tickets/TICKET-117-trending-belief-markets-empty-state-notification.md)** *(DONE)* | Empty State & Notifikasi Trending Belief Markets | Medium | `omen/web/components/landing/TrendingMarketsTeaser.tsx` |
+| 118 | **[TICKET-118](../tickets/TICKET-118-live-oracle-feeds-integration-and-light-mode-modal-fix.md)** *(DONE)* | Integrasi Live Oracle Feeds & Perbaikan Kontras Light Mode | High | `omen/web/lib/oracle/chainlink.ts` |
+| 119 | **[TICKET-119](../tickets/TICKET-119-optimize-market-detail-light-mode-and-creator-confirmation.md)** *(DONE)* | Optimasi Kontras Market Detail & Banner Konfirmasi Kreator | Medium | `omen/web/components/MarketDetailPanels.tsx` |
+| 120 | **[TICKET-120](../tickets/TICKET-120-fix-creator-confirmation-wallet-visibility-and-layout.md)** *(DONE)* | Perbaikan Visibilitas Wallet & Tata Letak Creator Confirmation | Medium | `omen/web/components/CreatorConfirmation.tsx` |
+| 121 | **[TICKET-121](../tickets/TICKET-121-update-omen-logo-and-category-tabs-icons.md)** *(DONE)* | Pembaruan Logo Resmi Omen & Ikon Kategori Tabs | Medium | `omen/web/components/Navbar.tsx`, `Footer.tsx` |
+| 122 | **[TICKET-122](../tickets/TICKET-122-landing-page-motion-marquee-faq-and-metrics-redesign.md)** *(DONE)* | Redesain Motion Marquee, FAQ Interaktif & Metrik Landing Page | High | `omen/web/app/page.tsx`, `HeroSection.tsx` |
+
+#### 10. Phase P08 — Audit V1 Remediation, Gas Estimation & Error Sanitization
+Remediasi komprehensif audit smart contract/backend, estimasi gas on-chain dinamis, sanitasi pesan error UI terpusat, dan integrasi pendaftaran kreator otomatis.
+
+| No | Tiket ID | Judul Tugas Tunggal | Prioritas | Lingkup File |
+|:---:|---|---|:---:|---|
+| 123 | **[TICKET-123](../tickets/TICKET-123-dynamic-gas-estimation-and-factory-client-optimization.md)** *(DONE)* | Dynamic Gas Estimation & Optimasi OmenFactory Client | High | `omen/web/lib/market/factory-client.ts` |
+| 124 | **[TICKET-124](../tickets/TICKET-124-centralized-error-sanitization-and-ui-leak-prevention.md)** *(DONE)* | Sanitasi Error Terpusat & Pencegahan Kebocoran Raw Error Stack di UI | High | `omen/web/lib/format-error.ts`, `BeliefSubmitForm.tsx` |
+| 125 | **[TICKET-125](../tickets/TICKET-125-creator-profile-auto-registration-and-x-redirect.md)** *(DONE)* | Registrasi Otomatis Profil Kreator, Backfill DB, dan Integrasi X Redirect | High | `omen/web/app/api/beliefs/submit/route.ts`, `creators/page.tsx` |
+| 126 | **[TICKET-126](../tickets/TICKET-126-canonical-database-seed-and-schema-alignment.md)** *(DONE)* | Penyelarasan Skema Kanonikal Database Seed & Data Inisialisasi | Medium | `omen/web/db/seed.sql` |
 
 ---
 
@@ -259,6 +294,7 @@ Deployment smart contract ke Robinhood Chain Testnet (46630), pengujian E2E sikl
 2. Cross-chain Bridge & Liquidity Aggregation.
 3. Creator DAO Tokenization & Revenue Share Engine.
 4. Autonomous Social Bot Scrapers & Live Stream Integrations.
+
 
 
 

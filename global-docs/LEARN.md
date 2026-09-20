@@ -109,16 +109,20 @@ AI Agent **WAJIB** menyalin struktur *markdown* berikut saat menambahkan rekaman
 *AI Agent WAJIB memperbarui tautan indeks di bawah ini setiap kali menambahkan entri baru (urutkan dari yang terbaru / descending).*
 
 - **Architecture & Pattern**
+  - [[QA-20260920-04] Alur Pendaftaran Otomatis Kreator (Auto-Registration) & Integrasi Redirect Profil X (Twitter)](#qa-20260920-04-alur-pendaftaran-otomatis-kreator-auto-registration--integrasi-redirect-profil-x-twitter)
   - [[QA-20260918-04] Mekanisme Penghubung Media Sosial & Pemetaan Identitas Dompet (Social Integration vs Wallet Mapping)](#qa-20260918-04-mekanisme-penghubung-media-sosial--pemetaan-identitas-dompet-social-integration-vs-wallet-mapping)
 - **State Management & Data Flow**
   - *(Belum ada entri)*
 - **Database & Data Modeling**
   - [[QA-20260915-01] Fungsi & Peran total_pool_yes dan total_pool_no pada Tabel markets](#qa-20260915-01-fungsi--peran-total_pool_yes-dan-total_pool_no-pada-tabel-markets)
 - **API & Network Integration**
+  - [[QA-20260920-02] Analisis & Resolusi Error 'Cost of Executing Transaction Exceeds Balance' pada Viem Simulation & Dynamic Gas Estimation](#qa-20260920-02-analisis--resolusi-error-cost-of-executing-transaction-exceeds-balance-pada-viem-simulation--dynamic-gas-estimation)
   - [[QA-20260918-09] Status Integrasi Smart Contract dengan Jaringan Testnet (Live On-Chain vs Mock Environment)](#qa-20260918-09-status-integrasi-smart-contract-dengan-jaringan-testnet-live-on-chain-vs-mock-environment)
   - [[QA-20260918-05] Status Integrasi Nyata vs Mock pada AI Social Ingestion Pipeline](#qa-20260918-05-status-integrasi-nyata-vs-mock-pada-ai-social-ingestion-pipeline)
   - [[QA-20260918-03] Detail Teknis Endpoint & Mekanisme Tanda Tangan Konfirmasi Belief (Hit API vs On-Chain)](#qa-20260918-03-detail-teknis-endpoint--mekanisme-tanda-tangan-konfirmasi-belief-hit-api-vs-on-chain)
 - **UI/UX & Design System**
+  - [[QA-20260920-03] Prinsip Sanitasi Error UI vs Developer Console Logging (Pencegahan Raw EVM Revert Leak)](#qa-20260920-03-prinsip-sanitasi-error-ui-vs-developer-console-logging-pencegahan-raw-evm-revert-leak)
+  - [[QA-20260920-01] Fungsi, Peran, dan Penanganan Limitasi Unavatar.io pada Avatar Kreator Omen](#qa-20260920-01-fungsi-peran-dan-penanganan-limitasi-unavatario-pada-avatar-kreator-omen)
   - [[QA-20260918-07] Fungsi & Peran Komponen Banner Creator Verification (CreatorConfirmation.tsx)](#qa-20260918-07-fungsi--peran-komponen-banner-creator-verification-creatorconfirmationtsx)
 - **Security & Authentication**
   - [[QA-20260918-10] Analisis Mekanisme Autentikasi Admin Saat Ini (Form & Header Based) vs True Web3 Wallet Signature](#qa-20260918-10-analisis-mekanisme-autentikasi-admin-saat-ini-form--header-based-vs-true-web3-wallet-signature)
@@ -138,6 +142,177 @@ AI Agent **WAJIB** menyalin struktur *markdown* berikut saat menambahkan rekaman
 ---
 
 ## 📚 Arsip Log Tanya-Jawab
+
+### [QA-20260920-04] Alur Pendaftaran Otomatis Kreator (Auto-Registration) & Integrasi Redirect Profil X (Twitter)
+- **Tanggal**: 2026-09-20 12:45
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `Architecture & Pattern`
+- **Tags**: `#creator-registration #social-redirect #supabase-upsert #backfill #beliefs-pipeline #creator-profiles`
+- **File Referensi**:
+  - `omen/web/app/api/beliefs/submit/route.ts` (L75-L115)
+  - `omen/web/components/CreatorCard.tsx` (L30-L75)
+  - `omen/web/app/creators/page.tsx` (L20-L90)
+  - `omen/web/app/creator/[address]/page.tsx` (L15-L60)
+
+#### ❓ Pertanyaan Pengguna
+1. **saat saya submit belief kreator tidak masuk di /creators dan takdapat redirect ke x**
+2. **lalu bagaimana yang sudah terlewat karna kebodohanmu?**
+3. **kok milik @rkfbrns tidak muncul**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Penyebab Masalah & Alur Pendaftaran Otomatis (Auto-Registration)
+- **Ringkasan Inti**: Form submit belief sebelumnya hanya menyimpan data ke tabel `beliefs` dan membuat smart contract on-chain, tanpa membuat record di tabel `creator_profiles`. Akibatnya, kreator baru tidak terindeks pada query join di `/creators`.
+- **Detail Implementasi & Logika**:
+  Di `web/app/api/beliefs/submit/route.ts`, ditambahkan langkah *auto-upsert* sebelum pasar dibuat:
+  ```typescript
+  const { data: existingProfile } = await supabase
+    .from("creator_profiles")
+    .select("wallet_address")
+    .or(`wallet_address.eq.${body.creator_wallet.toLowerCase()},handle.eq.${cleanHandle}`)
+    .maybeSingle();
+
+  if (!existingProfile) {
+    await supabase.from("creator_profiles").insert({
+      wallet_address: body.creator_wallet.toLowerCase(),
+      handle: cleanHandle,
+      display_name: cleanHandle,
+      bio: `Official profile for @${cleanHandle} on Omen Protocol.`,
+      avatar_url: `https://unavatar.io/x/${cleanHandle}`,
+      status: "UNCLAIMED",
+    });
+  }
+  ```
+- **Rasional & Keputusan Teknis**:
+  Dengan mendaftarkan profil secara proaktif saat belief pertama kali diajukan, ekosistem direktori `/creators` selalu sinkron tanpa mengharuskan kreator mendaftar akun terlebih dahulu secara manual.
+
+##### 2. Solusi Pemulihan Data Kreator yang Terlewat (Backfill)
+- **Ringkasan Inti**: Semua akun kreator yang sempat diajukan sebelum perbaikan kode (`@rkfbrns`, `@rakaaaa`, `@rk98736`) telah di-backfill secara langsung ke database Supabase aktif dengan menghubungkan alamat wallet admin/kreator masing-masing.
+- **Hasil**: Halaman `/creators` kini menampilkan seluruh kreator tersebut dengan daftar pasar terkait dan tombol redirect profil X aktif.
+
+##### 3. Tautan Redirect X (Twitter)
+- **Ringkasan Inti**: Komponen `CreatorCard.tsx` dan `CreatorProfileHeader.tsx` menggunakan format URL resmi `https://x.com/${handle.replace('@', '')}` dengan `target="_blank"` dan `rel="noopener noreferrer"`.
+
+---
+
+### [QA-20260920-03] Prinsip Sanitasi Error UI vs Developer Console Logging (Pencegahan Raw EVM Revert Leak)
+- **Tanggal**: 2026-09-20 12:40
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `UI/UX & Design System`
+- **Tags**: `#error-sanitization #user-experience #console-logging #security-leak #format-error #viem-errors`
+- **File Referensi**:
+  - `omen/web/lib/format-error.ts` (L1-L60)
+  - `omen/web/components/BeliefSubmitForm.tsx` (L140-L160)
+  - `omen/web/components/AdminMarketCreateForm.tsx` (L110-L135)
+  - `omen/web/components/CreatorConfirmation.tsx` (L85-L110)
+  - `omen/web/components/MarketDetailPanels.tsx` (L90-L125)
+
+#### ❓ Pertanyaan Pengguna
+1. **cek seluruh codebase. untuk error jangan pernah menampilkan error asli di ui (di console.error saja). jangan seperti: <div role="alert">The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account... Request Arguments: from: 0x9124...**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Pemisahan Feedback Pengguna vs Developer Observability
+- **Ringkasan Inti**: Menampilkan *raw error trace* atau dump JSON-RPC calldata hex di antarmuka pengguna melanggar standar estetika, merusak tata letak, dan membingungkan pengguna awam. Seluruh UI alert kini hanya menampilkan pesan ramah, sementara full raw stack trace dicatat secara eksklusif di `console.error`.
+- **Detail Implementasi & Logika**:
+  Dibuat helper terpusat `web/lib/format-error.ts`:
+  ```typescript
+  export function formatUserErrorMessage(error: unknown, fallbackMessage = "An unexpected error occurred."): string {
+    if (typeof window !== "undefined") {
+      console.error("[Omen Client Error]", error);
+    }
+    const message = error instanceof Error ? error.message : String(error || "");
+    const lower = message.toLowerCase();
+
+    if (lower.includes("exceeds the balance") || lower.includes("insufficient funds")) {
+      return "Transaction failed: Insufficient funds to cover gas fees. Please top up your wallet.";
+    }
+    if (lower.includes("user rejected") || lower.includes("user denied")) {
+      return "Transaction was cancelled by user.";
+    }
+    if (lower.includes("execution reverted")) {
+      return "Transaction reverted: Smart contract rejected the operation. Please verify input parameters.";
+    }
+    if (lower.includes("rate limit") || lower.includes("429")) {
+      return "Service is temporarily busy. Please try again in a few moments.";
+    }
+    return fallbackMessage;
+  }
+  ```
+- **Rasional & Keputusan Teknis**:
+  Pendekatan ini memberikan pesan yang *actionable* kepada pengguna (misal instruksi isi saldo ETH) tanpa mengekspos calldata hex atau stack trace internal.
+
+---
+
+### [QA-20260920-02] Analisis & Resolusi Error 'Cost of Executing Transaction Exceeds Balance' pada Viem Simulation & Dynamic Gas Estimation
+- **Tanggal**: 2026-09-20 12:35
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `API & Network Integration`
+- **Tags**: `#viem #gas-estimation #rpc-simulation #factory-client #sepolia #web3-error #gas-limit`
+- **File Referensi**:
+  - `omen/web/lib/market/factory-client.ts` (L1-L120)
+  - `omen/web/hooks/useAdminCreateMarket.ts` (L1-L80)
+
+#### ❓ Pertanyaan Pengguna
+1. **The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.**
+2. **Cannot find name 'gasLimit'.**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Akar Penyebab Error 'Cost Exceeds Balance'
+- **Ringkasan Inti**: Node RPC melakukan validasi *pre-flight upfront cost*: `required_balance = (gas_limit * max_fee_per_gas) + value`. Jika kode menggunakan `gas: 2000000n` (statis) saat base fee Sepolia melonjak ke ~2.38 Gwei, node mewajibkan saldo minimum `~0.00477 ETH`. Jika saldo wallet admin adalah `0.0045 ETH`, transaksi langsung ditolak sebelum simulasi dieksekusi.
+- **Solusi Dynamic Gas Estimation**:
+  Mengganti nilai statis 2,000,000 dengan estimasi on-chain dinamis via `publicClient.estimateContractGas`:
+  ```typescript
+  let gasLimit: bigint = 1750000n;
+  try {
+    const estimated = await publicClient.estimateContractGas({
+      account,
+      address: factoryAddress,
+      abi: OMEN_FACTORY_ABI,
+      functionName: "createMarket",
+      args: [...],
+    });
+    gasLimit = (estimated * 110n) / 100n;
+  } catch (err) {
+    console.warn("Gas estimation failed, using fallback:", err);
+  }
+  ```
+- **Hasil**: Estimasi aktual hanya membutuhkan ~1,560,000 gas + 10% buffer = ~1,716,000 gas, menurunkan syarat saldo minimum menjadi `~0.00408 ETH` sehingga transaksi berhasil dieksekusi.
+
+##### 2. Resolusi Scoping Error 'Cannot find name gasLimit'
+- **Ringkasan Inti**: Variabel `gasLimit` sebelumnya dideklarasikan di dalam blok `try` lokal, sehingga tidak dapat diakses pada pemanggilan `walletClient.writeContract` di luar blok. Memindahkan deklarasi `let gasLimit: bigint = 1750000n;` ke *outer scope* menyelesaikan compile error secara tuntas.
+
+---
+
+### [QA-20260920-01] Fungsi, Peran, dan Penanganan Limitasi Unavatar.io pada Avatar Kreator Omen
+- **Tanggal**: 2026-09-20 12:30
+- **Scope / Target Node**: `nodes/omen`
+- **Kategori**: `UI/UX & Design System`
+- **Tags**: `#unavatar #avatar-fallback #rate-limiting #creator-profile #ui-resilience #gradient-avatar`
+- **File Referensi**:
+  - `omen/web/components/CreatorCard.tsx` (L15-L65)
+  - `omen/web/components/CreatorProfileHeader.tsx` (L10-L55)
+  - `omen/web/app/creators/page.tsx` (L40-L90)
+
+#### ❓ Pertanyaan Pengguna
+1. **apa fungsi unavatar.io**
+
+#### 💡 Jawaban & Penjelasan Implementasi
+
+##### 1. Fungsi Utama Unavatar.io
+- **Ringkasan Inti**: `unavatar.io` adalah layanan CDN gratis (*unified avatar API*) yang mengambil foto profil pengguna secara otomatis dari berbagai platform media sosial (seperti X/Twitter, GitHub, Gravatar, Telegram, ENS) hanya menggunakan *handle* pengguna (contoh: `https://unavatar.io/x/elonmusk`).
+- **Peran di Omen Protocol**:
+  Ketika pasar keyakinan dibuat berdasarkan cuitan seorang influencer X, Omen menggunakan `https://unavatar.io/x/${handle}` sebagai avatar default tanpa mengharuskan kreator mengunggah gambar file secara manual.
+
+##### 2. Limitasi & Graceful Degradation Strategy
+- **Limitasi**:
+  1. *Rate Limiting*: Akun gratis dibatasi ~25 permintaan/hari per IP.
+  2. *Twitter Anti-Bot Protection*: Twitter sering memblokir scraper Unavatar, menghasilkan respon HTTP 429 atau 500.
+- **Penanganan di Omen**:
+  Komponen UI Omen (`CreatorCard.tsx`) membungkus elemen gambar dengan `onError` handler. Jika gambar Unavatar gagal dimuat, sistem secara otomatis menampilkan *Gradient Avatar Badge* dengan 2 huruf inisial nama kreator (contoh: "RK" untuk `@rkfbrns`) menggunakan gradien warna aksen ungu/cyan Omen, sehingga antarmuka tetap rapi, elegan, dan fungsional.
+
+---
 
 ### [QA-20260918-10] Analisis Mekanisme Autentikasi Admin Saat Ini (Form & Header Based) vs True Web3 Wallet Signature
 - **Tanggal**: 2026-09-18 20:45
