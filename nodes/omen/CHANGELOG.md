@@ -15,6 +15,69 @@ Changelog berfungsi sebagai catatan riwayat perubahan untuk node **Omen**.
 
 ## Log Perubahan (Omen)
 
+### [2026-09-20 10:45:00] - Refactor: Systematic Elimination of Magic Numbers Across Codebase
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Mengganti seluruh *magic numbers* (seperti chain ID `11155111` dan `46630`, konstanta durasi waktu pasar, dan `BASIS_POINTS_DIVISOR = 10000`) dengan konstanta terpusat dari `lib/constants.ts` di seluruh hooks, route handlers, pages, lib helpers, dan test suites.
+- **Perubahan:** `[Changed/Refactor/Constants/DRY]`
+- **Path File:** `web/lib/constants.ts`, `web/lib/market/resolution-helper.ts`, `web/hooks/useAdminCreateMarket.ts`, `web/app/api/beliefs/submit/route.ts`, `web/app/api/oracle/snapshot/route.ts`, `web/app/market/[id]/page.tsx`, `web/tests/setup.ts`, `web/tests/admin-create-market.test.ts`, `web/tests/admin-oracle-monitor.test.tsx`, `web/tests/api-activity.test.ts`, `web/tests/api-beliefs-submit.test.ts`, `web/tests/api-creator-confirm.test.ts`, `web/tests/api-markets-v1-get.test.ts`, `web/tests/api-schema-v1.test.ts`, `web/tests/contracts-abi.test.ts`, `web/tests/contracts-robinhood-deploy.test.ts`, `web/tests/creator-confirmation.test.tsx`, `web/tests/e2e/belief-market-cycle.test.tsx`, `web/tests/e2e/dual-chain-workflow.test.ts`, `web/tests/e2e/workflow.test.tsx`, `web/tests/market-detail-page.test.tsx`, `web/tests/network-switcher.test.tsx`, `web/tests/providers.test.tsx`, `web/tests/resolution-engine.test.ts`, `web/tests/rpc-decoder.test.ts`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-20 10:35:00] - Refactor: Normalize Backend Market API Response to Pure Agree/Disagree Schema
+> **Trigger:** User Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menghapus alias legacy (`yes_pool`, `no_pool`, `total_pool_yes`, `total_pool_no`) dari `GET /api/markets`, menyelaraskan response payload murni ke skema kanonikal `agree_pool`, `disagree_pool`, dan `total_pool`, serta mengganti magic number chainId fallback dengan `ETHEREUM_SEPOLIA_CHAIN_ID`.
+- **Perubahan:** `[Changed/API/Cleanup]`
+- **Path File:** `web/app/api/markets/route.ts`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-20 10:30:00] - Refactor: Comprehensive Remediation of Audit V1 Findings
+> **Trigger:** Autonomous Planning | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Eksekusi seluruh rencana perbaikan dari `audit-report-v1.md` dan `implementation_plan.md` di branch `main`:
+  1. **BUG-01 (Eliminasi PredictionMarket.sol & Old ABI):** Menghapus arsitektur kontrak monolitik `PredictionMarket.sol`, `PredictionMarket.json`, dan `PredictionMarket.test.ts`. Membersihkan 500+ baris `PREDICTION_MARKET_ABI` inline dari `contracts.ts`.
+  2. **BUG-01/12 (Rewrite Web3 Hooks):** Memperbarui seluruh hooks Web3 (`useAdminCreateMarket`, `useAdminResolveMarket`, `usePlaceBet`, `useClaimPayout`) agar secara eksklusif menggunakan `OMEN_FACTORY_ABI` dan `OMEN_MARKET_ABI` dengan interaksi langsung terhadap market contract address.
+  3. **BUG-13 (Fix EIP-712 Creator Confirmation):** Menyelaraskan domain EIP-712 (`OMEN`), primaryType (`BeliefConfirmation`), dan parameter fields antara `useCreatorConfirm.ts` dan backend `confirmation.ts`.
+  4. **DRY Consolidation & Modularization:** Mengekstrak regex dan validasi EVM/TxHash ke `lib/validators.ts`, otorisasi admin ke `lib/admin-auth.ts`, serta kalkulasi & pencatatan resolusi/settlement ke `lib/market/resolution-service.ts`.
+  5. **Resolution Engine & Bug Fixes:** Menambahkan filter `.eq("snapshot_type", "START")` pada oracle snapshot query (BUG-05), memperbaiki lookup profile dan akurasi kreator (BUG-06, BUG-07), mengubah default fee testnet menjadi 0 bps (BUG-11), standardisasi status uppercase `OPEN`/`RESOLVED`/`VOID` (BUG-14), dan membersihkan feed Robinhood yang belum terverifikasi dari `CHAINLINK_PRICE_FEEDS` (BUG-08).
+  6. **Verifikasi:** 100% test lulus (66/66 test files, 348/348 tests), 0 TypeScript compiler error (`npx tsc --noEmit`), Next.js production build (`npm run build`) sukses, Graphify knowledge graph tersinkronisasi (`graphify update`), dan seluruh source code mematuhi Zero-Comment Policy.
+- **Perubahan:** `[Added/Changed/Fixed/Removed/Web3/Security/TypeSafety]`
+- **Path File:** `contracts/contracts/PredictionMarket.sol`, `web/contracts/PredictionMarket.json`, `web/lib/contracts.ts`, `web/lib/constants.ts`, `web/lib/validators.ts`, `web/lib/admin-auth.ts`, `web/lib/market/resolution-service.ts`, `web/lib/market/resolution-engine.ts`, `web/lib/market/resolution-helper.ts`, `web/lib/rpc-decoder.ts`, `web/hooks/useAdminCreateMarket.ts`, `web/hooks/useAdminResolveMarket.ts`, `web/hooks/usePlaceBet.ts`, `web/hooks/useClaimPayout.ts`, `web/hooks/useCreatorConfirm.ts`, `web/app/api/markets/route.ts`, `web/app/api/markets/[id]/resolve/route.ts`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-20 06:30:00] - Refactor: Elimination of INITIAL_TRANSACTIONS and Hardcoded Dummy Data in Landing Page Activity Explorer
+> **Trigger:** User Production Readiness Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Menghilangkan seluruh dataset mock dummy dan interval generator palsu pada komponen landing page `LiveActivityExplorer.tsx`, `TrendingMarketsTeaser.tsx`, dan `LandingActivityStream.tsx`:
+  1. **Eliminasi `INITIAL_TRANSACTIONS` & Fake Streaming:** Menghapus total array hardcoded `INITIAL_TRANSACTIONS`, `RANDOM_STATEMENTS`, `RANDOM_HANDLES`, dan interval `Math.random()` pada `LiveActivityExplorer.tsx`. Komponen kini menginisialisasi state bersih `[]` dengan `isLoading: true` dan memuat transaksi riil secara langsung dari `/api/activity?limit=50`.
+  2. **Loading Skeleton & Empty State:** Menambahkan skeleton loader 5-baris dan UI empty state interaktif yang bersih saat basis data atau aktivitas on-chain belum memiliki transaksi.
+  3. **Dynamic Receipt Telemetry:** Menyelaraskan kalkulasi pool share, consensus shift, dan multiplier pada receipt modal agar dihitung secara dinamis dari nilai on-chain/database asli (sejalan dengan `ActivityFeed.tsx`).
+  4. **Eliminasi `INITIAL_MARKETS` & Stream Cleanup:** Menghapus `INITIAL_MARKETS` pada `TrendingMarketsTeaser.tsx` dan `INITIAL_ACTIVITIES` pada `LandingActivityStream.tsx`, menggantikannya dengan live fetch API dan polling otomatis 15 detik.
+  5. **Verifikasi:** 100% test lulus (78/78 test files, 413/413 unit tests), 0 TypeScript compiler error (`npx tsc --noEmit`), dan Next.js production build (`npm run build`) berhasil sukses dengan Zero-Comment Policy.
+- **Perubahan:** `[Removed/Refactored/ProductionReady]`
+- **Path File:** `omen/web/components/landing/LiveActivityExplorer.tsx`, `omen/web/components/landing/TrendingMarketsTeaser.tsx`, `omen/web/components/landing/LandingActivityStream.tsx`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-20 06:15:00] - Fix: Production Readiness Audit Comprehensive Remediations
+> **Trigger:** Production Readiness Audit Report (`AUDIT_PRODUCTION_READINESS_REPORT.md`) | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Memperbaiki dan menuntaskan seluruh temuan audit kesiapan produksi (*production readiness*) dari `AUDIT_PRODUCTION_READINESS_REPORT.md` di seluruh codebase Omen:
+  1. **Chain ID Alignment (`46631` → `46630`):** Menyelaraskan seluruh referensi Robinhood Chain Testnet ID dari nilai usang `46631` ke Chain ID resmi `46630` di `web/db/seed.sql`, `web/components/landing/LiveActivityExplorer.tsx`, `web/lib/mockPredictionMarket.ts`, dan test suite terkait.
+  2. **ABI & Multi-Contract Compatibility (`useMarket.ts` & `usePlaceBet.ts`):** Mengganti panggilan non-existent `getMarketSummary` pada `useMarket.ts` dengan multicall `useReadContracts` membaca `agreePool()`, `disagreePool()`, dan `status()`. Menambahkan dukungan interaksi langsung ABI `OmenMarket` (`depositAgree`/`depositDisagree`) pada `usePlaceBet.ts` dan `useClaimPayout.ts` saat berinteraksi dengan contract market standalone.
+  3. **Dual-Chain Server Architecture (Arbitrum Sepolia `421614` → Robinhood Chain `46630`):** Memperbarui server client, factory client, oracle Chainlink, resolution engine, dan Hardhat network config agar sepenuhnya mendukung Robinhood Chain (`46630`) serta parsing log event `MarketCreated` secara riil melalui `decodeEventLog`.
+  4. **Eliminasi Fake Tx Hash & Fallback Mock pada Production Path:** Menghapus fallback random hash tiruan pada `useClaim.ts`, `usePosition.ts`, `useAdminCreateMarket.ts`, dan `useAdminResolveMarket.ts` sehingga kegagalan wallet terpropagasi secara transparan.
+  5. **Type Safety & Schema Alignment:** Menyelaraskan client Supabase dengan generic `Database`, memperbaiki referensi pool fields (`agree_pool`, `disagree_pool`, `yes_pool`, `no_pool`, `total_pool_yes`, `total_pool_no`), serta memperbaiki type casting di API routes dan resolution engine.
+  6. **Telemetry & Real Wallet Integration:** Mengganti demo wallet hardcoded pada `DailyCheckinWidget.tsx` dengan connected account wagmi, serta menyinkronkan kalkulasi telemetry pada `ActivityFeed.tsx` dengan data on-chain dinamis.
+  7. **Verifikasi Penuh:** 100% test lulus (78/78 test files, 413/413 unit tests di `web/` dan 19/19 tests di `contracts/`), 0 TypeScript compiler error (`npx tsc --noEmit`), dan Next.js production build (`npm run build`) berhasil tanpa kendala dengan ketaatan penuh pada Zero-Comment Policy.
+- **Perubahan:** `[Fixed/Refactored/Web3/Security/TypeSafety]`
+- **Path File:** `omen/web/db/seed.sql`, `omen/web/components/landing/LiveActivityExplorer.tsx`, `omen/web/lib/contracts.ts`, `omen/web/lib/market/factory-client.ts`, `omen/web/lib/market/resolution-engine.ts`, `omen/web/lib/oracle/chainlink.ts`, `omen/contracts/hardhat.config.ts`, `omen/web/hooks/useMarket.ts`, `omen/web/hooks/useClaim.ts`, `omen/web/hooks/usePosition.ts`, `omen/web/hooks/useCreateMarket.ts`, `omen/web/hooks/useAdminCreateMarket.ts`, `omen/web/hooks/useAdminResolveMarket.ts`, `omen/web/components/DailyCheckinWidget.tsx`, `omen/web/components/ActivityFeed.tsx`, `omen/web/lib/supabase.ts`, `omen/web/hooks/usePlaceBet.ts`, `omen/web/hooks/useClaimPayout.ts`, `omen/web/lib/mockContracts.ts`, `omen/web/types/database.ts`, `nodes/omen/CHANGELOG.md`
+
+### [2026-09-19 23:05:00] - Feature: Live On-Chain RPC Transaction Fetching and Dynamic Viem ABI Calldata Decoder
+> **Trigger:** User Implementation Plan (`a.md`) Real RPC Integration | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
+- **Konteks:** Mengintegrasikan fetch transaksi RPC on-chain live dan dynamic calldata decoding menggunakan `viem` ke modal receipt transaksi, menyelaraskan signature fungsi smart contract asli, serta mengonfigurasi 3 wallet testnet non-admin:
+  1. **RPC Decoder Utility (`web/lib/rpc-decoder.ts`):** Membangun helper dual-chain client untuk Ethereum Sepolia (`11155111`) dan Robinhood Chain (`46630`), melakukan RPC `getTransaction`, `getTransactionReceipt`, dan `getBlockNumber` secara asynchronous dengan proteksi timeout, serta men-decode raw calldata `tx.input` terhadap ABI `OmenMarket`, `OmenFactory`, dan `PredictionMarket` via `decodeFunctionData` dari `viem`.
+  2. **Integrasi Live Modal Receipt (`ActivityFeed.tsx` & `LiveActivityExplorer.tsx`):** Menghubungkan modal receipt ke decoder RPC live, menampilkan status on-chain terkonfirmasi (`Confirmed (On-Chain)`), nomor block & konfirmasi asli, execution fee riil (`gasUsed * effectiveGasPrice`), serta rincian parameter fungsi ABI (`depositAgree()`, `depositDisagree()`, `createMarket()`, `claimPayout()`, `resolveMarket()`).
+  3. **Konfigurasi Seed Wallets Non-Admin (`web/.env.local` & `web/.env.example`):** Men-generate dan mengonfigurasi 3 private key wallet testnet terpisah (`SEED_WALLET_PRIVATE_KEY_1/2/3`) khusus untuk eksekusi testnet seeder tanpa mencampur dengan admin/deployer key.
+  4. **Pengujian & Verifikasi:** Menambahkan unit test suite `web/tests/rpc-decoder.test.ts`, memastikan 100% test lulus (413/413 passing tests di 78 test files), lolos build TypeScript (`npx tsc --noEmit`), dan mematuhi Zero-Comment Policy secara ketat.
+- **Perubahan:** `[Added/Integrated/RPC/Web3]`
+  1. `web/lib/rpc-decoder.ts`: Live RPC client & viem ABI calldata decoder utility.
+  2. `web/components/ActivityFeed.tsx`: Live modal receipt RPC decoding integration.
+  3. `web/components/landing/LiveActivityExplorer.tsx`: Live modal receipt RPC decoding integration.
+  4. `web/.env.local` & `web/.env.example`: Seed wallet private key environment definitions.
+  5. `web/tests/rpc-decoder.test.ts`: Unit test suite for RPC decoder utility.
+- **Path File:** `omen/web/lib/rpc-decoder.ts`, `omen/web/components/ActivityFeed.tsx`, `omen/web/components/landing/LiveActivityExplorer.tsx`, `omen/web/tests/rpc-decoder.test.ts`, `nodes/omen/CHANGELOG.md`
+
 ### [2026-09-19 21:45:00] - Refactor: Centralize and Modularize All TypeScript Interfaces and Types into web/types
 > **Trigger:** User Implementation Request | **Branch:** `main` | **Repo:** `https://github.com/wealthy-org/Omen.git`
 - **Konteks:** Melakukan refactoring menyeluruh dan sentralisasi semua definisi `interface` dan `type` dari seluruh direktori `web/components`, `web/app`, `web/hooks`, dan `web/lib` ke dalam modul-modul modular di dalam `web/types/`:
